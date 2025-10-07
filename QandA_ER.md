@@ -2,61 +2,71 @@
 
 ```mermaid
     erDiagram
-        students {
-            int ユーザid PK
+        STUDENTS {
+            string ユーザID PK
             string パスワード
             string メールアドレス
             string 学部
             string 学科
             int 学年
-            int 時間割id FK
-            int 副手登録テーブルid FK
         }
 
-        subjects {
-            int 科目id PK
+        SUBJECTS {
+            int 科目ID PK
             string 科目名
-            string description
+            string DESCRIPTION
+            int コマ数
+            int 単位数
+            string 配当期
+            string 開講曜日
+            string 時限
             date 作成日時
         }
 
-        practices {
-            int 課題id PK
-            int 科目id FK
+        PRACTICES {
+            int 課題ID PK
+            int 科目ID FK
             string 課題名
-            string description
+            string DESCRIPTION
             date 作成日時
             date 締め切り
         }
 
-        questions {
-            int 質問id PK
-            int 課題id FK
+        QUESTIONS {
+            int 質問ID PK
+            int 課題ID FK
             date 投稿日時
-            string ユーザid FK
+            string ユーザID FK
             string 質問名
-            string description
+            strinG DESCRIPTION
             int いいね数
         }
 
-        answers {
-            int 回答id PK
-            int 質問id FK
+        ANSWERS {
+            int 回答ID PK
+            int 質問ID FK
             date 投稿日時
             string 回答内容
             int いいね数
         }
 
-        tables {
-            int 時間割id PK
-            int ユーザid FK
+        TIMETABLE {
+            string ユーザID PK,FK
+            int 科目ID PK,FK
         }
 
-        students ||--|| tables : has
-        tables ||--o{ subjects : has
-        subjects ||--o{ practices : has
-        practices ||--o{ questions : has
-        questions ||--o{ answers : has
-        students ||--o{ questions : makes
-        students ||--o{ answers : makes
+        TA {
+            string ユーザID PK,FK
+            int 科目ID PK, FK
+        }
+
+        STUDENTS ||--o{ TIMETABLE : has
+        TIMETABLE ||--|| SUBJECTS : has
+        SUBJECTS ||--o{ PRACTICES : has
+        PRACTICES ||--o{ QUESTIONS : has
+        QUESTIONS ||--o{ ANSWERS : has
+        STUDENTS ||--o{ QUESTIONS : makes
+        STUDENTS ||--o{ ANSWERS : makes
+        STUDENTS ||--o{ TA : has
+        SUBJECTS }|--|| TA : has
 ```
