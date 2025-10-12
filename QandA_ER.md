@@ -6,9 +6,13 @@
             string ユーザID PK
             string パスワード
             string メールアドレス
-            string 学部
-            string 学科
-            int 学年
+            int 所属ID FK
+        }
+
+        BELONGING {
+            int 所属ID
+            string 所属学部記号
+            boolean 大学院生
         }
 
         SUBJECTS {
@@ -67,6 +71,7 @@
         QUESTIONS ||--o{ ANSWERS : has
         STUDENTS ||--o{ QUESTIONS : makes
         STUDENTS ||--o{ ANSWERS : makes
+        STUDENTS ||--|| BELONGING : has
         STUDENTS ||--o{ TA : has
         SUBJECTS }|--|| TA : has
 ```
