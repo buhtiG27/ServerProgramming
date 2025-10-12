@@ -2,17 +2,17 @@
 
 ```mermaid
     erDiagram
-        STUDENTS {
+        USERS {
             string ユーザID PK
             string パスワード
             string メールアドレス
+            string ニックネーム
             int 所属ID FK
         }
 
         BELONGING {
             int 所属ID
-            string 所属学部記号
-            boolean 大学院生
+            string 所属学部記号 "教員は教員用の特別な記号"
         }
 
         SUBJECTS {
@@ -64,14 +64,14 @@
             int 科目ID PK, FK
         }
 
-        STUDENTS ||--o{ TIMETABLE : has
+        USERS ||--o{ TIMETABLE : has
         TIMETABLE ||--|| SUBJECTS : has
         SUBJECTS ||--o{ PRACTICES : has
         PRACTICES ||--o{ QUESTIONS : has
         QUESTIONS ||--o{ ANSWERS : has
-        STUDENTS ||--o{ QUESTIONS : makes
-        STUDENTS ||--o{ ANSWERS : makes
-        STUDENTS ||--|| BELONGING : has
-        STUDENTS ||--o{ TA : has
+        USERS ||--o{ QUESTIONS : makes
+        USERS ||--o{ ANSWERS : makes
+        USERS ||--|| BELONGING : has
+        USERS ||--o{ TA : has
         SUBJECTS }|--|| TA : has
 ```
