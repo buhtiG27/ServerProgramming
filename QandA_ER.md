@@ -40,9 +40,9 @@
             int 質問ID PK
             int 課題ID FK
             date 投稿日時
-            string ユーザID FK
+            string 作成者 FK
             string 質問名
-            strinG DESCRIPTION
+            string DESCRIPTION
             int いいね数
         }
 
