@@ -8,6 +8,8 @@
             string メールアドレス
             string ニックネーム
             int 所属ID FK
+            int 入学年度
+            int 学年
         }
 
         BELONGING {
