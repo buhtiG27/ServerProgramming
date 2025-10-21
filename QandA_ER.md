@@ -3,94 +3,94 @@
 ```mermaid
     erDiagram
         USERS {
-            string ユーザID PK
-            string パスワード
-            string メールアドレス
-            string ニックネーム
-            string コメント
-            int 所属ID FK
-            int 入学年度
-            int 学年
-            boolean 利用制限
-            date created_at
-            date updated_at
-        }
-
-        TAGS {
-            string タグ名 Pk
-            int ユーザID PK,FK
+            string id PK
+            string password_hash
+            string email
+            string display_name
+            string description
+            int delinging_id FK "BELONGING.id"
+            int year_of_enrollment
+            int grade
+            string icon_path
+            string header_path
+            boolean restriction
             date created_at
             date updated_at
         }
 
         LIKES {
-            string ユーザID PK,FK
-            int postID PK,FK
+            int id PK
+            string user_id PK,FK "USER.id"
+            int post_id PK,FK "POSTS.id"
             date created_at
             date updated_at
         }
 
         FLAGS {
-            int ユーザID PK,FK
-            int postID PK,FK
+            int id PK
+            int user_id PK,FK "USERS.id"
+            int post_id PK,FK "POSTS.id"
             date created_at
             date updated_at
         }
 
         BELONGING {
-            int 所属ID PK
-            string 所属学部記号 "教員は教員用の特別な記号"
-            int 身分 "大学生=1、大学院生=2、教員=3のいずれかをとる"
+            int id PK
+            string department_code "教員は教員用の特別な記号"
+            int classification "大学生=1、大学院生=2、教員=3のいずれかをとる"
         }
 
         SUBJECTS {
-            int 科目ID PK
-            string 科目名
-            string DESCRIPTION
-            string 教室
-            string 担当教員
-            int コマ数
-            int 単位数
-            string 配当期
-            string 開講曜日
-            string 時限
+            int id PK
+            string subject_name
+            string description
+            string class_room
+            string teacher
+            int koma
+            int units
+            string period
+            string day
+            string time
             date created_at
             date updated_at
         }
 
         PRACTICES {
-            int 課題ID PK
-            int 科目ID FK
-            string 課題名
-            string 提出場所
-            string DESCRIPTION
-            date 締め切り
+            int id PK
+            int subject_id FK "SUBJECTS.id"
+            string practice_name
+            string place
+            string description
+            date deadline
             date created_at
             date updated_at
         }
 
 
         POSTS {
-            int postID PK
-            int 課題ID FK "PRACTICES.課題ID"
+            int id PK
+            int practice_id FK "PRACTICES.id"
             int QorA "Q=1 A=2"
-            int parentID FK "QorA=2の時のみ POSTS.postID"
-            string 作成者 FK "USERS.ユーザID"
-            string 投稿内容
+            int parent_id FK "QorA=2の時のみ POSTS.id"
+            string creator FK "USERS.id"
+            string contents_text
+            string image_path
             date created_at
             date updated_at
         }
 
         TIMETABLE {
-            string ユーザID PK,FK
-            int 科目ID PK,FK
+            int id PK
+            string user_id PK,FK "USERS.id"
+            int subject_id PK,FK "SUBJECTS.id"
             date created_at
             date updated_at
         }
 
         TA {
-            string ユーザID PK,FK
-            int 科目ID PK, FK
+            int id PK
+            string user_id PK,FK "USERS.id"
+            int subject_id PK, FK "SUBJECTS.id"
             date created_at
             date updated_at
         }
@@ -106,8 +106,8 @@
         USERS ||--o{ POSTS : writes
         USERS ||--|| BELONGING : has
         USERS ||--o{ TA : has
-        SUBJECTS }|--|| TA : has
-        USERS  ||--|{ TAGS : has
+        SUBJECTS ||--|| TA : has
+        POSTS ||--|| POSTS : has
 ```
 
 <!--
