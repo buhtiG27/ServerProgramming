@@ -1,0 +1,99 @@
+body{
+	background-color:white;
+	text-align:center;
+}
+
+h1{
+	color:rgb(0, 128, 255);
+	
+}
+/*検索*/
+.txt{
+	display: inline-block;
+    width: 50%;
+    border: 1px solid rgb(192, 192, 192);
+    box-sizing: border-box;
+    background: white;
+    margin: 5px;
+    padding: 5px;
+}
+/*上部のForm・button*/
+.top_button{
+	position: fixed;
+	top: 0;
+	width: 100%; 
+	background: white;
+    text-align: center;
+}
+.button{
+	background-color:rgb(192, 192, 192);
+	color:rgb(0, 0, 0);
+	width: 30%; 
+	height: 50px; 
+	font-size: 16px;	
+	padding: 15px 30px;
+}
+/*投稿部分*/
+.post-list{
+	width: 100%;
+	margin: 5px;
+	margin-top: 160px;
+	padding-bottom: 35px;
+	text-align: center;	
+}
+.post{
+	border: 1px solid rgb(0, 0, 0);
+	background-color: white;
+	padding: 15px;
+	margin-bottom: 15px;
+	border-radius: 8px;
+}
+.post h3{
+	color:black;
+}
+.button-post{
+	margin: 10px;
+}
+.like_button{
+	font-size: 12px;
+	box-sizing: border-box;
+	margin: 5px;
+    padding: 5px;
+}
+/*作成button*/
+.createbutton{
+	background-color:white;
+	color:black; 
+	font-size: 24px;
+	padding: 15px 30px;
+	position: fixed;
+	display: flex;
+    justify-content: flex-end;
+    bottom:180px;
+    right:15px;
+}
+
+/*下部のbutton（ページ切り替え）*/
+.bottom_buttons{
+	position: fixed;
+	width: 100%; 
+	bottom: 20px;
+	display: flex;
+    justify-content: center;
+    gap: 0;
+}
+
+.form{
+	flex: 1;
+}
+
+.pageButton{
+	background-color:rgb(255, 255, 255);
+	color:rgb(0, 0, 0); 
+	width: 100%; 
+	bottom: 20px;
+	font-size: 24px;
+	padding: 25px 0;
+}
+
+
