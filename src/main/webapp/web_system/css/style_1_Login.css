@@ -1,0 +1,50 @@
+body{
+	background-color:while;
+}
+
+.top_button{
+	position: fixed;
+	top: 0;
+	width: 100%; 
+	background: white;
+    text-align: center;
+}
+h1{
+	color:rgb(0, 128, 255);
+}
+label{
+	width: 60%;
+}
+.login_list{
+	width: 100%;
+	margin: 5px;
+	margin-top: 160px;
+	padding-bottom: 35px;
+	text-align: center;	
+}
+.txt{
+	display: inline-block;
+    width: 50%;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    background: #f2f2f2;
+    margin: 5px;
+    padding: 5px;
+}
+
+.button1{
+	background-color:blue;
+	color:white;
+	width: 150px; 
+	height: 50px; 
+	font-size: 16px;
+	
+}
+
+.button2{
+	background-color:white;
+	color:black;
+	width: 120px; 
+	height: 40px; 
+	font-size: 12px;
+}
