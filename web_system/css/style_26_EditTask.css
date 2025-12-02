@@ -1,0 +1,142 @@
+body{
+	background-color:white;
+	text-align:center;
+}
+
+/* --- トップボタン --- */
+top_button_area {
+	position: relative;
+	top: 10px;
+	display: flex;           
+	justify-content: center; 
+	text-align: center;
+}
+
+.top_button {
+	background: white;
+	color: rgb(0, 128, 255);
+	border: none;
+	font-size: 18px;
+	padding: 8px 16px;
+	border-radius: 5px;
+}
+
+
+.header_area {
+	margin-top: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.back_button {
+	position: absolute;
+	left: 20px;
+	background-color: white;
+	color: black;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+}
+
+.page_title {
+	margin: 0;
+	font-size: 24px;
+}
+
+/* --- 詳細表示部分 --- */
+.view_list {
+	width: 80%;
+	margin: 40px auto 100px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 10px;
+	background-color: rgb(255, 255, 255);
+}
+
+.task_title {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.cancel {
+	text-align: right;
+}
+
+.cancel_button {
+	font-size: 14px;
+	padding: 6px 14px;
+	border-radius: 5px;
+	border: 1px solid #666;
+	background-color: white;
+	cursor: pointer;
+}
+/* --- 内容ボックス --- */
+.info_box label {
+	display: block;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.content_box {
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 5px;
+	width: 95%;
+	background-color: white;
+	padding: 10px;
+	word-wrap: break-word;
+	white-space: pre-wrap; 
+}
+
+/* --- 補足説明部分（テキストエリア風） --- */
+.textarea_box {
+	width: 95%;
+	min-height: 80px;
+	padding: 10px;
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 5px;
+	background-color: rgb(255, 255, 255);
+}
+
+
+.regist_button_form {
+    text-align: center;
+}
+
+.regist_button{
+	background-color: blue;
+    color: white;
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+	border-radius: 5px;
+    display: block;    
+    margin: 0 auto;
+	
+}
+
+
+/*下部のbutton（ページ切り替え）*/
+.bottom_buttons{
+	position: fixed;
+	width: 100%; 
+	bottom: 20px;
+	display: flex;
+    justify-content: center;
+    gap: 0;
+}
+
+.form{
+	flex: 1;
+}
+
+.pageButton{
+	background-color:rgb(255, 255, 255);
+	color:rgb(0, 0, 0); 
+	width: 100%; 
+	bottom: 20px;
+	font-size: 24px;
+	padding: 25px 0;
+}
