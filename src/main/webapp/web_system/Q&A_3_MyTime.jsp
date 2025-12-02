@@ -8,19 +8,31 @@
 </head>
 <body>
 <%--　ロゴに置き換える --%>
-	<div class="top_button">
-		<%-- ボタンに置き換え --%>
-		<h1>TDU</h1>
-		<form action="Q&A_18_DeleteMyTime.jsp" method="get">
-			<button class="button" type="submit" name="filterbyNew" value="send">科目削除</button>
-		</form>
-		<form action="Q&A_13_ViewTask.jsp" method="get">
-			<button class="button" type="submit" name="filterbySameGrade" value="send">課題一覧</button>
+	<div class="top_button_area">
+		<form action="Q&A_2_Question.jsp" method="get">
+			<button class="top_button" type="submit" name="back" value="send">TDU</button>
 		</form>
 	</div>
-	<br>
+	<div class="header_area">
+		<form action="Q&A_18_DeleteMyTime.jsp" method="get">
+			<button class="delete_button" type="submit" name="filterbyNew" value="send">科目削除</button>
+		</form>
+		<h2>マイ時間割</h2>
+		<form action="Q&A_17_AllTask.jsp" method="get"> 
+			<button class="task_button" type="submit" name="filterbySameGrade" value="send">課題一覧</button>
+		</form>
+		
+	</div>
 	<%-- 置き換え --%>
 	<div class="time-list">
+	<%
+            String message = request.getParameter("message");
+            if (message != null && !message.isEmpty()) {
+        %>
+            <p style="color:green; font-weight:bold;"><%= message %></p>
+        <%
+            }
+        %>
 	<table>
 		<tr>
 		<%String[] days = {" ","月","火","水","木","金","土"};%>

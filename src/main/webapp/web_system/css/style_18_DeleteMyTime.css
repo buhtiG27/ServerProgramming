@@ -2,27 +2,49 @@ body{
 	background-color:white;
 	text-align:center;
 }
-
-h1{
-	color:rgb(0, 128, 255);
-	
+/* --- トップボタン --- */
+.top_button_area {
+	top: 10px;
+	text-align:center;
 }
 
-/*上部のForm・button*/
-.top_button{
-	position: fixed;
-	top: 0;
-	width: 100%; 
+.top_button {
 	background: white;
-    text-align: space-between;
+	color: rgb(0, 128, 255);
+	border: none;
+	padding: 8px 16px;
+	font-size: 24px;
+	border-radius: 5px;
 }
-.button{
-	background-color:rgb(192, 192, 192);
-	color:rgb(0, 0, 0);
-	width: 30%; 
-	height: 50px; 
-	font-size: 16px;	
-	padding: 15px 30px;
+
+
+.header_area {
+	margin-top: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cancel_button {
+	position: absolute;
+	left: 20px;
+	background-color: white;
+	color: black;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+}
+
+.save_button {
+	position: absolute;
+	right: 20px;
+	background-color: blue;
+	color: white;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
 }
 /*時間割部分*/
 .time-list{
@@ -54,8 +76,6 @@ h1{
 /* 削除ボタンの位置とスタイル */
 .deleteButton {
     position: absolute;
-    top: 2px;
-    left: 2px;
     background-color: rgb(255, 80, 80);
     color: white;
     border: none;

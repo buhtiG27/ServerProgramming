@@ -3,19 +3,21 @@ body{
 	text-align:center;
 }
 
-/* --- トップボタン（右上固定） --- */
-.top_button_area {
-	position: fixed;
+/* --- トップボタン --- */
+top_button_area {
+	position: relative;
 	top: 10px;
-	right: 10px;
+	display: flex;           
+	justify-content: center; 
+	text-align: center;
 }
 
 .top_button {
 	background: white;
 	color: rgb(0, 128, 255);
-	border: 1px solid rgb(0, 128, 255);
+	border: none;
+	font-size: 18px;
 	padding: 8px 16px;
-	font-size: 14px;
 	border-radius: 5px;
 }
 
@@ -90,7 +92,7 @@ body{
 	cursor: pointer;
 }
 
-/* --- 内容ボックス（自動改行） --- */
+/* --- 内容ボックス --- */
 .info_box label {
 	display: block;
 	margin-top: 10px;
@@ -101,6 +103,7 @@ body{
 	border: 1px solid rgb(192, 192, 192);
 	border-radius: 5px;
 	background-color: white;
+	width: 95%;
 	padding: 10px;
 	word-wrap: break-word;
 	white-space: pre-wrap; 
@@ -111,6 +114,7 @@ body{
 	border: 1px solid rgb(192, 192, 192);
 	border-radius: 5px;
 	background-color: rgb(255, 255, 255);
+	width: 95%;
 	padding: 10px;
 	min-height: 80px;
 	word-wrap: break-word;

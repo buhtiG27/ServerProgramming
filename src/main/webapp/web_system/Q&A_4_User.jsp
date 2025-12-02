@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="css/style_4_User.css">
 </head>
 <body>
-<%--　ロゴに置き換える --%>
 	<div class="top_button">
 	<%-- ログアウト部分の作成 --%>
-		<form action="" method="get">
+	<form action="LogoutServlet" method="post" class="logout-area">
+		<button type="submit" class="logout-button">ログアウト</button>
+	</form>
 			<img src="" class="background_image" />
 			<img src="" class="icon_image"/>
 			<div class="button">
@@ -22,7 +23,6 @@
 			<p class="intro_text">
 				紹介文が表示されます。
 			</p>
-		</form>
 	</div>
 	<br>
 	<%-- 置き換え --%>

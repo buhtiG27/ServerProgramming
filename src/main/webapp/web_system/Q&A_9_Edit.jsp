@@ -20,7 +20,7 @@
 			</form>
 		</div>
 		<div class="button_right">
-			<form action="Q&A_6_NewCheck.jsp" method="get">
+			<form action="Q&A_4_User.jsp" method="get">
 				<button class="save_button" type="submit" name="save" value="send">保存</button>
 			</form>
 		</div>
