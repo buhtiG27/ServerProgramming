@@ -4,18 +4,22 @@
 <head>
 <meta charset="utf-8">
 <title>マイ時間割削除画面</title>
-<link rel="stylesheet" href="css/style_3_MyTime.css">
+<link rel="stylesheet" href="css/style_18_DeleteMyTime.css">
 </head>
 <body>
 <%--　ロゴに置き換える --%>
-	<div class="top_button">
-		<%-- ボタンに置き換え --%>
-		<h1>TDU</h1>
-		<form action="Q&A_3_MyTime.jsp" method="get">
-			<button class="button" type="submit" name="filterbyNew" value="send">キャンセル</button>
+	<div class="top_button_area">
+		<form action="Q&A_2_Question.jsp" method="get">
+			<button class="top_button" type="submit" name="back" value="send">TDU</button>
 		</form>
-		<form action="" method="get">
-			<button class="button" type="submit" name="filterbySameGrade" value="send">変更保存</button>
+	</div>
+	<div class="header_area">
+		<form action="Q&A_3_MyTime.jsp" method="get">
+			<button class="cancel_button" type="submit" name="filterbyNew" value="send">キャンセル</button>
+		</form>
+		<h2>科目削除</h2>
+		<form action="Q&A_3_MyTime.jsp" method="get">
+			<button class="save_button" type="submit" name="filterbySameGrade" value="send">変更保存</button>
 		</form>
 	</div>
 	<br>
@@ -35,17 +39,18 @@
 			<th><%= i%>限</th>
 			<% for(int j = 0; j < 6; j++){ %>
 					<td>
-						<form class="delete-form" action="" method="post">
-         				   <input type="hidden" name="deleteSubject" />
-       					   <button class="deleteButton" type="submit">×</button>
-        				</form>
-						<form action="" method="post">
-							<input type="hidden" name="searchSubject" />
-							<input type="hidden" name="showRegisteredSubject" />
-							<button class="displayButton" type="submit">
-								<%= "登録/表示"  %>
-							</button>
-						</form>
+ 						<div class="cell-container">
+        					<form class="delete-form" action="" method="post">
+            					<input type="hidden" name="deleteSubject" />
+            					<button class="deleteButton" type="submit">×</button>
+        					</form>
+
+        					<form action="" method="post">
+            					<input type="hidden" name="searchSubject" />
+            					<input type="hidden" name="showRegisteredSubject" />
+            					<button class="displayButton" type="submit">登録/表示</button>
+        					</form>
+    					</div>
 					</td>
 			<% 	} %>
 		</tr>

@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>科目作成画面</title>
-<link rel="stylesheet" href="css/style_13_ViewTask.css">
+<link rel="stylesheet" href="css/style_20_CreateSubject.css">
 </head>
 <body>
 <%--　ロゴに置き換える --%>
@@ -16,7 +16,7 @@
 
 <!-- 戻るボタンとタイトル -->
 <div class="header_area">
-	<form action="" method="get">
+	<form action="Q&A_19_AllMyTime.jsp" method="get">
 		<button class="back_button" type="submit" name="back" value="send">戻る</button>
 	</form>
 	<h1 class="page_title">科目作成</h1>
@@ -24,20 +24,20 @@
 <div class="create_list">
 	<br>
 	<p>科目作成</p>
-	<form action="Q&A_6_NewCheck.jsp" method="get">
-		<label for="email">授業名：</label>
+	<form action="Q&A_19_AllMyTime.jsp" method="get">
+		<label for="classname">授業名：</label>
 		<br>
-		<input class="txt" type="text" size="20" value="" name="EmailAddress" />
+		<input class="txt" type="text" size="20" value="" name="Classname" />
 		<br><br>
-		<label for="pw">教員名：</label>
+		<label for="teacher">教員名：</label>
 		<br>
-		<input class="txt" type="password" size="32" value="" name="Password" />
+		<input class="txt" type="text" size="20" value="" name="Teacher" />
 		<br><br>
-		<label for="name">教室：</label>
+		<label for="roomname">教室：</label>
 		<br>
-		<input class="txt" type="text" size="20" value="" name="Username" />
+		<input class="txt" type="text" size="20" value="" name="Roomname" />
 		<br><br>
-		<button class="button1" type="submit" name="Login" value="send">登録</button>
+		<button class="regist_button" type="submit" name="Login" value="send">登録</button>
 	</form>
 	</div>
 </body>

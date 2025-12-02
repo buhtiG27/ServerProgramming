@@ -7,46 +7,62 @@
 <link rel="stylesheet" href="css/style_10_ShowQuestion.css">
 </head>
 <body>
+
 	<div class="top_button">
-		<%-- ボタンに置き換え --%>
 		<h1>TDU</h1>
 		<div class="button">
-		<form action="Q&A_2_Question.jsp" method="get">
-			<button class="back_button" type="submit" name="back" value="send">戻る</button>
-		</form>
+			<form action="Q&A_2_Question.jsp" method="get">
+				<button class="back_button" type="submit" name="back" value="send">戻る</button>
+			</form>
 		</div>
+
 		<br>
 		<a>質問</a>
 		<br>
 	</div>
+
 	<br>
+
+	<!-- 質問表示部 -->
 	<div class="post-list">
-		<div class="post">
+		<div class="post" id="questionPost">
 			<h3>投稿１</h3>
-			<p>サンプル投稿を表示</p>
+			<p id="questionText">サンプル投稿を表示</p>
+
 			<div class="button-post">
-				<button class="like_button" type="submit" name="LikeButton" value="send">いいね</button>
-				<button class="like_button" type="submit" name="FlagButton" value="send">フラグ</button>
-			</div>
-		</div>	
-	</div>
-	
-	<div class="remaind-list">
-	<h2>回答</h2>
-		<div class="post">
-			<h3>回答</h3>
-			<p>サンプル投稿を表示</p>
-			<div class="button-post">
-				<button class="like_button" type="submit" name="LikeButton" value="send">いいね</button>
-				<button class="like_button" type="submit" name="FlagButton" value="send">フラグ</button>
+				<button class="like_button" type="button">いいね</button>
+				<button class="like_button" type="button">フラグ</button>
+
+				<!-- 質問編集ボタン -->
+				<button class="edit_button" type="button" onclick="openEditQuestionModal()">編集</button>
 			</div>
 		</div>
-		
+	</div>
+
+	<!-- 回答一覧 -->
+	<div class="remaind-list">
+		<h2>回答</h2>
+
+		<div class="post">
+			<h3>回答</h3>
+
+			<p class="answerText">サンプル投稿を表示</p>
+
+			<div class="button-post">
+				<button class="like_button" type="button">いいね</button>
+				<button class="like_button" type="button">フラグ</button>
+
+				<!-- 回答編集ボタン -->
+				<button class="edit_button" type="button" onclick="openEditQuestionModal()">編集</button>
+			</div>
+		</div>
+
+		<!-- 回答作成ボタン -->
 		<div class="answer">
 			<button id="openAnswerModal" class="answer_button" type="button">回答作成</button>
 		</div>
-		<%-- 14画面 --%>
-		<%-- モーダルウィンドウの作成 --%>
+
+		<!-- 回答作成モーダル -->
 		<div id="answerModal" class="modal">
 			<div class="modal-content">
 				<span id="closeModal" class="close">&times;</span>
@@ -59,30 +75,82 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 質問編集モーダル -->
+	<div id="editQuestionModal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeEditQuestionModal()">&times;</span>
+			<h2>質問を編集</h2>
+
+			<form action="EditQuestionServlet" method="post">
+				<textarea id="editQuestionText" name="questionText" rows="5" cols="50"></textarea><br>
+				<button type="submit" class="submit_button">変更を保存</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- 回答編集モーダル -->
+	<div id="editAnswerModal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeEditAnswerModal()">&times;</span>
+			<h2>回答を編集</h2>
+
+			<form action="EditAnswerServlet" method="post">
+				<textarea id="editAnswerText" name="answerText" rows="5" cols="50"></textarea><br>
+				<button type="submit" class="submit_button">変更を保存</button>
+			</form>
+		</div>
+	</div>
+
 	<script>
+		/* 回答作成モーダル */
 		document.getElementById("openAnswerModal").onclick = function() {
-		document.getElementById("answerModal").style.display = "block";
+			document.getElementById("answerModal").style.display = "block";
 		};
 		document.getElementById("closeModal").onclick = function() {
-		document.getElementById("answerModal").style.display = "none";
+			document.getElementById("answerModal").style.display = "none";
 		};
-		// 背景クリックで閉じる処理
 		window.onclick = function(event) {
-		if (event.target == document.getElementById("answerModal")) {
+			if (event.target == document.getElementById("answerModal")) {
 				document.getElementById("answerModal").style.display = "none";
-		}
+			}
 		};
+
+
+		/* 質問編集モーダル */
+		function openEditQuestionModal() {
+			const currentQuestion = document.getElementById("questionText").innerText;
+			document.getElementById("editQuestionText").value = currentQuestion;
+			document.getElementById("editQuestionModal").style.display = "block";
+		}
+
+		function closeEditQuestionModal() {
+			document.getElementById("editQuestionModal").style.display = "none";
+		}
+
+
+		/* 回答編集モーダル */
+		function openEditAnswerModal(answerText) {
+			document.getElementById("editAnswerText").value = answerText;
+			document.getElementById("editAnswerModal").style.display = "block";
+		}
+
+		function closeEditAnswerModal() {
+			document.getElementById("editAnswerModal").style.display = "none";
+		}
 	</script>
+
 	<br>
+
 	<div class="bottom_buttons">
 		<form class="form" action="" method="get">
 			<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
 		</form>
 		<form class="form" action="Q&A_3_MyTime.jsp" method="get">
-			<button class="pageButton" action="Sample_MyTime.jsp" type="submit" name="toTimetable">マイ時間割</button>
+			<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
 		</form>
 		<form class="form" action="Q&A_4_User.jsp" method="get">
-			<button class="pageButton" action="Sample_Uses.jsp" type="submit" name="toUserInformation">ユーザ画面</button>
+			<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
 		</form>
 	</div>
 

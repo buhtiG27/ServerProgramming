@@ -7,22 +7,21 @@
 <link rel="stylesheet" href="css/style_13_ViewTask.css">
 </head>
 <body>
-<%--　ロゴに置き換える --%>
+
+<%-- トップボタン --%>
 <div class="top_button_area">
 	<form action="Q&A_2_Question.jsp" method="get">
 		<button class="top_button" type="submit" name="back" value="send">TDU</button>
 	</form>
 </div>
 
-<!-- 戻るボタンとタイトル -->
 <div class="header_area">
-	<form action="Q&A_3_MyTime.jsp" method="get">
+	<form action="Q&A_21_DetailSubject.jsp" method="get">
 		<button class="back_button" type="submit" name="back" value="send">戻る</button>
 	</form>
 	<h1 class="page_title">課題詳細</h1>
 </div>
 
-<!-- フィルターボタン3つ -->
 <div class="filter_buttons">
 	<button class="button" type="submit" name="filterbyNew" value="send">課題詳細</button>
 	<button class="button" type="submit" name="filterbySameGrade" value="send">人気</button>
@@ -31,10 +30,10 @@
 
 	<br>
 	<%-- 置き換え --%>
-	<div class="view_list">
+<div class="view_list">
 	<h2 class="task_title">課題名サンプル</h2>
 	<div class="edit">
-		<form action="" method="get">
+		<form action="Q&A_26_EditTask.jsp" method="get">
 			<button class="edit_button" type="submit" name="edit" value="send">編集</button>
 		</form>
 	</div>

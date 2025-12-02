@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>時間割一覧画面</title>
-<link rel="stylesheet" href="css/style_3_MyTime.css">
+<link rel="stylesheet" href="css/style_19_AllMyTime.css">
 </head>
 <body>
 	<div class="top_button_area">
@@ -14,10 +14,11 @@
 	</div>
 	<div class="header_area">
 		<form action="Q&A_3_MyTime.jsp" method="get">
-			<button class="button" type="submit" name="filterbyNew" value="send">キャンセル</button>
+			<button class="cancel_button" type="submit" name="filterbyNew" value="send">キャンセル</button>
 		</form>
-		<form action="Q&A_20_CreateQuestion">
-			<button class="button" type="submit" name="filterbySameGrade" value="send">新規作成</button>
+		<h2>時間割一覧</h2>
+		<form action="Q&A_20_CreateSubject.jsp">
+			<button class="new_button" type="submit" name="filterbySameGrade" value="send">新規作成</button>
 		</form>
 	</div>
 	<br>
@@ -27,23 +28,28 @@
 			<input class="txt" type="text" size="20" value="" name="searchbyKeyword" />		
 		</form>
 		<div class="subject_area">
-			<h3>科目1</h3>
+			<form action="Q&A_21_DetailSubject.jsp" method="get">
+				<button class="show_button" type="submit" name="filterbyNew" value="send">科目1</button>
+			</form>
 			<p>サンプル表示</p>
-				<form action="">		
+				<form action="Q&A_3_MyTime.jsp" method="post">
+				<input type="hidden" name="message" value="登録が完了しました。">
 					<button class="register_button" type="submit" name="LikeButton" value="send">登録</button>
 				</form>	
 		</div>	
 		<div class="subject_area">
 			<h3>科目1</h3>
 			<p>サンプル表示</p>
-				<form action="">		
+				<form action="Q&A_3_MyTime.jsp" method="post">
+				<input type="hidden" name="message" value="登録が完了しました。">
 					<button class="register_button" type="submit" name="LikeButton" value="send">登録</button>
 				</form>	
 		</div>	
 		<div class="subject_area">
 			<h3>科目1</h3>
 			<p>サンプル表示</p>
-				<form action="">		
+				<form action="Q&A_3_MyTime.jsp" method="post">
+				<input type="hidden" name="message" value="登録が完了しました。">	
 					<button class="register_button" type="submit" name="LikeButton" value="send">登録</button>
 				</form>	
 		</div>	
