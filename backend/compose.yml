@@ -1,0 +1,18 @@
+services:
+    pgsql_db:
+        image: postgres:${POSTGRES_VERSION}
+        container_name: ${CONTAINER_NAME}
+        command: -c 'config_file=/etc/postgresql/postgresql.conf'
+        hostname: ${HOSTNAME}
+        ports:
+            - "${DB_PORT}:5432"
+        restart: always
+        environment:
+            - POSTGRES_USER=${USER_NAME}
+            - POSTGRES_PASSWORD=${USER_PASS}
+        volumes:
+            - db_vol:/var/lib/postgresql/data
+            - ./postgres_db/postgresql.conf:/etc/postgresql/postgresql.conf
+
+volumes:
+    db_vol:
