@@ -8,8 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// TODO:他のユーザ登録情報をどうするか検討して，変更する
 type RegisterInput struct {
-	Username string `json:"username" binding:"required"`
+	UserID   string `json:"user_id" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -23,7 +24,7 @@ func Register(c *gin.Context) {
 	}
 
 	// ユーザオブジェクトを作成し，データベースに保存する
-	user := &models.User{Username: input.Username, Password: input.Password}
+	user := &models.User{UserID: input.UserID, Password: input.Password}
 	user, err := user.Save()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -37,7 +38,7 @@ func Register(c *gin.Context) {
 }
 
 type LoginInput struct {
-	Username string `json:"username" binding:"required"`
+	UserID   string `json:"user_id" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -52,15 +53,22 @@ func Login(c *gin.Context) {
 	}
 
 	// ユーザオブジェクトからトークンを生成する
-	token, err := models.GenerateToken(input.Username, input.Password)
+	user, err := models.Authenticate(input.UserID, input.Password)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+
+	jwt, err := models.GenerateTokenFromUser(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	// 成功した場合，トークンをレスポンスとして返す
 	c.JSON(http.StatusOK, gin.H{
-		"token": token,
+		"token": jwt,
+		"user":  user.PrepareOutput(),
 	})
 }
 
