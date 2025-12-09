@@ -9,7 +9,7 @@
 <body>
 
 	<div class="top_button">
-		<h1>TDU</h1>
+		<img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu" width="125" height="47"><!-- 1006:375 -->
 		<div class="button">
 			<form action="QA_02_Questions.jsp" method="get">
 				<button class="back_button" type="submit" name="back" value="send">戻る</button>

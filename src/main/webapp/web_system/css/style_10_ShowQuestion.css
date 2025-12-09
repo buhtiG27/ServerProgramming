@@ -20,7 +20,7 @@ h1{
 /*上部のForm・button*/
 .top_button{
 	position: fixed;
-	top: 0;
+	top: 100px;
 	width: 100%; 
 	background: white;
     text-align: center;
