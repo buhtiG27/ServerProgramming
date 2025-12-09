@@ -1,5 +1,5 @@
 body{
-	background-color:while;
+	background-color:#F5F6F7;
 }
 
 .top_button{
@@ -13,16 +13,25 @@ h1{
 	color:rgb(0, 128, 255);
 }
 label{
+	position:absolute;
+	right:71.25%;
+	transform:translateY(25%);
+	text-align:right;
 	width: 60%;
 }
 .login_list{
-	width: 100%;
+	position:absolute;
+	left:-0.25%;
+	width: 100.5%;
 	margin: 5px;
 	margin-top: 160px;
 	padding-bottom: 35px;
+	background-color:white;
 	text-align: center;	
 }
 .txt{
+	position:absolute;
+	right:20%;
 	display: inline-block;
     width: 50%;
     border: 1px solid #999;
@@ -32,8 +41,8 @@ label{
     padding: 5px;
 }
 
-.button1{
-	background-color:blue;
+.login_button{
+	background-color:#004ea2;
 	color:white;
 	width: 150px; 
 	height: 50px; 
@@ -41,7 +50,7 @@ label{
 	
 }
 
-.button2{
+.create_new_account_button{
 	background-color:white;
 	color:black;
 	width: 120px; 

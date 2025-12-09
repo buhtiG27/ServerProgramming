@@ -2,26 +2,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<title>質問画面</title>
-<link rel="stylesheet" href="css/style_10_ShowQuestion.css">
+	<meta charset="utf-8">
+	<title>質問画面</title>
+	<link rel="stylesheet" href="css/style_10_ShowQuestion.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 </head>
 <body>
-
-	<div class="top_button">
-		<img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu" width="125" height="47"><!-- 1006:375 -->
-		<div class="button">
-			<form action="QA_02_Questions.jsp" method="get">
-				<button class="back_button" type="submit" name="back" value="send">戻る</button>
-			</form>
-		</div>
-
-		<br>
-		<a>質問</a>
-		<br>
-	</div>
-
-	<br>
+	<header>
+		<jsp:include page="header.jsp" /><!-- ヘッダ部分を1つの.jspにまとめた→こう書くだけで使いまわせる -->
+	</header>
 
 	<!-- 質問表示部 -->
 	<div class="post-list">
