@@ -2,15 +2,26 @@ package controllers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/buhtiG27/ServerProgramming/backend/models"
 	"github.com/buhtiG27/ServerProgramming/backend/utils/token"
 	"github.com/gin-gonic/gin"
 )
 
+// TODO:他のユーザ登録情報をどうするか検討して，変更する
 type RegisterInput struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	UserID           string `json:"user_id" binding:"required"`
+	Password         string `json:"password" binding:"required,min=8"`
+	Email            string `json:"email" binding:"required,email"`
+	DisplayName      string `json:"display_name" binding:"required"`
+	Description      string `json:"description"`
+	YearOfEnrollment int    `json:"year_of_enrollment" binding:"required"`
+	Grade            int    `json:"grade" binding:"required"`
+	DepartmentCode   string `json:"department_code" binding:"required"`
+	Classification   uint   `json:"classification" binding:"required"`
+	IconPath         string `json:"icon_path"`
+	HeaderPath       string `json:"header_path"`
 }
 
 func Register(c *gin.Context) {
@@ -22,9 +33,50 @@ func Register(c *gin.Context) {
 		return
 	}
 
+	// 許可するドメイン
+	allowed := []string{"@ms.dendai.ac.jp"}
+
+	ok := false
+	for _, d := range allowed {
+		if strings.HasSuffix(input.Email, d) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "email domain is not allowed",
+		})
+		return
+	}
+
+	// 所属オブジェクトを作成し，データベースに保存する
+	belonging := &models.Belonging{
+		DepartmentCode: input.DepartmentCode,
+		Classification: input.Classification,
+	}
+	belonging, err := belonging.Save()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+	belongingID := belonging.ID
+
 	// ユーザオブジェクトを作成し，データベースに保存する
-	user := &models.User{Username: input.Username, Password: input.Password}
-	user, err := user.Save()
+	user := &models.User{
+		UserID:           input.UserID,
+		Password:         input.Password,
+		Email:            input.Email,
+		DisplayName:      input.DisplayName,
+		Description:      input.Description,
+		YearOfEnrollment: input.YearOfEnrollment,
+		Grade:            input.Grade,
+		BelongingID:      belongingID,
+		IconPath:         input.IconPath,
+		HeaderPath:       input.HeaderPath,
+	}
+	user, err = user.Save()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -37,7 +89,7 @@ func Register(c *gin.Context) {
 }
 
 type LoginInput struct {
-	Username string `json:"username" binding:"required"`
+	UserID   string `json:"user_id" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -52,15 +104,22 @@ func Login(c *gin.Context) {
 	}
 
 	// ユーザオブジェクトからトークンを生成する
-	token, err := models.GenerateToken(input.Username, input.Password)
+	user, err := models.Authenticate(input.UserID, input.Password)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+
+	jwt, err := models.GenerateTokenFromUser(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	// 成功した場合，トークンをレスポンスとして返す
 	c.JSON(http.StatusOK, gin.H{
-		"token": token,
+		"token": jwt,
+		"user":  user.PrepareOutput(),
 	})
 }
 
