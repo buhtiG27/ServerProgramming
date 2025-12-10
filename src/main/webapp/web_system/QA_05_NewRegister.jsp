@@ -58,59 +58,59 @@
 %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>新規ログイン</title>
-<link rel="stylesheet" href="css/style_5_New.css">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>新規ログイン</title>
+		<link rel="stylesheet" href="css/style_5_New.css">
+	</head>
+	<body>
 
-    <div class="top_button">
-        <h1>TDU</h1>
-        <form action="QA_01_Login.jsp" method="get">
-            <button class="button" type="submit" name="back" value="send">戻る</button>
-        </form>
-        <br>
-        <a>新規ログイン</a>
-        <br>
-    </div>
+    	<div class="top_button">
+        	<h1>TDU</h1>
+        	<form action="QA_01_Login.jsp" method="get">
+            	<button class="button" type="submit" name="back" value="send">戻る</button>
+        	</form>
+        	<br>
+       　	<a>新規ログイン</a>
+        	<br>
+    	</div>
 
-    <div class="request_list">
+    	<div class="request_list">
 
-        <% if (!errorMessage.isEmpty()) { %>
-            <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
-        <% } %>
+        	<% if (!errorMessage.isEmpty()) { %>
+            	<p style="color:red; font-weight:bold;"><%= errorMessage %></p>
+        	<% } %>
 
-        <form action="QA_05_NewRegister.jsp" method="post">
+        	<form action="QA_05_NewRegister.jsp" method="post">
 
-            <label for="email">メールアドレス：</label><br>
-            <input class="txt" type="text" size="20" name="EmailAddress"
-                       value="<%= (email != null ? email : "") %>"/>
-            <br><br>
+            	<label for="email">メールアドレス：</label><br>
+            	<input class="txt" type="text" size="20" name="EmailAddress"
+                       	value="<%= (email != null ? email : "") %>"/>
+            	<br><br>
 
-            <label for="pw">パスワード：</label><br>
-            <input class="txt" type="password" size="32" name="Password"
+            	<label for="pw">パスワード：</label><br>
+            	<input class="txt" type="password" size="32" name="Password"
                        value="<%= (pw != null ? pw : "") %>"/>
-            <br><br>
+            	<br><br>
 
-            <label for="name">ユーザ名：</label><br>
-            <input class="txt" type="text" size="20" name="Username"
+            	<label for="name">ユーザ名：</label><br>
+            	<input class="txt" type="text" size="20" name="Username"
                        value="<%= (uname != null ? uname : "") %>"/>
-            <br><br>
+            	<br><br>
 
-            <label for="grade">学年・学科：</label><br>
-            <input class="txt" type="text" size="20" name="GradeAndDepartment"
+            	<label for="grade">学年・学科：</label><br>
+            	<input class="txt" type="text" size="20" name="GradeAndDepartment"
                        value="<%= (grade != null ? grade : "") %>"/>
-            <br><br>
-
-            <label for="class">区分：</label><br>
-            <input class="txt" type="text" size="20" name="Classification"
+            	<br><br>
+			
+            	<label for="class">区分：</label><br>
+            	<input class="txt" type="text" size="20" name="Classification"
                        value="<%= (cls != null ? cls : "") %>"/>
-            <br><br>
-
-            <button class="button1" type="submit" name="Login" value="send">確認</button>
-        </form>
-    </div>
-
-</body>
+            	<br><br>
+			
+            	<button class="button1" type="submit" name="Login" value="send">確認</button>
+        	</form>
+    	</div>
+		
+	</body>
 </html>
