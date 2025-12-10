@@ -15,11 +15,13 @@ type User struct {
 	Password         string `gorm:"not null;" json:"password"`
 	Email            string `gorm:"not null;" json:"email"`
 	DisplayName      string `gorm:"not null;" json:"display_name"`
-	Description      string `gorm:"not null;" json:"description"`
+	Description      string `json:"description"`
 	YearOfEnrollment int    `json:"year_of_enrollment"`
 	Grade            int    `json:"grade"`
-	IconPath         string `json:"icon_path"`
-	HeaderPath       string `json:"header_path"`
+	BelongingID      uint
+	Belonging        Belonging `gorm:"not null;" json:"belonging"`
+	IconPath         string    `json:"icon_path"`
+	HeaderPath       string    `json:"header_path"`
 	Restriction      bool
 }
 

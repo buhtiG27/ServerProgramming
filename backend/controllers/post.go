@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type PostInput struct {
+type CreatePostInput struct {
 	IsQuestion   bool   `gorm:"not null;" json:"is_question" binding:"required"`
 	ParentID     uint   `json:"parent_id"`
 	ContentsText string `gorm:"not null;" json:"contents_text" binding:"required"`
@@ -16,7 +16,7 @@ type PostInput struct {
 }
 
 func Post(c *gin.Context) {
-	var input PostInput
+	var input CreatePostInput
 
 	// リクエストのJSONデータをPostInput構造体にバインドする
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -65,7 +65,7 @@ func Post(c *gin.Context) {
 
 func GetPosts(c *gin.Context) {
 	var posts []models.Post
-	if err := models.DB.Order("created_at desc").Find(&posts).Error; err != nil {
+	if err := models.DB.Where("parent_id IS NULL").Order("created_at desc").Preload("Creator").Find(&posts).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
