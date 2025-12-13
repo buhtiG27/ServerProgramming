@@ -32,10 +32,14 @@ func ConnectDataBase() {
 		log.Fatal("Could not connect to the database", err)
 	}
 
-	if err := DB.AutoMigrate(&User{}); err != nil {
-		log.Fatalf("failed to migrate: %v", err)
-	}
-	if err := DB.AutoMigrate(&Post{}); err != nil {
+	if err := DB.AutoMigrate(
+		&Belonging{},
+		&Subject{},
+		&User{},
+		&Post{},
+		&Practice{},
+		&Timetable{},
+	); err != nil {
 		log.Fatalf("failed to migrate: %v", err)
 	}
 	fmt.Println("migrated")

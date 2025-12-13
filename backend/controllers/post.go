@@ -9,9 +9,9 @@ import (
 )
 
 type CreatePostInput struct {
-	IsQuestion   bool   `gorm:"not null;" json:"is_question" binding:"required"`
+	IsQuestion   bool   `json:"is_question" binding:"required"`
 	ParentID     uint   `json:"parent_id"`
-	ContentsText string `gorm:"not null;" json:"contents_text" binding:"required"`
+	ContentsText string `json:"contents_text" binding:"required"`
 	Image_path   string
 }
 
