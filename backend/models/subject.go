@@ -11,7 +11,7 @@ type Subject struct {
 	Koma        int    `gorm:"not null;" json:"koma"`
 	Units       int    `json:"units"`
 	Period      string `json:"period"`
-	Day         string `gorm:"not null;" json:"day"`
+	Weekday     string `gorm:"not null;" json:"weekday"`
 	Time        string `gorm:"not null;" json:"time"`
 }
 

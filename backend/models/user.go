@@ -81,3 +81,23 @@ func GenerateTokenFromUser(user *User) (string, error) {
 
 	return token, nil
 }
+
+type PublicUser struct {
+	ID          uint   `json:"id"`
+	UserID      string `json:"user_id"`
+	DisplayName string `json:"display_name"`
+	Description string `json:"description"`
+	IconPath    string `json:"icon_path"`
+	HeaderPath  string `json:"header_path"`
+}
+
+func (u *User) ToPublic() *PublicUser {
+	return &PublicUser{
+		ID:          u.ID,
+		UserID:      u.UserID,
+		DisplayName: u.DisplayName,
+		Description: u.Description,
+		IconPath:    u.IconPath,
+		HeaderPath:  u.HeaderPath,
+	}
+}
