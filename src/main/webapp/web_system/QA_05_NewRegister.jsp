@@ -1,16 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.net.URLEncoder" %> 
 <%
-    request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 
-    // --- エラーメッセージ ---
-    String errorMessage = (String) request.getAttribute("error");
+String errorMessage = (String) request.getAttribute("error");
 
-    String email = (String) request.getAttribute("Address");
-    String pw = (String) request.getAttribute("Password");
-    String uname = (String) request.getAttribute("Username");
-    String grade = (String) request.getAttribute("Grade");
-    String cls = (String) request.getAttribute("Classification");
+String email = (String) request.getAttribute("Address");
+String pw = (String) request.getAttribute("Password");
+String uname = (String) request.getAttribute("Username");
+String grade = (String) request.getAttribute("Grade");
+String cls = (String) request.getAttribute("Classification");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -54,7 +53,7 @@
                        value="<%= (uname != null ? uname : "") %>"/>
             <br><br>
 
-            <label for="grade">学年・学科：</label><br>
+            <label for="grade">学年：</label><br>
             <input class="txt" type="text" size="10" name="Grade"
                        value="<%= (grade != null ? grade : "") %>"/>
             <br><br>
@@ -69,7 +68,7 @@
             </select>
             <br><br>
 
-            <button class="button1" type="submit" name="NewCheck" value="send">確認</button>
+            <button class="button1" type="submit">確認</button>
         </form>
     </div>
 

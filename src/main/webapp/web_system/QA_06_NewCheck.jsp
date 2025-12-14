@@ -12,10 +12,10 @@
 
     // リクエスト・パラメータ取得 
 	String email = (String) request.getAttribute("Address");
-    String pw = (String) request.getAttribute("Password");
-    String user = (String) request.getAttribute("Username");
-    String grade = (String) request.getAttribute("Grade");
-    String classification = (String) request.getAttribute("Classification");
+	String pw = (String) request.getAttribute("Password");
+	String user = (String) request.getAttribute("Username");
+	String grade = (String) request.getAttribute("Grade");
+	String classification = (String) request.getAttribute("Classification");
 %>
 
 <div class="top_button">
@@ -26,33 +26,31 @@
     <br>
     <a>登録内容確認</a>
 </div>
-
+<%
+    // エラーメッセージの取得と表示を追加
+    String errorMessage = (String) request.getAttribute("error");
+    if (errorMessage != null) {
+%>
+        <p style="color: red; font-weight: bold;">【エラー】<%= errorMessage %></p>
+<%
+    }
+%>
 <div class="request_list">
 
     <br>
     メールアドレス：<%= email %><br><br>
     パスワード：<%= pw %><br><br>
     ユーザ名：<%= user %><br><br>
-    学年・学科：<%= grade %><br><br>
+    学年：<%= grade %><br><br>
     区分：<%= classification %><br><br>
 
     <div class="bottom_buttons">
         <form class="form" action="<%= request.getContextPath() %>/RegisterCheck" method="post">
             <input type="hidden" name="actionType" value="correction"> 
-            <input type="hidden" name="Address" value="<%= email %>">
-            <input type="hidden" name="Password" value="<%= pw %>">
-            <input type="hidden" name="Username" value="<%= user %>">
-            <input type="hidden" name="Grade" value="<%= grade %>">
-            <input type="hidden" name="Classification" value="<%= classification %>">
             <button class="correctButton" type="submit">訂正</button>
         </form>
 
         <form class="form" action="<%= request.getContextPath() %>/Register" method="post">
-    		<input type="hidden" name="Address" value="<%= email %>">
-    		<input type="hidden" name="Password" value="<%= pw %>">
-    		<input type="hidden" name="Username" value="<%= user %>">
-    		<input type="hidden" name="Grade" value="<%= grade %>">
-    		<input type="hidden" name="Classification" value="<%= classification %>">
     		<button class="registerButton" type="submit">登録</button>
 		</form>
     </div>

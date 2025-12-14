@@ -21,17 +21,21 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        
+        String user = (String) request.getAttribute("Username");
+        String pw = (String) request.getAttribute("Password");
+        String email = (String) request.getAttribute("Address");
+        String grade = (String) request.getAttribute("Grade");
+        String cls = (String) request.getAttribute("Classification");
 
         // 確認画面からの値取得
         JSONObject json = new JSONObject();
-        json.put("user_id", request.getParameter("Username"));
-        json.put("password", request.getParameter("Password"));
-        json.put("email", request.getParameter("Address"));
-        json.put("display_name", request.getParameter("Username"));
-        json.put("grade",
-                 Integer.parseInt(request.getParameter("Grade")));
-        json.put("classification",
-                 Integer.parseInt(request.getParameter("Classification")));
+        json.put("user_id", user);
+        json.put("password", pw);
+        json.put("email", email);
+        json.put("display_name", user);
+        json.put("grade", Integer.parseInt(grade));
+        json.put("classification", Integer.parseInt(cls));
 
         @SuppressWarnings("deprecation")
 		URL url = new URL("http://localhost:8080/api/register");
