@@ -63,28 +63,24 @@ String loggedInUsername =
 		<h2>回答</h2>
 
 		<%
-		    if (answers != null) {
-		        for (Answer answer : answers) {
-		            String answerPosterUsername = answer.getUsername(); // Answerモデルクラスに getUsername() があると仮定
-		%>
+		if (answers != null) {
+			for (Map<String, Object> answer : answers) {
+				String answerUser = (String) answer.get("username");
+				%>
 		<div class="post">
-			<h3>回答</h3>
+    		<p class="answerText"><%= answer.get("content") %></p>
 
-			<p class="answerText"><%= answer.getContent() %></p> <%-- 回答内容をモデルから取得 --%>
-
-			<div class="button-post">
-				<button class="like_button" type="button">いいね</button>
-				<button class="like_button" type="button">フラグ</button>
-
-				<%-- ★ 回答編集ボタンの表示制御 --%>
-				<% if (loggedInUsername != null && loggedInUsername.equals(answerPosterUsername)) { %>
-				<button class="edit_button" type="button" onclick="openEditAnswerModal('<%= answer.getContent() %>')">編集</button>
-				<% } %>
-			</div>
+    		<div class="button-post">
+        		<% 
+        		if (loggedInUsername != null &&loggedInUsername.equals(answerUser)) { 
+        		%>
+            		<button class="edit_button" onclick="openEditAnswerModal('<%= answer.get("content") %>')">編集</button>
+        		<% } %>
+    		</div>
 		</div>
 		<%
-		        }
 		    }
+		}
 		%>
         
         </div>
