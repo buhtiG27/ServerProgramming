@@ -62,10 +62,10 @@
             <label for="class">区分：</label><br>
             <select class="txt" name="Classification">
                 <option value="0" <%= ("0".equals(cls) || cls == null || cls.isEmpty()) ? "selected" : "" %>>選択してください</option>
-                <option value="学生" <%= "学生".equals(cls) ? "selected" : "" %>>学生</option>
-                <option value="教員" <%= "副手".equals(cls) ? "selected" : "" %>>副手</option>
-                <option value="副手" <%= "教員".equals(cls) ? "selected" : "" %>>教員</option>
-                <option value="管理者" <%= "管理者".equals(cls) ? "selected" : "" %>>管理者</option>
+                <option value="1" <%= "1".equals(cls) ? "selected" : "" %>>学生</option>
+                <option value="2" <%= "2".equals(cls) ? "selected" : "" %>>副手</option>
+                <option value="3" <%= "3".equals(cls) ? "selected" : "" %>>教員</option>
+                <option value="4" <%= "4".equals(cls) ? "selected" : "" %>>管理者</option>
             </select>
             <br><br>
 
