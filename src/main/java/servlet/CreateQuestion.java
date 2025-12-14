@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/CreateQuestion")
 public class CreateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -62,11 +61,10 @@ public class CreateQuestion extends HttpServlet {
         } else {
             // エラー
             BufferedReader br = new BufferedReader(
-                new InputStreamReader(conn.getErrorStream(), "UTF-8")
-            );
+                    new InputStreamReader(conn.getErrorStream(), "UTF-8"));
             request.setAttribute("error", br.readLine());
             request.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 

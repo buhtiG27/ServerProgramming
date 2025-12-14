@@ -18,10 +18,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/AllQuestions")
 public class AllQuestions extends HttpServlet {
-	
-	public AllQuestions() {
+
+    public AllQuestions() {
         super();
     }
 
@@ -44,12 +43,12 @@ public class AllQuestions extends HttpServlet {
             conn.setRequestMethod("GET");
 
             BufferedReader br = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), "UTF-8")
-            );
+                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
             StringBuilder sb = new StringBuilder();
             String line;
-            while ((line = br.readLine()) != null) sb.append(line);
+            while ((line = br.readLine()) != null)
+                sb.append(line);
 
             JSONObject json = new JSONObject(sb.toString());
             JSONArray posts = json.getJSONArray("posts");
@@ -61,13 +60,13 @@ public class AllQuestions extends HttpServlet {
 
             request.setAttribute("questions", questions);
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "質問一覧の取得に失敗しました");
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 }

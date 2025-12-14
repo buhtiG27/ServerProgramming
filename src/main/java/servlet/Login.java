@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/Login")
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -29,11 +28,11 @@ public class Login extends HttpServlet {
         String password = request.getParameter("Password");
 
         if (userId == null || userId.isEmpty() ||
-            password == null || password.isEmpty()) {
+                password == null || password.isEmpty()) {
 
             request.setAttribute("error", "ユーザ名とパスワードを入力してください");
             request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
             return;
         }
 
@@ -43,7 +42,7 @@ public class Login extends HttpServlet {
         json.put("password", password);
 
         @SuppressWarnings("deprecation")
-		URL url = new URL("http://localhost:8080/api/login");
+        URL url = new URL("http://localhost:8080/api/login");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("POST");
@@ -78,12 +77,12 @@ public class Login extends HttpServlet {
             session.setAttribute("login", true);
 
             request.getRequestDispatcher("/AllQuestions")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } else {
             request.setAttribute("error", "ユーザ名またはパスワードが違います");
             request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 

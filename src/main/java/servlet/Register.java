@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/Register")
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -29,12 +28,12 @@ public class Register extends HttpServlet {
         json.put("email", request.getParameter("Address"));
         json.put("display_name", request.getParameter("Username"));
         json.put("grade",
-                 Integer.parseInt(request.getParameter("Grade")));
+                Integer.parseInt(request.getParameter("Grade")));
         json.put("classification",
-                 Integer.parseInt(request.getParameter("Classification")));
+                Integer.parseInt(request.getParameter("Classification")));
 
         @SuppressWarnings("deprecation")
-		URL url = new URL("http://localhost:8080/api/register");
+        URL url = new URL("http://localhost:8080/api/register");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("POST");
@@ -49,11 +48,11 @@ public class Register extends HttpServlet {
 
         if (status == 201 || status == 200) {
             request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         } else {
             request.setAttribute("error", "登録に失敗しました");
             request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 }

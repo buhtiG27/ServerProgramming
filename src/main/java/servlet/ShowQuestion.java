@@ -18,10 +18,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/ShowQuestion")
 public class ShowQuestion extends HttpServlet {
-	
-	public ShowQuestion() {
+
+    public ShowQuestion() {
         super();
     }
 
@@ -45,17 +44,16 @@ public class ShowQuestion extends HttpServlet {
             conn.setRequestMethod("GET");
 
             BufferedReader br = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), "UTF-8")
-            );
+                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
             StringBuilder sb = new StringBuilder();
             String line;
-            while ((line = br.readLine()) != null) sb.append(line);
+            while ((line = br.readLine()) != null)
+                sb.append(line);
 
             JSONObject json = new JSONObject(sb.toString());
 
-            Map<String, Object> question =
-                json.getJSONObject("question").toMap();
+            Map<String, Object> question = json.getJSONObject("question").toMap();
 
             List<Map<String, Object>> answers = new ArrayList<>();
             JSONArray ans = json.getJSONArray("answers");
@@ -67,13 +65,13 @@ public class ShowQuestion extends HttpServlet {
             request.setAttribute("answers", answers);
 
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "質問の取得に失敗しました");
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 }

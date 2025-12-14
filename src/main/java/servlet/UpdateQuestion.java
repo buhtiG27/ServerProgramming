@@ -15,14 +15,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/UpdateQuestion")
 public class UpdateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     public UpdateQuestion() {
         super();
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,13 +50,11 @@ public class UpdateQuestion extends HttpServlet {
 
         if (status == HttpURLConnection.HTTP_OK) {
             response.sendRedirect(
-                request.getContextPath() + "/ShowQuestion?questionId=" + questionId
-            );
+                    request.getContextPath() + "/ShowQuestion?questionId=" + questionId);
         } else {
             request.setAttribute("error", "更新に失敗しました");
             request.getRequestDispatcher(
-                "/web_system/QA_10_ShowQuestion.jsp?questionId=" + questionId
-            ).forward(request, response);
+                    "/web_system/QA_10_ShowQuestion.jsp?questionId=" + questionId).forward(request, response);
         }
     }
 
