@@ -56,17 +56,16 @@ func SetSubject(c *gin.Context) {
 	})
 }
 
-type GetSubjectsInput struct {
-	Weekday string `json:"weekday" binding:"required"`
-	Time    string `json:"time" binding:"required"`
+type SubjectsQuery struct {
+	Weekday string `form:"weekday" binding:"required"`
+	Time    string `form:"time" binding:"required"`
 }
 
 func GetSubjects(c *gin.Context) {
-	var input GetSubjectsInput
-	var subjects []models.Subject
+	var q SubjectsQuery
 
 	// インプットのJSONをバインド
-	if err := c.ShouldBindJSON(&input); err != nil {
+	if err := c.ShouldBindQuery(&q); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
@@ -74,7 +73,8 @@ func GetSubjects(c *gin.Context) {
 	}
 
 	// データベースから科目一覧を取得
-	if err := models.DB.Where("weekday = ?", input.Weekday).Where("time = ?", input.Time).Find(&subjects).Error; err != nil {
+	var subjects []models.Subject
+	if err := models.DB.Where("weekday = ?", q.Weekday).Where("time = ?", q.Time).Find(&subjects).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})

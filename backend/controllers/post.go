@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/buhtiG27/ServerProgramming/backend/models"
@@ -86,7 +87,7 @@ func GetPostsTemplate(posts []models.Post) []PostResponse {
 	resp := make([]PostResponse, 0, len(posts))
 	for _, p := range posts {
 		var creator *models.PublicUser
-		if p.CreatorID != 0 {
+		if p.Creator.ID != 0 {
 			creator = p.Creator.ToPublic()
 		}
 
@@ -105,9 +106,22 @@ func GetPostsTemplate(posts []models.Post) []PostResponse {
 	return resp
 }
 
+type GetPostsQuery struct {
+	Limit  int `form:"limit" binding:"required"`
+	Offset int `form:"offset" binding:"required"`
+}
+
 func GetPosts(c *gin.Context) {
+	var q GetPostsQuery
+	if err := c.ShouldBindQuery(&q); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
 	var posts []models.Post
-	if err := models.DB.Where("parent_id IS NULL").Order("created_at desc").Preload("Creator").Find(&posts).Error; err != nil {
+	if err := models.DB.Where("parent_id IS NULL").Order("created_at desc").Limit(q.Limit).Offset(q.Offset).Preload("Creator").Find(&posts).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
@@ -119,25 +133,28 @@ func GetPosts(c *gin.Context) {
 	})
 }
 
-type GetReplyInput struct {
-	ParentID uint `json:"parent_id" binding:"required"`
-}
-
-// TODO:ParentIDをパスパラメータかクエリパラメータで受け取るようにしたい
+// ParentIDをパスパラメータで受け取る
+// /posts/:id/replies
 func GetReply(c *gin.Context) {
-	var input GetReplyInput
-
-	// インプットのJSONをバインド
-	if err := c.ShouldBindJSON(&input); err != nil {
+	var q GetPostsQuery
+	if err := c.ShouldBindQuery(&q); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
 
+	parentID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "ParentID is invalid",
+		})
+		return
+	}
+
 	// データベースから返信を検索
 	var replies []models.Post
-	if err := models.DB.Where(&models.Post{ParentID: &input.ParentID}).Preload("Creator").Find(&replies).Error; err != nil {
+	if err := models.DB.Where("parent_id = ?", parentID).Limit(q.Limit).Offset(q.Offset).Preload("Creator").Find(&replies).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})

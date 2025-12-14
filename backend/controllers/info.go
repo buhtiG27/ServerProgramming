@@ -54,7 +54,7 @@ func GetTimetable(c *gin.Context) {
 	userID := c.GetUint("userID")
 
 	// データベースからそのユーザの時間割を全て取得する
-	if err := models.DB.Where(&models.Timetable{UserID: userID}).Preload("Subject").Preload("User").Find(&timetables).Error; err != nil {
+	if err := models.DB.Where(&models.Timetable{UserID: userID}).Select("subject_id").Preload("Subject").Find(&timetables).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
