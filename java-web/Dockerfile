@@ -11,21 +11,17 @@ RUN mkdir -p /work/classes
 
 # javac compile
 # Tomcatに含まれる servlet-api を使う + WEB-INF/lib の jar を classpath に追加
-# RUN javac -encoding UTF-8 \
-#     -cp "/usr/local/tomcat/lib/*:/work/webapp/WEB-INF/lib/*" \
-#     -d /work/classes \
-#     $(find /work/src -name "*.java")
-
-RUN set -eux; \
-    echo "== JAVA =="; java -version; \
-    echo "== files =="; find /work/src -name "*.java" | wc -l; \
-    echo "== compile =="; \
-    javac -Xlint:all -encoding UTF-8 \
+RUN javac -encoding UTF-8 \
     -cp "/usr/local/tomcat/lib/*:/work/webapp/WEB-INF/lib/*" \
     -d /work/classes \
-    $(find /work/src -name "*.java") 2>&1 | tee /work/javac.log; \
-    echo "== done =="
-
+    $(find /work/src -name "*.java")
+# RUN set -eux; \
+#     javac -Xlint:all -encoding UTF-8 \
+#     -cp "/usr/local/tomcat/lib/*:/work/webapp/WEB-INF/lib/*" \
+#     -d /work/classes \
+#     $(find /work/src -name "*.java") \
+#     2>&1 | tee /work/javac.log; \
+#     true
 
 # --- runtime stage: Tomcat serving JSP + compiled classes ---
 FROM public.ecr.aws/docker/library/tomcat:10.1-jdk21-temurin
