@@ -4,23 +4,23 @@
 <head>
 <meta charset="utf-8">
 <title>登録内容確認</title>
-<link rel="stylesheet" href="css/style_6_NewCheck.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_6_NewCheck.css">
 </head>
 <body>
 <%
     request.setCharacterEncoding("UTF-8");
 
     // リクエスト・パラメータ取得 
-String email = request.getParameter("EmailAddress");
-String pw = request.getParameter("Password");
-String user = request.getParameter("Username");
-String grade = request.getParameter("GradeAndDepartment");
-String classification = request.getParameter("Classification");
+	String email = (String) request.getAttribute("Address");
+    String pw = (String) request.getAttribute("Password");
+    String user = (String) request.getAttribute("Username");
+    String grade = (String) request.getAttribute("Grade");
+    String classification = (String) request.getAttribute("Classification");
 %>
 
 <div class="top_button">
     <h1>TDU</h1>
-    <form action="QA_01_Login.jsp" method="get">
+    <form action="<%= request.getContextPath() %>/web_system/QA_01_Login.jsp" method="get">
         <button class="button" type="submit">戻る</button>
     </form>
     <br>
@@ -37,22 +37,21 @@ String classification = request.getParameter("Classification");
     区分：<%= classification %><br><br>
 
     <div class="bottom_buttons">
-		<%-- <%= request.getContextPath() %>/web_system/ --%>
-        <form class="form" action="QA_05_NewRegister.jsp" method="post">
+        <form class="form" action="<%= request.getContextPath() %>/RegisterCheck" method="post">
             <input type="hidden" name="actionType" value="correction"> 
-            <input type="hidden" name="EmailAddress" value="<%= email %>">
+            <input type="hidden" name="Address" value="<%= email %>">
             <input type="hidden" name="Password" value="<%= pw %>">
             <input type="hidden" name="Username" value="<%= user %>">
-            <input type="hidden" name="GradeAndDepartment" value="<%= grade %>">
+            <input type="hidden" name="Grade" value="<%= grade %>">
             <input type="hidden" name="Classification" value="<%= classification %>">
             <button class="correctButton" type="submit">訂正</button>
         </form>
-		<%-- <%= request.getContextPath() %>/register --%>
-        <form class="form" action="QA_01_Login.jsp" method="post">
-    		<input type="hidden" name="EmailAddress" value="<%= email %>">
+
+        <form class="form" action="<%= request.getContextPath() %>/Register" method="post">
+    		<input type="hidden" name="Address" value="<%= email %>">
     		<input type="hidden" name="Password" value="<%= pw %>">
     		<input type="hidden" name="Username" value="<%= user %>">
-    		<input type="hidden" name="GradeAndDepartment" value="<%= grade %>">
+    		<input type="hidden" name="Grade" value="<%= grade %>">
     		<input type="hidden" name="Classification" value="<%= classification %>">
     		<button class="registerButton" type="submit">登録</button>
 		</form>

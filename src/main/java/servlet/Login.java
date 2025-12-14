@@ -1,60 +1,93 @@
 package servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import model.Member;
-import model.MemberDAO;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/WSP/Login") 
+import org.json.JSONObject;
+
+@WebServlet("/Login")
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        
-        String username = request.getParameter("Username");
+
+        String userId = request.getParameter("Username");
         String password = request.getParameter("Password");
 
-        // ★ 改善: 未入力チェック
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        if (userId == null || userId.isEmpty() ||
+            password == null || password.isEmpty()) {
+
             request.setAttribute("error", "ユーザ名とパスワードを入力してください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                   .forward(request, response);
             return;
         }
 
-        Member member = new Member();
-        member.setUsername(username);
-        member.setPassword(password);
+        // === Go API に送る JSON ===
+        JSONObject json = new JSONObject();
+        json.put("user_id", userId);
+        json.put("password", password);
 
-        MemberDAO dao = new MemberDAO();
-        boolean result = false;
+        URL url = new URL("http://localhost:8081/api/login");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        try {
-            result = dao.check(member);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // ★ 改善: データベースエラー時のメッセージ
-            request.setAttribute("error", "システムエラーが発生しました。時間をおいて再度お試しください。");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
-            return; // 処理を中断
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        conn.setDoOutput(true);
+
+        try (OutputStream os = conn.getOutputStream()) {
+            os.write(json.toString().getBytes("UTF-8"));
         }
 
-        if (result) {
-        	// ログイン成功
-        	request.getSession().setAttribute("loginUser", member);
-        	request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response); 
-        	} else {
-            // ログイン失敗
+        int status = conn.getResponseCode();
+
+        if (status == 200) {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            JSONObject res = new JSONObject(sb.toString());
+
+            String token = res.getString("token");
+            JSONObject user = res.getJSONObject("user");
+
+            HttpSession session = request.getSession();
+            session.setAttribute("token", token);
+            session.setAttribute("userId", user.getString("user_id"));
+            session.setAttribute("displayName", user.getString("display_name"));
+            session.setAttribute("login", true);
+
+            request.getRequestDispatcher("/AllQuestions")
+                   .forward(request, response);
+
+        } else {
             request.setAttribute("error", "ユーザ名またはパスワードが違います");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                   .forward(request, response);
         }
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        doPost(req, res);
     }
 }

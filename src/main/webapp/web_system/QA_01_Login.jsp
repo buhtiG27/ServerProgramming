@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>ログイン画面</title>
-<link rel="stylesheet" href="css/style_1_Login.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_1_Login.css">
 </head>
 <body align="center">
 
@@ -27,7 +27,15 @@
         %>
 
         <%-- 入力フォーム --%>
-        <form action="QA_02_Questions.jsp" method="get">
+        <%
+            String errorMessage = (String) request.getAttribute("error");
+            if (errorMessage != null) {
+        %>
+            <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
+        <%
+            }
+        %>
+        <form action="<%= request.getContextPath() %>/Login" method="post">
             <label for="name">ユーザ名：</label>
             <input class="txt" type="text" size="20" name="Username" />
             <br><br>
@@ -39,9 +47,9 @@
 
         <br><br>
 
-        <form action="QA_05_NewRegister.jsp" method="get">
-            <button class="button2" type="submit" name="Sign_Up" value="send">新規作成へ</button>
-        </form>
+        <form action="<%= request.getContextPath() %>/web_system/QA_05_NewRegister.jsp" method="get">
+    		<button class="button2" type="submit" name="Sign_Up" value="send">新規作成へ</button>
+		</form>
 
     </div>
 

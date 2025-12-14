@@ -1,18 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%
+Map<String, Object> question =
+    (Map<String, Object>) request.getAttribute("question");
+
+List<Map<String, Object>> answers =
+    (List<Map<String, Object>>) request.getAttribute("answers");
+
+String loggedInUsername =
+    (String) session.getAttribute("loggedInUsername");
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
 <title>質問画面</title>
-<link rel="stylesheet" href="css/style_10_ShowQuestion.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_10_ShowQuestion.css">
 </head>
 <body>
 
 	<div class="top_button">
 		<h1>TDU</h1>
 		<div class="button">
-			<form action="QA_02_Questions.jsp" method="get">
-				<button class="back_button" type="submit" name="back" value="send">戻る</button>
+			<form action="<%= request.getContextPath() %>/AllQuestions" method="get">
+				<button class="back_button" type="submit">戻る</button>
 			</form>
 		</div>
 
@@ -26,36 +38,56 @@
 	<!-- 質問表示部 -->
 	<div class="post-list">
 		<div class="post" id="questionPost">
-			<h3>投稿１</h3>
-			<p id="questionText">サンプル投稿を表示</p>
+			<h3>投稿</h3>
+			<p id="questionText"><%= question.get("content") %></p>
 
 			<div class="button-post">
 				<button class="like_button" type="button">いいね</button>
 				<button class="like_button" type="button">フラグ</button>
 
 				<!-- 質問編集ボタン -->
-				<button class="edit_button" type="button" onclick="openEditQuestionModal()">編集</button>
+				<%
+					if (loggedInUsername != null &&
+    					loggedInUsername.equals(question.get("username"))) {
+				%>
+				<button class="edit_button" type="button"
+				    onclick="openEditQuestionModal()">編集</button>
+				<%
+				}
+				%>
 			</div>
 		</div>
 	</div>
 
-	<!-- 回答一覧 -->
 	<div class="remaind-list">
 		<h2>回答</h2>
 
+		<%
+		    if (answers != null) {
+		        for (Answer answer : answers) {
+		            String answerPosterUsername = answer.getUsername(); // Answerモデルクラスに getUsername() があると仮定
+		%>
 		<div class="post">
 			<h3>回答</h3>
 
-			<p class="answerText">サンプル投稿を表示</p>
+			<p class="answerText"><%= answer.getContent() %></p> <%-- 回答内容をモデルから取得 --%>
 
 			<div class="button-post">
 				<button class="like_button" type="button">いいね</button>
 				<button class="like_button" type="button">フラグ</button>
 
-				<!-- 回答編集ボタン -->
-				<button class="edit_button" type="button" onclick="openEditQuestionModal()">編集</button>
+				<%-- ★ 回答編集ボタンの表示制御 --%>
+				<% if (loggedInUsername != null && loggedInUsername.equals(answerPosterUsername)) { %>
+				<button class="edit_button" type="button" onclick="openEditAnswerModal('<%= answer.getContent() %>')">編集</button>
+				<% } %>
 			</div>
 		</div>
+		<%
+		        }
+		    }
+		%>
+        
+        </div>
 
 		<!-- 回答作成ボタン -->
 		<div class="answer">
@@ -74,7 +106,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
 
 	<!-- 質問編集モーダル -->
 	<div id="editQuestionModal" class="modal">
@@ -146,10 +177,10 @@
 		<form class="form" action="" method="get">
 			<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
 		</form>
-		<form class="form" action="QA_03_MyTime.jsp" method="get">
+		<form class="form" action="<%= request.getContextPath() %>/web_system/QA_03_MyTime.jsp" method="get">
 			<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
 		</form>
-		<form class="form" action="QA_04_User.jsp" method="get">
+		<form class="form" action="<%= request.getContextPath() %>/web_system/QA_04_User.jsp" method="get">
 			<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
 		</form>
 	</div>
