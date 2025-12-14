@@ -38,17 +38,17 @@ String cls = (String) request.getAttribute("Classification");
 
         <form action="<%= request.getContextPath() %>/RegisterCheck" method="post">
 
-            <label for="email">メールアドレス：</label><br>
-            <input class="txt" type="text" size="256" name="Address"
+            <label for="email">メールアドレス（@ms.dendai.ac.jp）：</label><br>
+            <input class="txt" type="text" size="256" name="Address"　placeholder="s123456@ms.dendai.ac.jp"
                        value="<%= (email != null ? email : "") %>"/>
             <br><br>
 
-            <label for="pw">パスワード：</label><br>
+            <label for="pw">パスワード（英字を1文字以上含む）：</label><br>
             <input class="txt" type="password" size="32" name="Password"
                        value="<%= (pw != null ? pw : "") %>"/>
             <br><br>
 
-            <label for="name">ユーザ名：</label><br>
+            <label for="name">ユーザ名（表示名）：</label><br>
             <input class="txt" type="text" size="30" name="Username"
                        value="<%= (uname != null ? uname : "") %>"/>
             <br><br>
