@@ -1,2 +1,6 @@
 /build/
 /bin/
+.env
+/env/
+/java-web/
+/nginx/
