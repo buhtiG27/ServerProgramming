@@ -27,17 +27,14 @@ public class Register extends HttpServlet {
         json.put("user_id", request.getParameter("Username"));
         json.put("password", request.getParameter("Password"));
         json.put("email", request.getParameter("Address"));
-        json.put("display_name", request.getParameter("DisplayName"));
-        json.put("year_of_enrollment",
-                 Integer.parseInt(request.getParameter("Year")));
+        json.put("display_name", request.getParameter("Username"));
         json.put("grade",
                  Integer.parseInt(request.getParameter("Grade")));
-        json.put("department_code",
-                 request.getParameter("DepartmentCode"));
         json.put("classification",
                  Integer.parseInt(request.getParameter("Classification")));
 
-        URL url = new URL("http://localhost:8081/api/register");
+        @SuppressWarnings("deprecation")
+		URL url = new URL("http://localhost:8080/api/register");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("POST");

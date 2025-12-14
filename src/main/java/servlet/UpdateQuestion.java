@@ -38,7 +38,7 @@ public class UpdateQuestion extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(body);
 
-        URL url = new URL("http://localhost:8081/api/questions/" + questionId);
+        URL url = new URL("http://localhost:8080/api/questions/" + questionId);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
