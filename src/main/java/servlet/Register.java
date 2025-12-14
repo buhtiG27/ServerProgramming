@@ -33,7 +33,7 @@ public class Register extends HttpServlet {
         json.put("classification",
                  Integer.parseInt(request.getParameter("Classification")));
 
-        URL url = new URL("http://localhost:8081/api/register");
+        URL url = new URL("http://localhost:8080/api/register");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("POST");

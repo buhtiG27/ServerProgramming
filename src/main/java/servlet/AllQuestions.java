@@ -39,7 +39,7 @@ public class AllQuestions extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
-            URL url = new URL("http://localhost:8081/api/posts");
+            URL url = new URL("http://localhost:8080/api/posts");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 

@@ -44,7 +44,7 @@ public class CreateQuestion extends HttpServlet {
         String json = gson.toJson(body);
 
         // Go API 接続
-        URL url = new URL("http://localhost:8081/api/questions");
+        URL url = new URL("http://localhost:8080/api/questions");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");

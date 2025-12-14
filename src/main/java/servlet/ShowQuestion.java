@@ -40,7 +40,7 @@ public class ShowQuestion extends HttpServlet {
         String questionId = request.getParameter("questionId");
 
         try {
-            URL url = new URL("http://localhost:8081/api/posts/" + questionId);
+            URL url = new URL("http://localhost:8080/api/posts/" + questionId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
