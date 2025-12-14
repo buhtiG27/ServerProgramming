@@ -11,18 +11,18 @@ import (
 // Usersのテーブル定義
 type User struct {
 	gorm.Model
-	UserID           string `gorm:"not null;uniqueIndex" json:"user_id"`
-	Password         string `gorm:"not null;" json:"password"`
-	Email            string `gorm:"not null;" json:"email"`
-	DisplayName      string `gorm:"not null;" json:"display_name"`
-	Description      string `json:"description"`
-	YearOfEnrollment int    `json:"year_of_enrollment"`
-	Grade            int    `json:"grade"`
-	BelongingID      uint
-	Belonging        Belonging `gorm:"not null;" json:"belonging"`
-	IconPath         string    `json:"icon_path"`
-	HeaderPath       string    `json:"header_path"`
-	Restriction      bool
+	UserID           string  `gorm:"not null;uniqueIndex" json:"user_id"`
+	Password         string  `gorm:"not null;" json:"password"`
+	Email            string  `gorm:"not null;" json:"email"`
+	DisplayName      string  `gorm:"not null;" json:"display_name"`
+	Description      *string `json:"description"`
+	YearOfEnrollment *int    `json:"year_of_enrollment"`
+	Grade            *int    `json:"grade"`
+	BelongingID      *uint
+	Belonging        *Belonging `json:"belonging"`
+	IconPath         *string    `json:"icon_path"`
+	HeaderPath       *string    `json:"header_path"`
+	Restriction      bool       `gorm:"not null"`
 }
 
 // Userオブジェクトをデータベースに保存する
