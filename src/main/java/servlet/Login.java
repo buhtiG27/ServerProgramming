@@ -42,7 +42,8 @@ public class Login extends HttpServlet {
         json.put("user_id", userId);
         json.put("password", password);
 
-        URL url = new URL("http://localhost:8080/api/login");
+        @SuppressWarnings("deprecation")
+		URL url = new URL("http://localhost:8080/api/login");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("POST");
