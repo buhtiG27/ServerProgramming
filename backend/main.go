@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/buhtiG27/ServerProgramming/backend/controllers"
 	"github.com/buhtiG27/ServerProgramming/backend/middlewares"
 	"github.com/buhtiG27/ServerProgramming/backend/models"
@@ -13,6 +15,32 @@ func main() {
 	router := gin.Default()
 
 	api := router.Group("/api")
+
+	// サーバの生存確認用
+	api.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"ok": true,
+		})
+	})
+	// データベースの生存確認用
+	api.GET("/ready", func(c *gin.Context) {
+		if models.DB == nil {
+			c.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{
+				"error": "db not initialized",
+			})
+			return
+		}
+		if err := models.DB.Exec("SELECT 1").Error; err != nil {
+			c.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"ok": true,
+		})
+	})
 
 	api.POST("/register", controllers.Register)
 	api.POST("/login", controllers.Login)
