@@ -16,10 +16,10 @@ type RegisterInput struct {
 	Email            string `json:"email" binding:"required,email"`
 	DisplayName      string `json:"display_name" binding:"required"`
 	Description      string `json:"description"`
-	YearOfEnrollment int    `json:"year_of_enrollment" binding:"required"`
-	Grade            int    `json:"grade" binding:"required"`
-	DepartmentCode   string `json:"department_code" binding:"required"`
-	Classification   uint   `json:"classification" binding:"required"`
+	YearOfEnrollment int    `json:"year_of_enrollment"`
+	Grade            int    `json:"grade"`
+	DepartmentCode   string `json:"department_code"`
+	Classification   uint   `json:"classification"`
 	IconPath         string `json:"icon_path"`
 	HeaderPath       string `json:"header_path"`
 }
@@ -52,8 +52,8 @@ func Register(c *gin.Context) {
 
 	// 所属オブジェクトを作成し，データベースに保存する
 	belonging := &models.Belonging{
-		DepartmentCode: input.DepartmentCode,
-		Classification: input.Classification,
+		DepartmentCode: &input.DepartmentCode,
+		Classification: &input.Classification,
 	}
 	belonging, err := belonging.Save()
 	if err != nil {
@@ -69,12 +69,13 @@ func Register(c *gin.Context) {
 		Password:         input.Password,
 		Email:            input.Email,
 		DisplayName:      input.DisplayName,
-		Description:      input.Description,
-		YearOfEnrollment: input.YearOfEnrollment,
-		Grade:            input.Grade,
-		BelongingID:      belongingID,
-		IconPath:         input.IconPath,
-		HeaderPath:       input.HeaderPath,
+		Description:      &input.Description,
+		YearOfEnrollment: &input.YearOfEnrollment,
+		Grade:            &input.Grade,
+		BelongingID:      &belongingID,
+		IconPath:         &input.IconPath,
+		HeaderPath:       &input.HeaderPath,
+		Restriction:      false,
 	}
 	user, err = user.Save()
 	if err != nil {
