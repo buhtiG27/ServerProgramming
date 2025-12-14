@@ -1,14 +1,6 @@
 body{
 	background-color:#F5F6F7;
 }
-
-.top_button{
-	position: fixed;
-	top: 0;
-	width: 100%; 
-	background: white;
-    text-align: center;
-}
 h1{
 	color:rgb(0, 128, 255);
 }

@@ -10,7 +10,7 @@
 	<body align="center">
 		
 		<header>
-			<jsp:include page="header.jsp" /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+			<jsp:include page="header.jsp" /><!-- ヘッダ -->
 		</header>
 
     	<div class="login_list">
@@ -38,7 +38,7 @@
             	
             	<button class="login_button" type="submit" name="Login" value="send">LOG IN</button>
         	</form>
-        	<br><br>
+        	<br>
         	<form action="QA_05_NewRegister.jsp" method="get">
             	<button class="create_new_account_button" type="submit" name="Sign_Up" value="send">新規作成へ</button>
         	</form>

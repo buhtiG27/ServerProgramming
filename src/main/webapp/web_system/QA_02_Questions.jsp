@@ -14,13 +14,14 @@
 		</header>
 		
 		<main>
+			<div class="filters">
+				<p>(余裕あればここに検索ボックスや「新着」「学科」などのフィルター)</p>
+			</div>
 			<div class="post-list">
 				<div class="post">
         			<form action="QA_10_ShowQuestion.jsp" method="get">
-            			<button class="show_button" type="submit" name="questionId" value="1">投稿1</button>
+            			<button class="show_button" type="submit" name="questionId" value="1">サンプル投稿を表示</button>
         			</form>
-					
-        			<p>サンプル投稿を表示</p>
 				
         			<div class="button-post">
             			<form action="LikeServlet" method="post" style="display:inline;">
@@ -45,7 +46,7 @@
 			<br>
 		</main>
 	
-		<footer>
+		<nav>
 			<div class="bottom_buttons">
     			<form class="form" action="QA_02_Questions.jsp" method="get">
         			<button class="pageButton" type="submit">質問一覧</button>
@@ -57,7 +58,7 @@
         			<button class="pageButton" type="submit">ユーザ画面</button>
     			</form>
 			</div>
-		</footer>
+		</nav>
 
 	</body>
 </html>
