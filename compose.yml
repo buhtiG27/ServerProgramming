@@ -1,0 +1,56 @@
+services:
+  pgsql_db:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: ${CONTAINER_NAME}
+    env_file:
+      - ./env/db.env
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+      - ./backend/postgres_db/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: -c 'config_file=/etc/postgresql/postgresql.conf'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  go-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: go_api
+    env_file:
+      - ./env/go.env
+    depends_on:
+      pgsql_db:
+        condition: service_healthy
+    expose:
+      - "8080"
+
+  java-web:
+    build:
+      context: .
+      dockerfile: java-web/Dockerfile
+    container_name: java_web
+    env_file:
+      - ./env/java.env
+    depends_on:
+      - go-api
+    expose:
+      - "8080"
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - java-web
+      - go-api
+
+volumes:
+  db_vol:
