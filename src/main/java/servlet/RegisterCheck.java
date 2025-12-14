@@ -28,8 +28,13 @@ public class RegisterCheck extends HttpServlet {
 
         if (email == null || email.isEmpty()) {
             error = "メールアドレスを入力してください。";
+        } else if (!email.endsWith("@ms.dendai.ac.jp")) {
+            error = "メールアドレスは @ms.dendai.ac.jp ドメインでなければなりません。";
         } else if (pw == null || pw.isEmpty()) {
             error = "パスワードを入力してください。";
+        } else if (!pw.matches(".*[A-Za-z].*")) {
+            // パスワードに英字が含まれているか
+            error = "パスワードには少なくとも1文字の英字を含めてください。";
         } else if (uname == null || uname.isEmpty()) {
             error = "ユーザ名を入力してください。";
         } else if (grade == null || grade.isEmpty()) {
@@ -41,7 +46,7 @@ public class RegisterCheck extends HttpServlet {
         if (error != null) {
             request.setAttribute("error", error);
 
-            // 入力値を戻す（UX向上）
+            // 入力値を戻す
             request.setAttribute("Address", email);
             request.setAttribute("Username", uname);
             request.setAttribute("Grade", grade);
