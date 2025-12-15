@@ -18,7 +18,6 @@ import client.ApiResponse;
 import config.AppConfig;
 import listener.AppInitListener;
 
-@WebServlet("/Register")
 @SuppressWarnings("deprecation")
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
