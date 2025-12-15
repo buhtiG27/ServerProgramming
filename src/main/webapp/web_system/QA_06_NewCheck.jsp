@@ -51,6 +51,12 @@
         </form>
 
         <form class="form" action="<%= request.getContextPath() %>/Register" method="post">
+        	<input type="hidden" name="Address" value="<%= email %>">
+			<input type="hidden" name="Password" value="<%= pw %>">
+    		<input type="hidden" name="Username" value="<%= user %>">
+    		<input type="hidden" name="Grade" value="<%= grade %>">
+    		<input type="hidden" name="Classification" value="<%= classification %>">
+        
     		<button class="registerButton" type="submit">登録</button>
 		</form>
     </div>
