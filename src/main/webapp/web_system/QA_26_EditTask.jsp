@@ -58,78 +58,77 @@
 %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>課題編集画面</title>
-<link rel="stylesheet" href="css/style_26_EditTask.css">
-</head>
-<body>
-<%-- トップボタン --%>
-<div class="top_button_area">
-	<form action="QA_02_Questions.jsp" method="get">
-		<button class="top_button" type="submit" name="back" value="send">TDU</button>
-	</form>
-</div>
-
-<!-- 戻るボタンとタイトル -->
-<div class="header_area">
-	<form action="QA_13_ViewTask.jsp" method="get">
-		<button class="back_button" type="submit" name="back" value="send">戻る</button>
-	</form>
-	<h1 class="page_title">課題編集</h1>
-</div>
-
-	<br>
-	<%-- 置き換え --%>
-<div class="view_list">
-	<h2 class="task_title">課題名サンプル</h2>
-
-		<% if (!errorMessage.isEmpty()) { %>
-            <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
-        <% } %>
-	<div class="info_box">
-	<form action="" method="post">
-
-            <label for="cls">授業名：</label><br>
-            <input class="content_box" type="text" maxlength="50" name="classneme"
-                       value="<%= (cls != null ? cls : cls) %>"/>
-            <br><br>
-
-            <label for="con">内容：</label><br>
-            <input class="content_box" type="text" maxlength="200" name="content"
-                       value="<%= (con != null ? con : con) %>"/>
-            <br><br>
-
-            <label for="lim">期限：</label><br>
-            <input class="content_box" type="text" maxlength="30" name="limmit" 
-                       value="<%= (lim != null ? lim : lim) %>"/>
-            <br><br>
-
-            <label for="out">提出場所：</label><br>
-            <input class="content_box" type="text" maxlength="100" name="output"
-                       value="<%= (output != null ? output : output) %>"/>
-            <br><br>
-
-            <label for="detail">補足説明：</label><br>
-            <input class="textarea_box" type="text" maxlength="400" name="detailcontent"
-                       value="<%= (detail != null ? detail : detail) %>"/>
-            <br><br>
-
-            <button class="regist_button" type="submit" name="register" value="send">確認</button>
-        </form>
-       </div>
-</div>
-	<div class="bottom_buttons">
-		<form class="form" action="" method="get">
-			<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-		</form>
-		<form class="form" action="QA_03_MyTime.jsp" method="get">
-			<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
-		</form>
-		<form class="form" action="QA_04_User.jsp" method="get">
-			<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
-		</form>
-	</div>
-
-</body>
+	<head>
+		<meta charset="utf-8">
+		<title>課題編集画面</title>
+		<link rel="stylesheet" href="css/style_26_EditTask.css">
+	</head>
+	<body>
+		<%-- トップボタン --%>
+		<div class="top_button_area">
+			<form action="QA_02_Questions.jsp" method="get">
+				<button class="top_button" type="submit" name="back" value="send">TDU</button>
+			</form>
+		</div>
+			
+		<!-- 戻るボタンとタイトル -->
+		<div class="header_area">
+			<form action="QA_13_ViewTask.jsp" method="get">
+				<button class="back_button" type="submit" name="back" value="send">戻る</button>
+			</form>
+			<h1 class="page_title">課題編集</h1>
+		</div>
+		
+		<br>
+		<%-- 置き換え --%>
+		<div class="view_list">
+			<h2 class="task_title">課題名サンプル</h2>
+		
+			<% if (!errorMessage.isEmpty()) { %>
+				<p style="color:red; font-weight:bold;"><%= errorMessage %></p>
+			<% } %>
+			<div class="info_box">
+				<form action="" method="post">
+					<label for="cls">授業名：</label><br>
+					<input class="content_box" type="text" maxlength="50" name="classneme"
+   	                    value="<%= (cls != null ? cls : cls) %>"/>
+					<br><br>
+					<label for="con">内容：</label><br>
+					<input class="content_box" type="text" maxlength="200" name="content"
+   	                    value="<%= (con != null ? con : con) %>"/>
+					<br><br>
+					
+					<label for="lim">期限：</label><br>
+					<input class="content_box" type="text" maxlength="30" name="limmit" 
+   	                    value="<%= (lim != null ? lim : lim) %>"/>
+					<br><br>
+					
+					<label for="out">提出場所：</label><br>
+					<input class="content_box" type="text" maxlength="100" name="output"
+   	                    value="<%= (output != null ? output : output) %>"/>
+					<br><br>
+					
+					<label for="detail">補足説明：</label><br>
+					<input class="textarea_box" type="text" maxlength="400" name="detailcontent"
+   	                    value="<%= (detail != null ? detail : detail) %>"/>
+   	                    
+					<br><br>
+					
+					<button class="regist_button" type="submit" name="register" value="send">確認</button>
+				</form>
+			</div>
+		</div>
+		<div class="bottom_buttons">
+			<form class="form" action="" method="get">
+				<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
+			</form>
+			<form class="form" action="QA_03_MyTime.jsp" method="get">
+				<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
+			</form>
+			<form class="form" action="QA_04_User.jsp" method="get">
+				<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
+			</form>
+		</div>
+		
+	</body>
 </html>

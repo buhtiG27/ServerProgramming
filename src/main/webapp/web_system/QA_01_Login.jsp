@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+01Login <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -8,11 +8,11 @@
             rel="stylesheet"
             href="<%= request.getContextPath() %>/web_system/css/style_1_Login.css"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- cssでスマホ用のデザインをするために書く -->
     </head>
     <body align="center">
-        <div class="top_button">
-            <h1>TDU</h1>
-        </div>
+        <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
 
         <div class="login_list">
             <h1>ログイン</h1>
@@ -45,7 +45,7 @@
                 method="get"
             >
                 <button
-                    class="button2"
+                    class="create_new_account_button"
                     type="submit"
                     name="Sign_Up"
                     value="send"

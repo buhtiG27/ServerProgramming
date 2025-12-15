@@ -28,7 +28,12 @@
             <br />
             <a>登録内容確認</a>
         </div>
-
+        <% // エラーメッセージの取得と表示を追加 String errorMessage = (String)
+        request.getAttribute("error"); if (errorMessage != null) { %>
+        <p style="color: red; font-weight: bold">
+            【エラー】<%= errorMessage %>
+        </p>
+        <% } %>
         <div class="request_list">
             <br />
             メールアドレス：<%= email %><br /><br />
@@ -70,6 +75,7 @@
                         name="Classification"
                         value="<%= classification %>"
                     />
+
                     <button class="registerButton" type="submit">登録</button>
                 </form>
             </div>

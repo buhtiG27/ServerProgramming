@@ -18,6 +18,8 @@ import client.ApiResponse;
 import config.AppConfig;
 import listener.AppInitListener;
 
+@WebServlet("/Register")
+@SuppressWarnings("deprecation")
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -27,16 +29,43 @@ public class Register extends HttpServlet {
         String rid = (String) request.getAttribute("rid");
         request.setCharacterEncoding("UTF-8");
 
+        String user = request.getParameter("Username");
+        String pw = request.getParameter("Password");
+        String email = request.getParameter("Address");
+        String gradeStr = request.getParameter("Grade");
+        String clsStr = request.getParameter("Classification");
+
+        if (user == null || pw == null || email == null
+                || gradeStr == null || clsStr == null) {
+
+            request.setAttribute("error", "登録情報が失われました。もう一度やり直してください。");
+            request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        int grade;
+        int cls;
+
+        try {
+            grade = Integer.parseInt(gradeStr);
+            cls = Integer.parseInt(clsStr);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "学年または区分の形式が不正です。");
+            request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
+                    .forward(request, response);
+            return;
+        }
+
         // 確認画面からの値取得
         JSONObject json = new JSONObject();
-        json.put("user_id", request.getParameter("Username"));
-        json.put("password", request.getParameter("Password"));
-        json.put("email", request.getParameter("Address"));
-        json.put("display_name", request.getParameter("Username"));
-        json.put("grade",
-                Integer.parseInt(request.getParameter("Grade")));
-        json.put("classification",
-                Integer.parseInt(request.getParameter("Classification")));
+
+        json.put("user_id", user);
+        json.put("password", pw);
+        json.put("email", email);
+        json.put("display_name", user);
+        json.put("grade", grade);
+        json.put("classification", cls);
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);

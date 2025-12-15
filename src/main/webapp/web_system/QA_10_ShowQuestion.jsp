@@ -13,12 +13,12 @@ String loggedInUsername =
 %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>質問画面</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_10_ShowQuestion.css">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>質問画面</title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_10_ShowQuestion.css">
+	</head>
+	<body>
 
 	<div class="top_button">
 		<h1>TDU</h1>
@@ -181,5 +181,5 @@ String loggedInUsername =
 		</form>
 	</div>
 
-</body>
+	</body>
 </html>
