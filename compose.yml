@@ -48,6 +48,7 @@ services:
     container_name: java_web
     env_file:
       - ./env/java.env
+    command: ["sh", "-c", "touch /usr/local/tomcat/logs/catalina.$(date +%F).log /usr/local/tomcat/logs/localhost.$(date +%F).log; tail -F /usr/local/tomcat/logs/*.log & exec catalina.sh run"]
     depends_on:
       go-api:
         condition: service_healthy
@@ -55,7 +56,7 @@ services:
       - "8080"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/ >/dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health >/dev/null 2>&1 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 30

@@ -36,7 +36,7 @@ String cls = (String) request.getAttribute("Classification");
             <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
         <% } %>
 
-        <form action="<%= request.getContextPath() %>/RegisterCheck" method="post">
+        <form action="<%= request.getContextPath() %>/register/check" method="post">
 
             <label for="email">メールアドレス（@ms.dendai.ac.jp）：</label><br>
             <input class="txt" type="text" size="256" name="Address"　placeholder="s123456@ms.dendai.ac.jp"

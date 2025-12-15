@@ -53,9 +53,9 @@ func main() {
 		protected.GET("/user", controllers.CurrentUser)
 
 		// 投稿
-		protected.POST("/post", controllers.Post)
+		protected.POST("/posts", controllers.Post)
 	}
-	api.GET("/get_posts", controllers.GetPosts)
+	api.GET("/posts", controllers.GetPosts)
 
 	router.Run(":8080")
 }

@@ -18,10 +18,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/ShowQuestion")
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class ShowQuestion extends HttpServlet {
-	
-	public ShowQuestion() {
+
+    public ShowQuestion() {
         super();
     }
 
@@ -36,26 +40,17 @@ public class ShowQuestion extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String rid = (String) request.getAttribute("rid");
         request.setCharacterEncoding("UTF-8");
         String questionId = request.getParameter("questionId");
 
         try {
-            URL url = new URL("http://localhost:8080/api/posts/" + questionId);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse res = api.get("/posts" + questionId);
 
-            BufferedReader br = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), "UTF-8")
-            );
+            JSONObject json = new JSONObject(res.body);
 
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) sb.append(line);
-
-            JSONObject json = new JSONObject(sb.toString());
-
-            Map<String, Object> question =
-                json.getJSONObject("question").toMap();
+            Map<String, Object> question = json.getJSONObject("question").toMap();
 
             List<Map<String, Object>> answers = new ArrayList<>();
             JSONArray ans = json.getJSONArray("answers");
@@ -67,13 +62,14 @@ public class ShowQuestion extends HttpServlet {
             request.setAttribute("answers", answers);
 
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("error", "質問の取得に失敗しました");
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
+            getServletContext().log("[rid=" + rid + "] ShowQuestion failed", e);
+            throw new ServletException(e);
         }
     }
 }

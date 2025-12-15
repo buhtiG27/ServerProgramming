@@ -23,7 +23,7 @@ String loggedInUsername =
 	<div class="top_button">
 		<h1>TDU</h1>
 		<div class="button">
-			<form action="<%= request.getContextPath() %>/AllQuestions" method="get">
+			<form action="<%= request.getContextPath() %>/questions" method="get">
 				<button class="back_button" type="submit">戻る</button>
 			</form>
 		</div>

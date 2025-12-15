@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/RegisterCheck")
 public class RegisterCheck extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -56,13 +55,13 @@ public class RegisterCheck extends HttpServlet {
             request.setAttribute("error", error);
 
             request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
             return;
         }
 
         // ===== OK → 確認画面へ =====
         request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 
     @Override

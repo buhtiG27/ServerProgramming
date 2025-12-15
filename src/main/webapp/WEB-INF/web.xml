@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- writer ruha321 -->
+<!-- 実装は適宜変更してください -->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+    version="5.0">
+
+    <!-- HealthCheck Servlet -->
+    <servlet>
+        <servlet-name>HealthServlet</servlet-name>
+        <servlet-class>servlet.HealthServlet</servlet-class>
+    </servlet>
+
+    <welcome-file-list>
+        <welcome-file>web_system/QA_02_Questions.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet-mapping>
+        <servlet-name>HealthServlet</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AllQuestions</servlet-name>
+        <servlet-class>servlet.AllQuestions</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllQuestions</servlet-name>
+        <url-pattern>/questions</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>CreateQuestion</servlet-name>
+        <servlet-class>servlet.CreateQuestion</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CreateQuestion</servlet-name>
+        <url-pattern>/questions/create</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>servlet.Login</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>servlet.Register</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>RegisterCheck</servlet-name>
+        <servlet-class>servlet.RegisterCheck</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterCheck</servlet-name>
+        <url-pattern>/register/check</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ShowQuestion</servlet-name>
+        <servlet-class>servlet.ShowQuestion</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShowQuestion</servlet-name>
+        <url-pattern>/questions/show</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UpdateQuestion</servlet-name>
+        <servlet-class>servlet.UpdateQuestion</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateQuestion</servlet-name>
+        <url-pattern>/questions/update</url-pattern>
+    </servlet-mapping>
+</web-app>
