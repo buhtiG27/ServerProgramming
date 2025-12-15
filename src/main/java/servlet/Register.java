@@ -22,20 +22,42 @@ public class Register extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         
-        String user = (String) request.getAttribute("Username");
-        String pw = (String) request.getAttribute("Password");
-        String email = (String) request.getAttribute("Address");
-        String grade = (String) request.getAttribute("Grade");
-        String cls = (String) request.getAttribute("Classification");
+        String user = request.getParameter("Username");
+        String pw = request.getParameter("Password");
+        String email = request.getParameter("Address");
+        String gradeStr = request.getParameter("Grade");
+        String clsStr = request.getParameter("Classification");
+        
+        if (user == null || pw == null || email == null
+                || gradeStr == null || clsStr == null) {
 
+            request.setAttribute("error", "登録情報が失われました。もう一度やり直してください。");
+            request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
+                   .forward(request, response);
+            return;
+        }
+
+        int grade;
+        int cls;
+
+        try {
+            grade = Integer.parseInt(gradeStr);
+            cls = Integer.parseInt(clsStr);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "学年または区分の形式が不正です。");
+            request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
+                   .forward(request, response);
+            return;
+        }
+        
         // 確認画面からの値取得
         JSONObject json = new JSONObject();
         json.put("user_id", user);
         json.put("password", pw);
         json.put("email", email);
         json.put("display_name", user);
-        json.put("grade", Integer.parseInt(grade));
-        json.put("classification", Integer.parseInt(cls));
+        json.put("grade", grade);
+        json.put("classification", cls);
 
         @SuppressWarnings("deprecation")
 		URL url = new URL("http://localhost:8080/api/register");
