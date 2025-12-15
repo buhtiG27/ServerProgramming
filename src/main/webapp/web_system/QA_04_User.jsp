@@ -60,17 +60,10 @@
 		</div>
 		<br>
 		<br>
-		<div class="bottom_buttons">
-			<form class="form" action="QA_02_Questions.jsp" method="get" style="display:inline-flex;">
-				<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-			</form>
-			<form class="form" action="QA_03_MyTime.jsp" method="get" style="display:inline-flex;">
-				<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
-			</form>
-			<form class="form" action="" method="get" style="display:inline-flex;">
-				<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
-			</form>
-		</div>
+	
+		<nav>
+			<jsp:include page="navigation.jsp" />
+		</nav>
 
 	</body>
 </html>

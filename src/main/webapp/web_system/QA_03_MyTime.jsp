@@ -8,12 +8,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
 	<body>
-		<%--　ロゴに置き換える --%>
-		<div class="top_button_area">
-			<form action="QA_02_Question.jsp" method="get">
-				<button class="top_button" type="submit" name="back" value="send">TDU</button>
-			</form>
-		</div>
+		<header>
+			<jsp:include page="header.jsp" /><!-- ヘッダ -->
+		</header>
+		
 		<div class="header_area">
 			<form action="QA_18_DeleteMyTime.jsp" method="get">
 				<button class="delete_button" type="submit" name="filterbyNew" value="send">科目削除</button>
@@ -63,17 +61,10 @@
 		</div>
 		<br>
 		<br>
-		<div class="bottom_buttons">
-		<form class="form" action="QA_02_Question.jsp" method="get">
-			<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-		</form>
-		<form class="form" action="" method="get">
-			<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
-		</form>
-		<form class="form" action="QA_04_User.jsp" method="get">
-			<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
-		</form>
-		</div>
+		
+		<nav>
+			<jsp:include page="navigation.jsp" />
+		</nav>
 
 	</body>
 </html>

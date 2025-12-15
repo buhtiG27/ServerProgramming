@@ -79,27 +79,3 @@ show_button{
     right:15px;
 }
 
-/*下部のbutton（ページ切り替え）*/
-.bottom_buttons{
-	position: fixed;
-	width: 100%; 
-	bottom: 20px;
-	display: flex;
-    justify-content: center;
-    gap: 0;
-}
-
-.form{
-	flex: 1;
-}
-
-.pageButton{
-	background-color:rgb(255, 255, 255);
-	color:rgb(0, 0, 0); 
-	width: 100%; 
-	bottom: 20px;
-	font-size: 24px;
-	padding: 25px 0;
-}
-
-

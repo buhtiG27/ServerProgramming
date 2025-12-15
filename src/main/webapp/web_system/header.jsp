@@ -1,3 +1,4 @@
+	<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<link rel="stylesheet" href="css/header.css"><!-- header.cssを適用 -->
 	<div class="top_button">
 		<img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu">
