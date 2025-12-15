@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/Register")
+@SuppressWarnings("deprecation")
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +60,7 @@ public class Register extends HttpServlet {
         json.put("grade", grade);
         json.put("classification", cls);
 
-        @SuppressWarnings("deprecation")
+
 		URL url = new URL("http://localhost:8080/api/register");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
