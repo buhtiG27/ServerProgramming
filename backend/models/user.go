@@ -11,8 +11,18 @@ import (
 // Usersのテーブル定義
 type User struct {
 	gorm.Model
-	Username string `gorm:"primaryKey;not null; unique" json:"username"`
-	Password string `gorm:"not null;" json:"password"`
+	UserID           string  `gorm:"not null;uniqueIndex" json:"user_id"`
+	Password         string  `gorm:"not null;" json:"password"`
+	Email            string  `gorm:"not null;" json:"email"`
+	DisplayName      string  `gorm:"not null;" json:"display_name"`
+	Description      *string `json:"description"`
+	YearOfEnrollment *int    `json:"year_of_enrollment"`
+	Grade            *int    `json:"grade"`
+	BelongingID      *uint
+	Belonging        *Belonging `json:"belonging"`
+	IconPath         *string    `json:"icon_path"`
+	HeaderPath       *string    `json:"header_path"`
+	Restriction      bool       `gorm:"not null"`
 }
 
 // Userオブジェクトをデータベースに保存する
@@ -44,21 +54,25 @@ func (u *User) PrepareOutput() *User {
 }
 
 // ユーザ名とパスワードを照合してトークンを返す
-func GenerateToken(username string, password string) (string, error) {
+func Authenticate(userID string, password string) (*User, error) {
 	var user User
 
 	// ユーザ名を検索する
-	err := DB.Where("username = ?", username).First(&user).Error
+	err := DB.Where("user_id = ?", userID).First(&user).Error
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	// パスワードをハッシュ化して検証する
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
+	return &user, nil
+}
+
+func GenerateTokenFromUser(user *User) (string, error) {
 	// トークンを生成する
 	token, err := token.GenerateToken(user.ID)
 	if err != nil {

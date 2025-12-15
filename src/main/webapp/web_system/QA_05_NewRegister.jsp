@@ -1,116 +1,76 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.net.URLEncoder" %> 
 <%
-    request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 
-    // --- エラーメッセージ ---
-    String errorMessage = "";
+String errorMessage = (String) request.getAttribute("error");
 
-    // フォームの値
-    String email = request.getParameter("EmailAddress");
-    String pw = request.getParameter("Password");
-    String uname = request.getParameter("Username");
-    String grade = request.getParameter("GradeAndDepartment");
-    String cls = request.getParameter("Classification");
-    
-    // 訂正ボタンからのリクエスト判定用
-    String actionType = request.getParameter("actionType"); 
-
-    // --- POST のときだけチェック ---
-    if ("POST".equalsIgnoreCase(request.getMethod())) {
-
-                if ("correction".equals(actionType)) {
-                    } else {
-            // 通常の「確認」ボタン押下の場合のみ、入力チェックを行う
-            if (email == null || email.isEmpty()) {
-                errorMessage = "メールアドレスを入力してください。";
-            } else if (pw == null || pw.isEmpty()) {
-                errorMessage = "パスワードを入力してください。";
-            } else if (uname == null || uname.isEmpty()) {
-                errorMessage = "ユーザ名を入力してください。";
-            } else if (grade == null || grade.isEmpty()) {
-                errorMessage = "学年・学科を入力してください。";
-            } else if (cls == null || cls.isEmpty()) {
-                errorMessage = "区分を入力してください。";
-            }
-
-            // --- エラーなしなら次画面へ遷移 ---
-            if (errorMessage.isEmpty()) {
-
-                String encodedEmail = URLEncoder.encode(email, "UTF-8");
-                String encodedPw = URLEncoder.encode(pw, "UTF-8");
-                String encodedUname = URLEncoder.encode(uname, "UTF-8");
-                String encodedGrade = URLEncoder.encode(grade, "UTF-8");
-                String encodedCls = URLEncoder.encode(cls, "UTF-8");
-
-                String redirectUrl = "QA_06_NewCheck.jsp"
-                                   + "?EmailAddress=" + encodedEmail
-                                   + "&Password=" + encodedPw
-                                   + "&Username=" + encodedUname
-                                   + "&GradeAndDepartment=" + encodedGrade
-                                   + "&Classification=" + encodedCls;
-
-                response.sendRedirect(redirectUrl);
-                return;
-            }
-        }
-    }
+String email = (String) request.getAttribute("Address");
+String pw = (String) request.getAttribute("Password");
+String uname = (String) request.getAttribute("Username");
+String grade = (String) request.getAttribute("Grade");
+String cls = (String) request.getAttribute("Classification");
 %>
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="utf-8">
-		<title>新規ログイン</title>
-		<link rel="stylesheet" href="css/style_5_New.css">
-	</head>
-	<body>
+<head>
+<meta charset="utf-8">
+<title>新規ログイン</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
+</head>
+<body>
 
-    	<div class="top_button">
-        	<h1>TDU</h1>
-        	<form action="QA_01_Login.jsp" method="get">
-            	<button class="button" type="submit" name="back" value="send">戻る</button>
-        	</form>
-        	<br>
-       　	<a>新規ログイン</a>
-        	<br>
-    	</div>
+    <div class="top_button">
+        <h1>TDU</h1>
+        <form action="<%= request.getContextPath() %>/web_system/QA_01_Login.jsp" method="get">
+            <button class="button" type="submit" name="back" value="send">戻る</button>
+        </form>
+        <br>
+        <a>新規ログイン</a>
+        <br>
+    </div>
 
-    	<div class="request_list">
+    <div class="request_list">
 
-        	<% if (!errorMessage.isEmpty()) { %>
-            	<p style="color:red; font-weight:bold;"><%= errorMessage %></p>
-        	<% } %>
+        <% if (errorMessage != null) { %>
+            <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
+        <% } %>
 
-        	<form action="QA_05_NewRegister.jsp" method="post">
+        <form action="<%= request.getContextPath() %>/RegisterCheck" method="post">
 
-            	<label for="email">メールアドレス：</label><br>
-            	<input class="txt" type="text" size="20" name="EmailAddress"
-                       	value="<%= (email != null ? email : "") %>"/>
-            	<br><br>
+            <label for="email">メールアドレス（@ms.dendai.ac.jp）：</label><br>
+            <input class="txt" type="text" size="256" name="Address"　placeholder="s123456@ms.dendai.ac.jp"
+                       value="<%= (email != null ? email : "") %>"/>
+            <br><br>
 
-            	<label for="pw">パスワード：</label><br>
-            	<input class="txt" type="password" size="32" name="Password"
+            <label for="pw">パスワード（英字を1文字以上含む）：</label><br>
+            <input class="txt" type="password" size="32" name="Password"
                        value="<%= (pw != null ? pw : "") %>"/>
-            	<br><br>
+            <br><br>
 
-            	<label for="name">ユーザ名：</label><br>
-            	<input class="txt" type="text" size="20" name="Username"
+            <label for="name">ユーザ名（表示名）：</label><br>
+            <input class="txt" type="text" size="30" name="Username"
                        value="<%= (uname != null ? uname : "") %>"/>
-            	<br><br>
+            <br><br>
 
-            	<label for="grade">学年・学科：</label><br>
-            	<input class="txt" type="text" size="20" name="GradeAndDepartment"
+            <label for="grade">学年：</label><br>
+            <input class="txt" type="text" size="10" name="Grade"
                        value="<%= (grade != null ? grade : "") %>"/>
-            	<br><br>
-			
-            	<label for="class">区分：</label><br>
-            	<input class="txt" type="text" size="20" name="Classification"
-                       value="<%= (cls != null ? cls : "") %>"/>
-            	<br><br>
-			
-            	<button class="button1" type="submit" name="Login" value="send">確認</button>
-        	</form>
-    	</div>
-		
-	</body>
+            <br><br>
+
+            <label for="class">区分：</label><br>
+            <select class="txt" name="Classification">
+                <option value="0" <%= ("0".equals(cls) || cls == null || cls.isEmpty()) ? "selected" : "" %>>選択してください</option>
+                <option value="1" <%= "1".equals(cls) ? "selected" : "" %>>学生</option>
+                <option value="2" <%= "2".equals(cls) ? "selected" : "" %>>副手</option>
+                <option value="3" <%= "3".equals(cls) ? "selected" : "" %>>教員</option>
+                <option value="4" <%= "4".equals(cls) ? "selected" : "" %>>管理者</option>
+            </select>
+            <br><br>
+
+            <button class="button1" type="submit">確認</button>
+        </form>
+    </div>
+
+</body>
 </html>
