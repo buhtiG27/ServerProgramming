@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>質問作成画面</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_12_CreateQuestion.css">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>質問作成画面</title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_12_CreateQuestion.css">
+	</head>
+	<body>
 
 	<div class="header_area">
 		<div class="button_left">
@@ -47,5 +47,5 @@
 			<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
 		</form>
 	</div>
-</body>
+	</body>
 </html>

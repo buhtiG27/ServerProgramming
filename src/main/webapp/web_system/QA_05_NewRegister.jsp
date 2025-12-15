@@ -13,12 +13,12 @@ String cls = (String) request.getAttribute("Classification");
 %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>新規ログイン</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
+	<head>
+	<meta charset="utf-8">
+	<title>新規ログイン</title>
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
 </head>
-<body>
+	<body>
 
     <div class="top_button">
         <h1>TDU</h1>
@@ -72,5 +72,5 @@ String cls = (String) request.getAttribute("Classification");
         </form>
     </div>
 
-</body>
+	</body>
 </html>
