@@ -1,25 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.net.URLEncoder" %> 
 <%
-    request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 
-    // --- エラーメッセージ ---
-    String errorMessage = (String) request.getAttribute("error");
+String errorMessage = (String) request.getAttribute("error");
 
-    String email = (String) request.getAttribute("Address");
-    String pw = (String) request.getAttribute("Password");
-    String uname = (String) request.getAttribute("Username");
-    String grade = (String) request.getAttribute("Grade");
-    String cls = (String) request.getAttribute("Classification");
+String email = (String) request.getAttribute("Address");
+String pw = (String) request.getAttribute("Password");
+String uname = (String) request.getAttribute("Username");
+String grade = (String) request.getAttribute("Grade");
+String cls = (String) request.getAttribute("Classification");
 %>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>新規ログイン</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
+	<head>
+	<meta charset="utf-8">
+	<title>新規ログイン</title>
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
 </head>
-<body>
+	<body>
 
     <div class="top_button">
         <h1>TDU</h1>
@@ -39,22 +38,22 @@
 
         <form action="<%= request.getContextPath() %>/register/check" method="post">
 
-            <label for="email">メールアドレス：</label><br>
-            <input class="txt" type="text" size="256" name="Address"
+            <label for="email">メールアドレス（@ms.dendai.ac.jp）：</label><br>
+            <input class="txt" type="text" size="256" name="Address"　placeholder="s123456@ms.dendai.ac.jp"
                        value="<%= (email != null ? email : "") %>"/>
             <br><br>
 
-            <label for="pw">パスワード：</label><br>
+            <label for="pw">パスワード（英字を1文字以上含む）：</label><br>
             <input class="txt" type="password" size="32" name="Password"
                        value="<%= (pw != null ? pw : "") %>"/>
             <br><br>
 
-            <label for="name">ユーザ名：</label><br>
+            <label for="name">ユーザ名（表示名）：</label><br>
             <input class="txt" type="text" size="30" name="Username"
                        value="<%= (uname != null ? uname : "") %>"/>
             <br><br>
 
-            <label for="grade">学年・学科：</label><br>
+            <label for="grade">学年：</label><br>
             <input class="txt" type="text" size="10" name="Grade"
                        value="<%= (grade != null ? grade : "") %>"/>
             <br><br>
@@ -69,9 +68,9 @@
             </select>
             <br><br>
 
-            <button class="button1" type="submit" name="NewCheck" value="send">確認</button>
+            <button class="button1" type="submit">確認</button>
         </form>
     </div>
 
-</body>
+	</body>
 </html>

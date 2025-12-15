@@ -1,0 +1,52 @@
+/*全ページ共通の設定(これがないとページ間でちょっとずれたりする)*/
+html{
+	overflow-y: scroll;/*スクロールバーを常に表示する*/
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.bottom_button{/*下部のナビゲーション全体*/
+	position: fixed;
+	left:0;
+	width: 100%;
+	height:10%;
+	bottom: -1%;
+	display: flex;
+    justify-content: center;
+    gap: 0;
+}
+
+.form{
+	flex: 1;
+}
+
+.pageButton{
+	width: 100%; 
+	height:120%;
+	border-radius:25px 25px 0 0;
+	background-color:rgb(255, 255, 255);
+	color:rgb(0, 0, 0); 
+	font-size: 24px;
+}
+
+/* =========================== */
+/*  スマホ向けデザイン         */
+/* =========================== */
+@media screen and (max-width : 768px) {/*F12で確認できるスマホ用のレイアウト*/
+	.bottom_button{
+		position: fixed;
+		left:-0.25%;
+		top:0;
+		width: 100.5%;
+		height:10vh;
+		background: white;
+    }
+}
+
+
+
+
+
+
