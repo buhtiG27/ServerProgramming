@@ -13,12 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String rid = (String) request.getAttribute("rid");
         request.setCharacterEncoding("UTF-8");
 
         // 確認画面からの値取得
@@ -32,27 +38,22 @@ public class Register extends HttpServlet {
         json.put("classification",
                 Integer.parseInt(request.getParameter("Classification")));
 
-        @SuppressWarnings("deprecation")
-        URL url = new URL("http://localhost:8080/api/register");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        try {
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse res = api.postJson("/register", json.toString());
 
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        conn.setDoOutput(true);
-
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(json.toString().getBytes("UTF-8"));
-        }
-
-        int status = conn.getResponseCode();
-
-        if (status == 201 || status == 200) {
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                    .forward(request, response);
-        } else {
-            request.setAttribute("error", "登録に失敗しました");
-            request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
-                    .forward(request, response);
+            if (res.is2xx()) {
+                request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                        .forward(request, response);
+            } else {
+                request.setAttribute("error", "登録に失敗しました");
+                request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
+                        .forward(request, response);
+            }
+        } catch (Exception e) {
+            // TODO:
+            getServletContext().log("[Register] failed", e);
+            throw new ServletException(e);
         }
     }
 }

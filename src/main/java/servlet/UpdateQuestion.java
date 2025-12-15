@@ -24,7 +24,7 @@ public class UpdateQuestion extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String rid = (String) request.getAttribute("rid");
         request.setCharacterEncoding("UTF-8");
 
         String questionId = request.getParameter("questionId");
@@ -36,7 +36,7 @@ public class UpdateQuestion extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(body);
 
-        URL url = new URL("http://localhost:8080/api/questions/" + questionId);
+        URL url = new URL("http:/go-api:8080/api/questions/" + questionId);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -48,9 +48,13 @@ public class UpdateQuestion extends HttpServlet {
 
         int status = conn.getResponseCode();
 
+        // TODO:編集機能を実装したらコメントアウト
+        // ApiClient api = (ApiClient)
+        // getServletContext().getAttribute(AppInitListener.API_KEY);
+        // ApiResponse res = api.put("/questions/" + questionId, json);
         if (status == HttpURLConnection.HTTP_OK) {
             response.sendRedirect(
-                    request.getContextPath() + "/ShowQuestion?questionId=" + questionId);
+                    request.getContextPath() + "/questions/show?questionId=" + questionId);
         } else {
             request.setAttribute("error", "更新に失敗しました");
             request.getRequestDispatcher(

@@ -18,6 +18,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class AllQuestions extends HttpServlet {
 
     public AllQuestions() {
@@ -34,39 +39,34 @@ public class AllQuestions extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String rid = (String) request.getAttribute("rid");
 
         request.setCharacterEncoding("UTF-8");
 
         try {
-            URL url = new URL("http://localhost:8080/api/posts");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse res = api.get("/posts");
+            if (res.is2xx()) {
+                var sb = res.body;
+                JSONObject json = new JSONObject(sb);
+                JSONArray posts = json.getJSONArray("posts");
 
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                List<Map<String, Object>> questions = new ArrayList<>();
+                for (int i = 0; i < posts.length(); i++) {
+                    questions.add(posts.getJSONObject(i).toMap());
+                }
 
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null)
-                sb.append(line);
-
-            JSONObject json = new JSONObject(sb.toString());
-            JSONArray posts = json.getJSONArray("posts");
-
-            List<Map<String, Object>> questions = new ArrayList<>();
-            for (int i = 0; i < posts.length(); i++) {
-                questions.add(posts.getJSONObject(i).toMap());
+                request.setAttribute("questions", questions);
+                request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+                        .forward(request, response);
             }
 
-            request.setAttribute("questions", questions);
-            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                    .forward(request, response);
-
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("error", "質問一覧の取得に失敗しました");
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
                     .forward(request, response);
+            getServletContext().log("[rid=" + rid + "] AllQuestionns failed", e);
+            throw new ServletException(e);
         }
     }
 }

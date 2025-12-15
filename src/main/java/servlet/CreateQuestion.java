@@ -17,11 +17,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class CreateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String rid = (String) request.getAttribute("rid");
 
         request.setCharacterEncoding("UTF-8");
 
@@ -42,29 +48,23 @@ public class CreateQuestion extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(body);
 
-        // Go API 接続
-        URL url = new URL("http://localhost:8080/api/questions");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        conn.setDoOutput(true);
+        try {
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse res = api.postJson("/questions", json);
 
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(json.getBytes("UTF-8"));
-        }
-
-        int status = conn.getResponseCode();
-
-        if (status == HttpURLConnection.HTTP_CREATED) {
-            // 作成成功 → 一覧へ
-            response.sendRedirect(request.getContextPath() + "/AllQuestions");
-        } else {
-            // エラー
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-            request.setAttribute("error", br.readLine());
-            request.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
-                    .forward(request, response);
+            if (res.status == HttpURLConnection.HTTP_CREATED) {
+                // 作成成功 → 一覧へ
+                response.sendRedirect(request.getContextPath() + "/questions");
+            } else {
+                // エラー
+                request.setAttribute("error", res.body);
+                request.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
+                        .forward(request, response);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            getServletContext().log("[rid=" + rid + "] CreateQuestion failed", e);
+            throw new ServletException(e);
         }
     }
 
