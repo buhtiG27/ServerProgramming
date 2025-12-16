@@ -42,17 +42,38 @@ String rid = (String) request.getAttribute("rid");
 空欄の値はローカルでは自分の好きな値でよい（起動後に変更するとバグるから注意）  
 
 2. コンテナの作成と起動  
-`docker(podman) compose up -d --build`  
+`docker compose up -d --build`  
 ルートディレクトリにcompose.ymlがあるのを確認して上記のコマンドを打つ  
 シェルに`nginx Started`と表示されたらサーバーが起動している  
 これで <http://localhost:8000/> にアクセスするとページが表示される  
 
 3. 実行中にソースコードを変更し反映させたい場合  
 以下のコマンドを順に実行する  
-`docker(podman) compose up -d --build java-web`  
-`docker(podman) compose restart nginx`  
+`docker compose up -d --build java-web`  
+`docker compose restart nginx`  
 
 4. 終了するとき  
-`docker(podman) compose down`  
+`docker compose down`  
 そこそこ重いので片付け忘れに注意  
-もう一度起動するときは2へ  
+もう一度起動するときは2へ
+
+### コンテナでのログの見方
+1. java，tomcat
+`docker logs java_web`
+
+2. go
+`docker logs go_api`
+
+3. nginx
+`docker logs nginx`
+アクセスログではなくシステムログ
+
+4. postgres
+`docker logs pgsql_db`
+同じくシステムログ
+
+### データベースのデータの確認の仕方（暫定）
+`docker exec -it pgsql_db psql -U $db.env内のPOSTGRES_USER -d $db.env内のPOSTGRES_DB`
+これでデータベースの中に入れるからSQL等で操作できる
+
+
