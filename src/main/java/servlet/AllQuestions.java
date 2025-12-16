@@ -18,55 +18,55 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
-import listener.AppInitListener;
-
+@WebServlet("/AllQuestions")
 public class AllQuestions extends HttpServlet {
-
-    public AllQuestions() {
+	
+	public AllQuestions() {
         super();
     }
 
     // POST も GET と同じ動作にする
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    @Override
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String rid = (String) request.getAttribute("rid");
 
         request.setCharacterEncoding("UTF-8");
 
         try {
-            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse res = api.get("/posts");
-            if (res.is2xx()) {
-                var sb = res.body;
-                JSONObject json = new JSONObject(sb);
-                JSONArray posts = json.getJSONArray("posts");
+            URL url = new URL("http://localhost:8081/posts?limit=50&offset=0");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
 
-                List<Map<String, Object>> questions = new ArrayList<>();
-                for (int i = 0; i < posts.length(); i++) {
-                    questions.add(posts.getJSONObject(i).toMap());
-                }
+            BufferedReader br = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), "UTF-8")
+            );
 
-                request.setAttribute("questions", questions);
-                request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                        .forward(request, response);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) sb.append(line);
+
+            JSONObject json = new JSONObject(sb.toString());
+            JSONArray posts = json.getJSONArray("posts");
+
+            List<Map<String, Object>> questions = new ArrayList<>();
+            for (int i = 0; i < posts.length(); i++) {
+                questions.add(posts.getJSONObject(i).toMap());
             }
 
+            request.setAttribute("questions", questions);
+
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "質問一覧の取得に失敗しました");
-            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                    .forward(request, response);
-            getServletContext().log("[rid=" + rid + "] AllQuestionns failed", e);
-            throw new ServletException(e);
         }
+
+        request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+               .forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        doGet(req, res);
     }
 }

@@ -18,58 +18,58 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
-import listener.AppInitListener;
-
+@WebServlet("/ShowQuestion")
 public class ShowQuestion extends HttpServlet {
-
-    public ShowQuestion() {
+	
+	public ShowQuestion() {
         super();
     }
 
-    // POST も GET と同じ動作にする
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    @Override
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String rid = (String) request.getAttribute("rid");
         request.setCharacterEncoding("UTF-8");
         String questionId = request.getParameter("questionId");
 
         try {
-            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse res = api.get("/posts" + questionId);
+            // 親質問（posts から1件取得）
+            URL qUrl = new URL("http://localhost:8081/posts?limit=1&offset=0");
+            // ※ 本来は /posts/{id} を作るのが理想だが、構成変更不可のため省略
 
-            JSONObject json = new JSONObject(res.body);
+            // 返信取得
+            URL rUrl = new URL(
+                "http://localhost:8081/posts/" + questionId + "/replies?limit=20&offset=0"
+            );
 
-            Map<String, Object> question = json.getJSONObject("question").toMap();
+            HttpURLConnection conn = (HttpURLConnection) rUrl.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader br = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), "UTF-8")
+            );
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) sb.append(line);
+
+            JSONObject json = new JSONObject(sb.toString());
+            JSONArray replies = json.getJSONArray("replies");
 
             List<Map<String, Object>> answers = new ArrayList<>();
-            JSONArray ans = json.getJSONArray("answers");
-            for (int i = 0; i < ans.length(); i++) {
-                answers.add(ans.getJSONObject(i).toMap());
+            for (int i = 0; i < replies.length(); i++) {
+                answers.add(replies.getJSONObject(i).toMap());
             }
 
-            request.setAttribute("question", question);
+            request.setAttribute("questionId", questionId);
             request.setAttribute("answers", answers);
 
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                    .forward(request, response);
-
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "質問の取得に失敗しました");
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                    .forward(request, response);
-            getServletContext().log("[rid=" + rid + "] ShowQuestion failed", e);
-            throw new ServletException(e);
         }
+
+        request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
+               .forward(request, response);
     }
 }
