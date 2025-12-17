@@ -10,12 +10,15 @@
         />
     </head>
     <body>
-        <% request.setCharacterEncoding("UTF-8"); // リクエスト・パラメータ取得
-        String email = (String) request.getAttribute("Address"); String pw =
-        (String) request.getAttribute("Password"); String user = (String)
-        request.getAttribute("Username"); String grade = (String)
-        request.getAttribute("Grade"); String classification = (String)
-        request.getAttribute("Classification"); %>
+        <% 
+        request.setCharacterEncoding("UTF-8"); 
+        // リクエスト・パラメータ取得
+        String email = (String) request.getAttribute("Address"); 
+        String pw = (String) request.getAttribute("Password"); 
+        String user = (String) request.getAttribute("Username"); 
+        String grade = (String) request.getAttribute("Grade"); 
+        String classification = (String) request.getAttribute("Classification"); 
+        %>
 
         <div class="top_button">
             <h1>TDU</h1>
@@ -28,12 +31,16 @@
             <br />
             <a>登録内容確認</a>
         </div>
-        <% // エラーメッセージの取得と表示を追加 String errorMessage = (String)
-        request.getAttribute("error"); if (errorMessage != null) { %>
-        <p style="color: red; font-weight: bold">
-            【エラー】<%= errorMessage %>
-        </p>
-        <% } %>
+        <%
+		String errorMessage = (String) request.getAttribute("error");
+		if (errorMessage != null) {
+		%>
+    	<p style="color: red; font-weight: bold">
+        	【エラー】<%= errorMessage %>
+    	</p>
+		<%
+		}
+		%>
         <div class="request_list">
             <br />
             メールアドレス：<%= email %><br /><br />

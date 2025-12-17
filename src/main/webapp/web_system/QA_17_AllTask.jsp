@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div class="top_button_area">
-			<form action="QA_02_Questions.jsp" method="get">
+			<form action="" method="get">
 				<button class="top_button" type="submit" name="back" value="send">TDU</button>
 			</form>
 		</div>

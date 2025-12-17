@@ -1,8 +1,8 @@
 	<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<link rel="stylesheet" href="css/header.css"><!-- header.cssを適用 -->
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/header.css"><!-- header.cssを適用 -->
 	<div class="top_button">
-		<img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu">
-		<img src="images/icon_dendaiQA.png" alt="(「電大生のQ&A」のアイコン)" class="icon_dendaiQA">
+		<img src="<%= request.getContextPath() %>/web_system/images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu">
+		<img src="<%= request.getContextPath() %>/web_system/images/icon_dendaiQA.png" alt="(「電大生のQ&A」のアイコン)" class="icon_dendaiQA">
 		<!-- <img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu">-->
 		<!--<div class="button">
 			 <form action="QA_02_Questions.jsp" method="get">

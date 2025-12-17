@@ -43,7 +43,7 @@ String cls = (String) request.getAttribute("Classification");
                        value="<%= (email != null ? email : "") %>"/>
             <br><br>
 
-            <label for="pw">パスワード（英字を1文字以上含む）：</label><br>
+            <label for="pw">パスワード（英数字を8文字以上含む）：</label><br>
             <input class="txt" type="password" size="32" name="Password"
                        value="<%= (pw != null ? pw : "") %>"/>
             <br><br>

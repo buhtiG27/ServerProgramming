@@ -33,7 +33,7 @@
                 <label for="pw">パスワード：</label>
                 <input class="txt" type="password" size="32" name="Password" />
                 <br /><br />
-                <button class="button1" type="submit" name="Login" value="send">
+                <button class="login_button" type="submit" name="Login" value="send">
                     LOG IN
                 </button>
             </form>

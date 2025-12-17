@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,11 +57,12 @@ public class CreateQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] Call API POST /posts");
 
-            ApiResponse apires = api.postJson("/posts", json.toString(), token);
+            ApiResponse apires = api.postJson("/posts", json.toString());
 
             if (apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] CreateQuestion success");
                 response.sendRedirect(request.getContextPath() + "/questions");
+
             } else {
                 getServletContext().log(
                     "[rid=" + rid + "] CreateQuestion failed status=" + apires.status
@@ -81,6 +81,7 @@ public class CreateQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        doPost(req, res);
+        req.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
+           .forward(req, res);
     }
 }

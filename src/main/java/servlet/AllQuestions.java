@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -75,10 +74,15 @@ public class AllQuestions extends HttpServlet {
             getServletContext().log(
                 "[rid=" + rid + "] AllQuestions success count=" + questions.size()
             );
+            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+                    .forward(request, response);
 
         } catch (Exception e) {
             getServletContext().log("[rid=" + rid + "] AllQuestions failed", e);
             request.setAttribute("error", "質問一覧の取得に失敗しました");
+            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+                    .forward(request, response);
+            throw new ServletException(e);
         }
 
         request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
@@ -89,5 +93,11 @@ public class AllQuestions extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         doGet(req, res);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧画面</title>
+		<%-- <%= request.getContextPath() %>/web_system/css/○○　このように書かないと反映されない --%>
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_2_Question.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
@@ -39,7 +40,7 @@
     				for (Map<String, Object> q : questions) {
 			%>
 				<div class="post">
-    				<form action="<%= request.getContextPath() %>/ShowQuestion" method="get">
+    				<form action="<%= request.getContextPath() %>/questions/show" method="get">
         				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
        					<button class="show_button" type="submit">
             			<%= q.get("title") %>
