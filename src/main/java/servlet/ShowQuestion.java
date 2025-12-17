@@ -1,71 +1,111 @@
 package servlet;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import listener.AppInitListener;
 
 @WebServlet("/ShowQuestion")
 public class ShowQuestion extends HttpServlet {
-	
-	public ShowQuestion() {
+    private static final long serialVersionUID = 1L;
+
+    public ShowQuestion() {
         super();
     }
 
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String rid = (String) request.getAttribute("rid");
+        getServletContext().log("[rid=" + rid + "] ShowQuestion start");
+
         request.setCharacterEncoding("UTF-8");
-        String questionId = request.getParameter("questionId");
+
+        String questionIdStr = request.getParameter("questionId");
+        if (questionIdStr == null) {
+            request.setAttribute("error", "質問IDが不正です");
+            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+                   .forward(request, response);
+            return;
+        }
+
+        long questionId = Long.parseLong(questionIdStr);
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("token") == null) {
+            request.setAttribute("error", "ログインしてください");
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                   .forward(request, response);
+            return;
+        }
+
+        String token = (String) session.getAttribute("token");
 
         try {
-            // 親質問（posts から1件取得）
-            URL qUrl = new URL("http://localhost:8081/posts?limit=1&offset=0");
-            // ※ 本来は /posts/{id} を作るのが理想だが、構成変更不可のため省略
+            ApiClient api =
+                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            // 返信取得
-            URL rUrl = new URL(
-                "http://localhost:8081/posts/" + questionId + "/replies?limit=20&offset=0"
-            );
+            getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
-            HttpURLConnection conn = (HttpURLConnection) rUrl.openConnection();
-            conn.setRequestMethod("GET");
+            ApiResponse apires = api.get("/posts", token);
 
-            BufferedReader br = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), "UTF-8")
-            );
+            if (!apires.is2xx()) {
+                request.setAttribute("error", "質問の取得に失敗しました");
+                request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
+                       .forward(request, response);
+                return;
+            }
 
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) sb.append(line);
+            JSONObject json = new JSONObject(apires.body);
+            JSONArray posts = json.getJSONArray("posts");
 
-            JSONObject json = new JSONObject(sb.toString());
-            JSONArray replies = json.getJSONArray("replies");
+            JSONObject question = null;
+            List<JSONObject> answers = new ArrayList<>();
 
-            List<Map<String, Object>> answers = new ArrayList<>();
-            for (int i = 0; i < replies.length(); i++) {
-                answers.add(replies.getJSONObject(i).toMap());
+            for (int i = 0; i < posts.length(); i++) {
+                JSONObject p = posts.getJSONObject(i);
+
+                long id = p.getLong("id");
+
+                if (id == questionId) {
+                    question = p;
+                }
+
+                if (p.has("parent_id") &&
+                    !p.isNull("parent_id") &&
+                    p.getLong("parent_id") == questionId) {
+
+                    answers.add(p);
+                }
+            }
+
+            if (question == null) {
+                request.setAttribute("error", "質問が見つかりません");
+            } else {
+                request.setAttribute("question", question);
+                request.setAttribute("answers", answers);
             }
 
             request.setAttribute("questionId", questionId);
-            request.setAttribute("answers", answers);
+
+            getServletContext().log(
+                "[rid=" + rid + "] ShowQuestion success answers=" + answers.size()
+            );
 
         } catch (Exception e) {
-            e.printStackTrace();
+            getServletContext().log("[rid=" + rid + "] ShowQuestion failed", e);
             request.setAttribute("error", "質問の取得に失敗しました");
         }
 
