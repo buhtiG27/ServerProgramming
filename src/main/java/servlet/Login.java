@@ -66,9 +66,8 @@ public class Login extends HttpServlet {
                 session.setAttribute("displayName", user.getString("display_name"));
                 session.setAttribute("login", true);
 
-                getServletContext().log("[rid=" + rid + "] Login foward -> /questions");
-                request.getRequestDispatcher("/questions")
-                        .forward(request, response);
+                getServletContext().log("[rid=" + rid + "] Login redirect -> /questions");
+                response.sendRedirect(request.getContextPath() + "/questions");
 
             } else {
                 request.setAttribute("error", "ユーザ名またはパスワードが違います");

@@ -12,14 +12,15 @@
         <servlet-class>servlet.HealthServlet</servlet-class>
     </servlet>
 
-    <welcome-file-list>
-        <welcome-file>web_system/QA_02_Questions.jsp</welcome-file>
-    </welcome-file-list>
-
     <servlet-mapping>
         <servlet-name>HealthServlet</servlet-name>
         <url-pattern>/health</url-pattern>
     </servlet-mapping>
+
+
+    <welcome-file-list>
+        <welcome-file>web_system/QA_02_Questions.jsp</welcome-file>
+    </welcome-file-list>
 
 
     <servlet>
@@ -56,6 +57,16 @@
 
 
     <servlet>
+        <servlet-name>Practices</servlet-name>
+        <servlet-class>servlet.Practices</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Practices</servlet-name>
+        <url-pattern>/practices</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Register</servlet-name>
         <servlet-class>servlet.Register</servlet-class>
     </servlet>
@@ -89,6 +100,26 @@
 
 
     <servlet>
+        <servlet-name>Timetable</servlet-name>
+        <servlet-class>servlet.Timetable</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Timetable</servlet-name>
+        <url-pattern>/timetable</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TimetableSearch</servlet-name>
+        <servlet-class>servlet.TimetableSearch</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TimetableSearch</servlet-name>
+        <url-pattern>/timetable/search</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>UpdateQuestion</servlet-name>
         <servlet-class>servlet.UpdateQuestion</servlet-class>
     </servlet>
@@ -96,5 +127,16 @@
     <servlet-mapping>
         <servlet-name>UpdateQuestion</servlet-name>
         <url-pattern>/questions/update</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserInfo</servlet-name>
+        <servlet-class>servlet.UserInfo</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserInfo</servlet-name>
+        <url-pattern>/user</url-pattern>
     </servlet-mapping>
 </web-app>
