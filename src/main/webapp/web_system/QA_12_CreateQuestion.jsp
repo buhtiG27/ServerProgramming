@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> <%
+request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -20,19 +21,11 @@
                     <button class="back_button" type="submit">戻る</button>
                 </form>
             </div>
-
-            <div class="header_right">
-                <button
-                    class="save_button"
-                    type="submit"
-                    form="questionForm"
-                    name="save"
-                    value="send"
-                >
-                    保存
-                </button>
-            </div>
         </div>
+        <% String errorMessage = (String) request.getAttribute("error"); if
+        (errorMessage != null) { %>
+        <p style="color: red; font-weight: bold"><%= errorMessage %></p>
+        <% } %>
 
         <form
             id="questionForm"
@@ -61,6 +54,17 @@
                         placeholder="質問内容を入力してください"
                     ></textarea>
                 </div>
+            </div>
+            <div class="header_right">
+                <button
+                    class="save_button"
+                    type="submit"
+                    form="questionForm"
+                    name="save"
+                    value="send"
+                >
+                    保存
+                </button>
             </div>
         </form>
         <nav>

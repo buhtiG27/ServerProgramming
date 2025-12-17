@@ -14,16 +14,11 @@
         alt="(「電大生のQ&A」のアイコン)"
         class="icon_dendaiQA"
     />
-    <img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu" />-->
-    <div class="button">
-        <form
-            action="${pageContent.request.contextPath}/questions"
-            method="get"
-        >
-            <button class="back_button" type="submit" name="back" value="send">
-                <!-- 戻る -->
-            </button>
+    <!-- <img src="images/icon_tdu.png" alt="(TDUのアイコン)" class="icon_tdu" />-->
+    <!-- <div class="button">
+        <form action="${pageContent.request.contextPath}/questions" method="get" >
+            <button class="back_button" type="submit" name="back" value="send"> 戻る </button>
         </form>
-    </div>
+    </div> -->
 </div>
 <br />

@@ -7,9 +7,11 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_17_AllTask.css">
 	</head>
 	<body>
-		<header>
-			<jsp:include page="header.jsp" /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
-		</header>
+		<div class="top_button_area">
+			<form action="" method="get">
+				<button class="top_button" type="submit" name="back" value="send">TDU</button>
+			</form>
+		</div>
 		<div class="header_area">
 			<form action="${pageContext.request.contextPath}/timetable" method="get">
 				<button class="back_button" type="submit" name="filterbyNew" value="send">戻る</button>
