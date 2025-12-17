@@ -41,21 +41,23 @@ public class ShowQuestion extends HttpServlet {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             ApiResponse res = api.get("/posts" + questionId);
 
-            JSONObject json = new JSONObject(res.body);
+            if (res.is2xx()) {
+                JSONObject json = new JSONObject(res.body);
 
-            Map<String, Object> question = json.getJSONObject("question").toMap();
+                Map<String, Object> question = json.getJSONObject("question").toMap();
 
-            List<Map<String, Object>> answers = new ArrayList<>();
-            JSONArray ans = json.getJSONArray("answers");
-            for (int i = 0; i < ans.length(); i++) {
-                answers.add(ans.getJSONObject(i).toMap());
+                List<Map<String, Object>> answers = new ArrayList<>();
+                JSONArray ans = json.getJSONArray("answers");
+                for (int i = 0; i < ans.length(); i++) {
+                    answers.add(ans.getJSONObject(i).toMap());
+                }
+
+                request.setAttribute("question", question);
+                request.setAttribute("answers", answers);
+
+                request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
+                        .forward(request, response);
             }
-
-            request.setAttribute("question", question);
-            request.setAttribute("answers", answers);
-
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                    .forward(request, response);
 
         } catch (Exception e) {
             request.setAttribute("error", "質問の取得に失敗しました");

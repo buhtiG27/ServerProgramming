@@ -71,8 +71,7 @@ public class Register extends HttpServlet {
             ApiResponse res = api.postJson("/register", json.toString());
 
             if (res.is2xx()) {
-                request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                        .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 request.setAttribute("error", "登録に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")

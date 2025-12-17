@@ -59,8 +59,8 @@ public class Login extends HttpServlet {
                 session.setAttribute("login", true);
 
                 getServletContext().log("[rid=" + rid + "] Login foward -> /questions");
-                request.getRequestDispatcher("/questions")
-                        .forward(request, response);
+                // request.getRequestDispatcher("/questions") .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/questions");
 
             } else {
                 request.setAttribute("error", "ユーザ名またはパスワードが違います");

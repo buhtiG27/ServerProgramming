@@ -45,8 +45,7 @@ public class UserInfo extends HttpServlet {
                 request.getRequestDispatcher("/web_system/QA_04_User.jsp")
                         .forward(request, response);
             } else {
-                request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                        .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/login");
             }
         } catch (Exception e) {
             getServletContext().log("[rid=" + rid + "] Login failed", e);
