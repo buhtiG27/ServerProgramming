@@ -69,6 +69,7 @@ public class CreateQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        doPost(req, res);
+        req.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
+           .forward(req, res);
     }
 }

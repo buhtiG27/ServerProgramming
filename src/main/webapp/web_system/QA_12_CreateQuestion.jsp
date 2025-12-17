@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
 request.setCharacterEncoding("UTF-8");
-
-String contentsText = request.getParameter("questionBody");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,17 +15,21 @@ String contentsText = request.getParameter("questionBody");
     <body>
         <div class="header_area">
 		<div class="button_left">
-			<form class="back_form" action="<%= request.getContextPath() %>/AllQuestions" method="get"> 
+			<form class="back_form" action="<%= request.getContextPath() %>/questions" method="get"> 
 				<button class="back_button" type="submit">戻る</button>
 			</form>
 		</div>
 
         
 	</div>
+	<% String errorMessage = (String)
+            request.getAttribute("error"); if (errorMessage != null) { %>
+            <p style="color: red; font-weight: bold"><%= errorMessage %></p>
+            <% } %>
 
         <form
             id="questionForm"
-            action="<%= request.getContextPath() %>/AllQuestions"
+            action="<%= request.getContextPath() %>/questions/create"
             method="post"
             enctype="multipart/form-data"
         >

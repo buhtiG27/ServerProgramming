@@ -40,7 +40,7 @@
     				for (Map<String, Object> q : questions) {
 			%>
 				<div class="post">
-    				<form action="<%= request.getContextPath() %>/ShowQuestion" method="get">
+    				<form action="<%= request.getContextPath() %>/questions/show" method="get">
         				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
        					<button class="show_button" type="submit">
             			<%= q.get("title") %>
