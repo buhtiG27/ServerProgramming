@@ -1,4 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+request.setCharacterEncoding("UTF-8");
+
+String contentsText = request.getParameter("questionBody");
+%>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -11,32 +16,18 @@
     </head>
     <body>
         <div class="header_area">
-            <div class="button_left">
-                <form
-                    class="back_form"
-                    action="<%= request.getContextPath() %>/questions"
-                    method="get"
-                >
-                    <button class="back_button" type="submit">戻る</button>
-                </form>
-            </div>
+		<div class="button_left">
+			<form class="back_form" action="<%= request.getContextPath() %>/AllQuestions" method="get"> 
+				<button class="back_button" type="submit">戻る</button>
+			</form>
+		</div>
 
-            <div class="header_right">
-                <button
-                    class="save_button"
-                    type="submit"
-                    form="questionForm"
-                    name="save"
-                    value="send"
-                >
-                    保存
-                </button>
-            </div>
-        </div>
+        
+	</div>
 
         <form
             id="questionForm"
-            action="<%= request.getContextPath() %>/questions/create"
+            action="<%= request.getContextPath() %>/AllQuestions"
             method="post"
             enctype="multipart/form-data"
         >
@@ -62,6 +53,18 @@
                     ></textarea>
                 </div>
             </div>
+            <div class="header_right">
+
+            <button
+                    class="save_button"
+                    type="submit"
+                    form="questionForm"
+                    name="save"
+                    value="send"
+                >
+                    保存
+                </button>
+        </div>
         </form>
 
         <div class="bottom_buttons">

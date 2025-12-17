@@ -1,26 +1,20 @@
 package servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
 
+@WebServlet("/login")
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -66,9 +60,9 @@ public class Login extends HttpServlet {
                 session.setAttribute("displayName", user.getString("display_name"));
                 session.setAttribute("login", true);
 
-                getServletContext().log("[rid=" + rid + "] Login foward -> /questions");
-                request.getRequestDispatcher("/questions")
-                        .forward(request, response);
+                getServletContext().log("[rid=" + rid + "] Login foward -> /AllQuestions");
+                request.getRequestDispatcher("/Login")
+                		.forward(request, response);
 
             } else {
                 request.setAttribute("error", "ユーザ名またはパスワードが違います");
@@ -83,8 +77,10 @@ public class Login extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(req, res);
+        request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                .forward(request, response);
     }
 }
