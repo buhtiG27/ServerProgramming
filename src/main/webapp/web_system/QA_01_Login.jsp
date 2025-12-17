@@ -6,7 +6,7 @@
         <title>ログイン画面</title>
         <link
             rel="stylesheet"
-            href="<%= request.getContextPath() %>/web_system/css/style_1_Login.css"
+            href="${pageContext.request.contextPath}/css/style_1_Login.css"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
@@ -26,7 +26,10 @@
             request.getAttribute("error"); if (errorMessage != null) { %>
             <p style="color: red; font-weight: bold"><%= errorMessage %></p>
             <% } %>
-            <form action="<%= request.getContextPath() %>/login" method="post">
+            <form
+                action="${pageContext.request.contextPath}/login"
+                method="post"
+            >
                 <label for="name">ユーザ名：</label>
                 <input class="txt" type="text" size="20" name="Username" />
                 <br /><br />
@@ -41,7 +44,7 @@
             <br /><br />
 
             <form
-                action="<%= request.getContextPath() %>/web_system/QA_05_NewRegister.jsp"
+                action="${pageContext.request.contextPath}/register"
                 method="get"
             >
                 <button

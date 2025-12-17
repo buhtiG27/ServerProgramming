@@ -1,4 +1,4 @@
-02Questions
+X02Questions
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧画面</title>
-		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_2_Question.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_2_Question.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
 	<body>
@@ -39,7 +39,7 @@
     				for (Map<String, Object> q : questions) {
 			%>
 				<div class="post">
-    				<form action="<%= request.getContextPath() %>/ShowQuestion" method="get">
+    				<form action="${pageContext.request.contextPath}/questions/show" method="get">
         				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
        					<button class="show_button" type="submit">
             			<%= q.get("title") %>
@@ -49,12 +49,12 @@
     				<p>担当教員：<%= q.get("teacher") %></p>
 
     				<div class="button-post">
-        				<form action="<%= request.getContextPath() %>/LikeServlet" method="post">
+        				<form action="${pageContext.request.contextPath}/LikeServlet" method="post">
             				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
             				<button class="like_button" type="submit">いいね</button>
         				</form>
 
-        				<form action="<%= request.getContextPath() %>/FlagServlet" method="post">
+        				<form action="${pageContext.request.contextPath}/FlagServlet" method="post">
             				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
            					<button class="like_button" type="submit">フラグ</button>
         				</form>
@@ -68,7 +68,7 @@
 
 			<br><br>
 
-			<form action="<%= request.getContextPath() %>/web_system/QA_12_CreateQuestion.jsp" method="get">
+			<form action="${pageContext.request.contextPath}/web_system/QA_12_CreateQuestion.jsp" method="get">
     			<button class="createbutton" type="submit">質問作成</button>
 			</form>
 

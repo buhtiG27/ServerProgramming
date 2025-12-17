@@ -67,7 +67,8 @@ public class Login extends HttpServlet {
                 session.setAttribute("login", true);
 
                 getServletContext().log("[rid=" + rid + "] Login redirect -> /questions");
-                response.sendRedirect(request.getContextPath() + "/questions");
+                request.getRequestDispatcher("web_system/QA_02_Questions.jsp")
+                        .forward(request, response);
 
             } else {
                 request.setAttribute("error", "ユーザ名またはパスワードが違います");

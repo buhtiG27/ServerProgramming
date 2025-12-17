@@ -54,7 +54,8 @@ public class CreateQuestion extends HttpServlet {
 
             if (res.status == HttpURLConnection.HTTP_CREATED) {
                 // 作成成功 → 一覧へ
-                response.sendRedirect(request.getContextPath() + "/questions");
+                request.getRequestDispatcher("web_system/QA_02_Questions.jsp")
+                        .forward(request, response);
             } else {
                 // エラー
                 request.setAttribute("error", res.body);
