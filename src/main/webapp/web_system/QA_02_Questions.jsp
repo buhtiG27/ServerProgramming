@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧画面</title>
+		<%-- <%= request.getContextPath() %>/web_system/css/○○　このように書かないと反映されない --%>
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_2_Question.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
