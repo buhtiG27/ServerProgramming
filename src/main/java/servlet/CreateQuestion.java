@@ -10,13 +10,11 @@ import com.google.gson.Gson;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import listener.AppInitListener;
 
-@WebServlet("/CreateQuestion")
 public class CreateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

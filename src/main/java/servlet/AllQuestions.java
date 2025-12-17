@@ -11,13 +11,11 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import listener.AppInitListener;
 
-@WebServlet("/AllQuestions")
 public class AllQuestions extends HttpServlet {
 
     @Override
