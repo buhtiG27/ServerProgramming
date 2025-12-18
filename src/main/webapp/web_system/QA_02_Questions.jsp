@@ -15,12 +15,12 @@
 	<body>
 
 		<header>
-			<jsp:include page="header.jsp" /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+			<jsp:include page="header.jsp" />
 		</header>
 		
 		<main>
 			<div class="filters">
-				<form action="" method="post">検索：
+				<form action="" method="post">：
         			<input class="txt" type="text" name="searchbyKeyword" size="20" />
     			</form>
     			<button class="button" type="submit" name="filterbyNew" value="send">新着</button>
