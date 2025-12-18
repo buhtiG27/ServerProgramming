@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,19 +13,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
 public class ShowQuestion extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
     public ShowQuestion() {
         super();
-    }
-
-    // POST も GET と同じ動作にする
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
 
     @Override
@@ -34,37 +28,89 @@ public class ShowQuestion extends HttpServlet {
             throws ServletException, IOException {
 
         String rid = (String) request.getAttribute("rid");
+        getServletContext().log("[rid=" + rid + "] ShowQuestion start");
+
         request.setCharacterEncoding("UTF-8");
-        String questionId = request.getParameter("questionId");
+
+        String questionIdStr = request.getParameter("questionId");
+        if (questionIdStr == null) {
+            request.setAttribute("error", "質問IDが不正です");
+            request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        long questionId = Long.parseLong(questionIdStr);
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("token") == null) {
+            request.setAttribute("error", "ログインしてください");
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        String token = (String) session.getAttribute("token");
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse res = api.get("/posts" + questionId);
 
-            if (res.is2xx()) {
-                JSONObject json = new JSONObject(res.body);
+            getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
-                Map<String, Object> question = json.getJSONObject("question").toMap();
+            // ApiResponse apires = api.get("/posts", token);
+            ApiResponse apires = api.get("/posts");
 
-                List<Map<String, Object>> answers = new ArrayList<>();
-                JSONArray ans = json.getJSONArray("answers");
-                for (int i = 0; i < ans.length(); i++) {
-                    answers.add(ans.getJSONObject(i).toMap());
-                }
+            // この部分の修正が必要（多分go）
+            // ApiResponse apires = api.get("/posts", token);
 
-                request.setAttribute("question", question);
-                request.setAttribute("answers", answers);
-
+            if (!apires.is2xx()) {
+                request.setAttribute("error", "質問の取得に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
                         .forward(request, response);
+                return;
             }
 
+            JSONObject json = new JSONObject(apires.body);
+            JSONArray posts = json.getJSONArray("posts");
+
+            JSONObject question = null;
+            List<JSONObject> answers = new ArrayList<>();
+
+            for (int i = 0; i < posts.length(); i++) {
+                JSONObject p = posts.getJSONObject(i);
+
+                long id = p.getLong("id");
+
+                if (id == questionId) {
+                    question = p;
+                }
+
+                if (p.has("parent_id") &&
+                        !p.isNull("parent_id") &&
+                        p.getLong("parent_id") == questionId) {
+
+                    answers.add(p);
+                }
+            }
+
+            if (question == null) {
+                request.setAttribute("error", "質問が見つかりません");
+            } else {
+                request.setAttribute("question", question);
+                request.setAttribute("answers", answers);
+            }
+
+            request.setAttribute("questionId", questionId);
+
+            getServletContext().log(
+                    "[rid=" + rid + "] ShowQuestion success answers=" + answers.size());
+
         } catch (Exception e) {
-            request.setAttribute("error", "質問の取得に失敗しました");
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                    .forward(request, response);
             getServletContext().log("[rid=" + rid + "] ShowQuestion failed", e);
-            throw new ServletException(e);
+            request.setAttribute("error", "質問の取得に失敗しました");
         }
+
+        request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
+                .forward(request, response);
     }
 }
