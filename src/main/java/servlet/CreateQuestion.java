@@ -8,14 +8,12 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
-@WebServlet("/CreateQuestion")
 public class CreateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +57,7 @@ public class CreateQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] Call API POST /posts");
 
+            //api.setBearerToken(token);
             ApiResponse apires = api.postJson("/posts", json.toString());
 
             if (apires.is2xx()) {

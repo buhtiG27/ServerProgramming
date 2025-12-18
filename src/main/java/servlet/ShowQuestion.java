@@ -9,14 +9,12 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
-@WebServlet("/ShowQuestion")
 public class ShowQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +25,6 @@ public class ShowQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
 
         String rid = (String) request.getAttribute("rid");
         getServletContext().log("[rid=" + rid + "] ShowQuestion start");
@@ -60,11 +57,11 @@ public class ShowQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
-<<<<<<< HEAD
-=======
             //ApiResponse apires = api.get("/posts", token);
->>>>>>> refs/remotes/origin/main
             ApiResponse apires = api.get("/posts");
+            
+            // この部分の修正が必要（多分go）
+            //ApiResponse apires = api.get("/posts", token);
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");

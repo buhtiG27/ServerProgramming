@@ -10,21 +10,18 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
-@WebServlet("/questions")
 public class AllQuestions extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     public AllQuestions() {
         super();
     }
-    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,16 +44,16 @@ public class AllQuestions extends HttpServlet {
         String token = (String) session.getAttribute("token");
 
         try {
-            ApiClient api =(ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiClient api =
+                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
             // 認証付き GET
             ApiResponse apires = api.get("/posts");
-<<<<<<< HEAD
-=======
+            
+            // この部分の修正が必要（多分go）
             //ApiResponse apires = api.get("/posts", token);
->>>>>>> refs/remotes/origin/main
 
             if (!apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] API error status=" + apires.status);
@@ -99,8 +96,6 @@ public class AllQuestions extends HttpServlet {
             throws ServletException, IOException {
         doGet(req, res);
     }
-<<<<<<< HEAD
-=======
     /*
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -108,5 +103,4 @@ public class AllQuestions extends HttpServlet {
         doGet(request, response);
     }
     */
->>>>>>> refs/remotes/origin/main
 }

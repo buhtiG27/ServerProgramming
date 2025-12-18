@@ -13,14 +13,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Subject;
 
 @SuppressWarnings("deprecation")
-@WebServlet("/AllSubjects")
 public class AllSubjects extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
