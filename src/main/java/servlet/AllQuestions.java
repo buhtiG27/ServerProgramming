@@ -95,10 +95,11 @@ public class AllQuestions extends HttpServlet {
             throws ServletException, IOException {
         doGet(req, res);
     }
-
+    /*
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
+    */
 }
