@@ -3,11 +3,12 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
-        <title>ログイン画面</title>
+        <title>ログイン | 電大生のQ&A</title>
         <link
             rel="stylesheet"
             href="<%= request.getContextPath() %>/web_system/css/style_1_Login.css"
         />
+        <link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
     </head>

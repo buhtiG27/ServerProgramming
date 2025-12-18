@@ -7,8 +7,9 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>質問一覧画面</title>
+		<title>質問一覧 | 電大生のQ&A</title>
 		<%-- <%= request.getContextPath() %>/web_system/css/○○　このように書かないと反映されない --%>
+		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_2_Question.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>

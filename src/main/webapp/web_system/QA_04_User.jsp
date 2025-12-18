@@ -3,7 +3,8 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>ユーザ画面</title>
+		<title>ユーザ情報 | 電大生のQ&A</title>
+		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
 		<link rel="stylesheet" href="css/style_4_User.css">
 	</head>
 	<body>

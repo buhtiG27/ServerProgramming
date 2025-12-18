@@ -3,7 +3,8 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>マイ時間割画面</title>
+		<title>マイ時間割 | 電大生のQ&A</title>
+		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
 		<link rel="stylesheet" href="css/style_3_MyTime.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
