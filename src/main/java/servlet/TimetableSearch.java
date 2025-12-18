@@ -26,6 +26,7 @@ public class TimetableSearch extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String rid = (String) request.getAttribute("rid");
+        // TODO:曜日と時限で科目を検索
         // getServletContext().log("[rid=" + rid + "] Login calling API /api/login"); //
         // API呼び出しをログに書き込む（任意）
         // ApiClient api = (ApiClient)

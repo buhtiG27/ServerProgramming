@@ -56,6 +56,28 @@
 
 
     <servlet>
+        <servlet-name>AllSubjects</servlet-name>
+        <servlet-class>servlet.AllSubjects</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllSubjects</servlet-name>
+        <url-pattern>/subjects</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AllTasks</servlet-name>
+        <servlet-class>servlet.AllTasks</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllTasks</servlet-name>
+        <url-pattern>/tasks</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>CreateQuestion</servlet-name>
         <servlet-class>servlet.CreateQuestion</servlet-class>
     </servlet>
@@ -63,6 +85,29 @@
     <servlet-mapping>
         <servlet-name>CreateQuestion</servlet-name>
         <url-pattern>/questions/create</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>CreateTask</servlet-name>
+        <servlet-class>servlet.CreateTask</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CreateTask</servlet-name>
+        <url-pattern>/tasks/create</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- TODO:パラメータ対応 -->
+    <servlet>
+        <servlet-name>DetailSubject</servlet-name>
+        <servlet-class>servlet.DetailSubject</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DetailSubject</servlet-name>
+        <url-pattern>/subjects/detail</url-pattern>
     </servlet-mapping>
 
 
@@ -76,16 +121,6 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-
-    <servlet>
-        <servlet-name>Practices</servlet-name>
-        <servlet-class>servlet.Practices</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Practices</servlet-name>
-        <url-pattern>/practices</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>Register</servlet-name>
@@ -109,6 +144,7 @@
     </servlet-mapping>
 
 
+    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>ShowQuestion</servlet-name>
         <servlet-class>servlet.ShowQuestion</servlet-class>
@@ -117,6 +153,17 @@
     <servlet-mapping>
         <servlet-name>ShowQuestion</servlet-name>
         <url-pattern>/questions/show</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>SubjectRegister</servlet-name>
+        <servlet-class>servlet.SubjectRegister</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SubjectRegister</servlet-name>
+        <url-pattern>/subjects/register</url-pattern>
     </servlet-mapping>
 
 
@@ -130,6 +177,8 @@
         <url-pattern>/timetable</url-pattern>
     </servlet-mapping>
 
+
+    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>TimetableSearch</servlet-name>
         <servlet-class>servlet.TimetableSearch</servlet-class>
@@ -139,6 +188,7 @@
         <servlet-name>TimetableSearch</servlet-name>
         <url-pattern>/timetable/search</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>UpdateQuestion</servlet-name>
@@ -159,5 +209,17 @@
     <servlet-mapping>
         <servlet-name>UserInfo</servlet-name>
         <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- TODO:パラメータ対応 -->
+    <servlet>
+        <servlet-name>ViewTask</servlet-name>
+        <servlet-class>servlet.ViewTask</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ViewTask</servlet-name>
+        <url-pattern>/tasks/view</url-pattern>
     </servlet-mapping>
 </web-app>

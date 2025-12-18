@@ -14,17 +14,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class CreateTask extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     public CreateTask() {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	this.doPost(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        this.doPost(request, response);
     }
-    
+
     @SuppressWarnings("deprecation")
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -36,37 +37,33 @@ public class CreateTask extends HttpServlet {
         String subjectId = request.getParameter("subjectId");
 
         try {
-            URL url = new URL("http://localhost:8081/practice");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setDoOutput(true);
+            JSONObject json = new JSONObject();
+            json.put("subject_id", Integer.parseInt(subjectId));
+            json.put("practice_name", practiceName);
+            json.put("place", place);
+            json.put("description", description);
+            json.put("deadline", deadline);
 
-            JSONObject body = new JSONObject();
-            body.put("subject_id", Integer.parseInt(subjectId));
-            body.put("practice_name", practiceName);
-            body.put("place", place);
-            body.put("description", description);
-            body.put("deadline", deadline);
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            OutputStream os = con.getOutputStream();
-            os.write(body.toString().getBytes("UTF-8"));
-            os.flush();
+            getServletContext().log("[rid=" + rid + "] Call API POST /posts");
 
-            if (con.getResponseCode() == 200) {
+            ApiResponse apires = api.postJson(request, "/practices", json.toString());
+
+            if (apires.is2xx()) {
                 request.getRequestDispatcher("/web_system/QA_25_CompleteTask.jsp")
-                       .forward(request, response);
+                        .forward(request, response);
             } else {
                 request.setAttribute("error", "課題作成に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp")
-                       .forward(request, response);
+                        .forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "システムエラーが発生しました");
             request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 }

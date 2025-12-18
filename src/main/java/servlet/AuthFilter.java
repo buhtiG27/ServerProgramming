@@ -20,7 +20,8 @@ public class AuthFilter implements Filter {
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
         // ログイン不要の例外
-        if (path.equals("/register") || path.equals("/login") || path.startsWith("/web_system/css/")
+        if (path.equals("/health") || path.equals("/register") || path.equals("/login")
+                || path.startsWith("/web_system/css/")
                 || path.startsWith("/web_system/images/")) {
             chain.doFilter(req, resp);
             return;

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>課題一覧画面</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_17_AllTask.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_17_AllTasks.css">
 	</head>
 	<body>
 		<div class="top_button_area">

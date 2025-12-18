@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Task;
 
-public class AllTask extends HttpServlet {
+public class AllTasks extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     public AllTask() {
@@ -32,7 +32,7 @@ public class AllTask extends HttpServlet {
     }
 
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -42,25 +42,17 @@ public class AllTask extends HttpServlet {
 
         try {
             // ===== Go API 呼び出し =====
-            URL url = new URL("http://localhost:8081/practice");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+            getServletContext().log("[rid=" + rid + "] AllTask calling API /api/practices"); // API呼び出しをログに書き込む（任意）
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
+            ApiResponse apires = api.get(request, "/practices"); // api.getかapi.postJsonを入れる
 
-            if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            if (!apires.is2xx()) {
+                // TODO:アクセス失敗時処理
                 throw new IOException("Go API error");
             }
 
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "UTF-8"));
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
             // ===== JSON 解析 =====
-            JSONObject json = new JSONObject(sb.toString());
+            JSONObject json = new JSONObject(apires.body);
             JSONArray practices = json.getJSONArray("practices");
 
             for (int i = 0; i < practices.length(); i++) {
@@ -83,7 +75,7 @@ public class AllTask extends HttpServlet {
                 taskList.add(task);
             }
 
-            request.setAttribute("task", taskList);
+            request.setAttribute("tasks", taskList);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +83,7 @@ public class AllTask extends HttpServlet {
         }
 
         // JSP へ
-        request.getRequestDispatcher("/web_system/QA_17_AllTask.jsp")
-               .forward(request, response);
+        request.getRequestDispatcher("/web_system/QA_17_AllTasks.jsp")
+                .forward(request, response);
     }
 }

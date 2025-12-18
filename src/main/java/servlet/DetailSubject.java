@@ -20,28 +20,24 @@ import model.Subject;
 public class DetailSubject extends HttpServlet {
 
     @SuppressWarnings("deprecation")
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
         String classname = request.getParameter("classname");
 
         try {
-            String apiUrl = "http://localhost:8080/subjects?subject_name="
-                    + URLEncoder.encode(classname, "UTF-8");
+            String query = "?subject_name=" + URLEncoder.encode(classname, "UTF-8");
+            getServletContext().log("[rid=" + rid + "] DetailSubject calling API /api/subjects"); // API呼び出しをログに書き込む（任意）
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
+            ApiResponse apires = api.get(request, "/subjects" + query); // api.getかapi.postJsonを入れる
 
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            if (!apires.is2xx()) {
+                // TODO:アクセス失敗時処理
+                throw new IOException("Go API error");
+            }
 
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) sb.append(line);
-            br.close();
-
-            JSONObject json = new JSONObject(sb.toString());
+            JSONObject json = new JSONObject(apires.body);
             JSONObject o = json.getJSONArray("subjects").getJSONObject(0);
 
             Subject subject = new Subject();
@@ -56,6 +52,6 @@ public class DetailSubject extends HttpServlet {
         }
 
         request.getRequestDispatcher("/web_system/QA_21_DetailSubject.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 }

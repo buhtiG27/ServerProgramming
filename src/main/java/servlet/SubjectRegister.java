@@ -21,7 +21,7 @@ public class SubjectRegister extends HttpServlet {
     }
 
     @SuppressWarnings("deprecation")
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -36,35 +36,29 @@ public class SubjectRegister extends HttpServlet {
             json.put("subject_name", classname);
             json.put("teacher", teacher);
             json.put("class_room", roomname);
-            json.put("koma", 1);          // 必須
-            json.put("weekday", "Mon");   // 必須
-            json.put("time", "1");        // 必須
+            json.put("koma", 1); // 必須
+            json.put("weekday", "Mon"); // 必須
+            json.put("time", "1"); // 必須
 
             // ===== Go API POST =====
-            URL url = new URL("http://localhost:8080/subjects");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            conn.setDoOutput(true);
+            getServletContext().log("[rid=" + rid + "] SubjectRegister calling API /api/subjects");
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse apires = api.postJson(request, "/subjects", json.toString());
 
-            OutputStream os = conn.getOutputStream();
-            os.write(json.toString().getBytes("UTF-8"));
-            os.close();
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            if (!apires.is2xx()) {
                 throw new IOException("API error");
             }
 
             // 成功
             request.setAttribute("Register", classname);
             request.getRequestDispatcher("/web_system/QA_22_CompleteSubject.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "科目登録に失敗しました");
             request.getRequestDispatcher("/web_system/QA_20_CreateSubject.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
         }
     }
 }

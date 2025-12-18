@@ -42,26 +42,12 @@ public class ShowQuestion extends HttpServlet {
 
         long questionId = Long.parseLong(questionIdStr);
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("token") == null) {
-            request.setAttribute("error", "ログインしてください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                    .forward(request, response);
-            return;
-        }
-
-        String token = (String) session.getAttribute("token");
-
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            getServletContext().log("[rid=" + rid + "] Call API GET /posts");
+            getServletContext().log("[rid=" + rid + "] ShowQuestion Call API GET /posts");
 
-            // ApiResponse apires = api.get("/posts", token);
             ApiResponse apires = api.get(request, "/posts");
-
-            // この部分の修正が必要（多分go）
-            // ApiResponse apires = api.get("/posts", token);
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");

@@ -28,7 +28,7 @@ public class AllSubjects extends HttpServlet {
         doGet(request, response);
     }
 
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -38,26 +38,19 @@ public class AllSubjects extends HttpServlet {
             // ===== Go API 呼び出し =====
             String weekday = request.getParameter("weekday");
             String time = request.getParameter("time");
+            String query = "?weekday=" + URLEncoder.encode(weekday, "UTF-8") + "&time="
+                    + URLEncoder.encode(time, "UTF-8");
 
-            String apiUrl = "http://localhost:8080/subjects"
-                    + "?weekday=" + URLEncoder.encode(weekday, "UTF-8")
-                    + "&time=" + URLEncoder.encode(time, "UTF-8");
+            getServletContext().log("[rid=" + rid + "] AllSubjects calling API /api/subjects"); // API呼び出しをログに書き込む（任意）
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
+            ApiResponse apires = api.get(request, "/subjects" + query); // api.getかapi.postJsonを入れる
 
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            if (!apires.is2xx()) {
+                // TODO:アクセス失敗時処理
+                throw new IOException("Go API error");
             }
-            br.close();
-
             // ===== JSON → Subject List =====
-            JSONObject json = new JSONObject(sb.toString());
+            JSONObject json = new JSONObject(apires.body);
             JSONArray array = json.getJSONArray("subjects");
 
             List<Subject> list = new ArrayList<>();
@@ -78,6 +71,6 @@ public class AllSubjects extends HttpServlet {
         }
 
         request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 }

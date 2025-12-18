@@ -18,7 +18,7 @@ public class ViewTask extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -38,28 +38,18 @@ public class ViewTask extends HttpServlet {
 
         try {
             // Go API 呼び出し
-            URL url = new URL("http://localhost:8081/practice/" + practiceId);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+            getServletContext().log("[rid=" + rid + "] ViewTask calling API /api/practices"); // API呼び出しをログに書き込む（任意）
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
+            ApiResponse apires = api.get(request, "/practices" + practiceId); // api.getかapi.postJsonを入れる
 
-            if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            if (!apires.is2xx()) {
                 request.setAttribute("error", "課題情報の取得に失敗しました");
                 request.getRequestDispatcher(destination).forward(request, response);
                 return;
             }
 
-            // レスポンス読み込み
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "UTF-8"));
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
             // JSON 解析
-            JSONObject json = new JSONObject(sb.toString());
+            JSONObject json = new JSONObject(apires.body);
             JSONObject p = json.getJSONObject("practice");
 
             // Task に詰め替え
