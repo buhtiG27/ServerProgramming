@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ public class AllQuestions extends HttpServlet {
     public AllQuestions() {
         super();
     }
+    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,13 +47,12 @@ public class AllQuestions extends HttpServlet {
         String token = (String) session.getAttribute("token");
 
         try {
-            ApiClient api =
-                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiClient api =(ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
             // 認証付き GET
-            ApiResponse apires = api.get("/posts", token);
+            ApiResponse apires = api.get("/posts");
 
             if (!apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] API error status=" + apires.status);
@@ -93,11 +94,5 @@ public class AllQuestions extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         doGet(req, res);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
 }
