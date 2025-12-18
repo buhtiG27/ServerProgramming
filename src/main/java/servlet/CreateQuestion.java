@@ -1,11 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.HashMap;
-import java.util.Map;
 
-import com.google.gson.Gson;
+import org.json.JSONObject;
 
 import client.ApiClient;
 import client.ApiResponse;
@@ -13,8 +10,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
+@WebServlet("/CreateQuestion")
 public class CreateQuestion extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -22,46 +21,59 @@ public class CreateQuestion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String rid = (String) request.getAttribute("rid");
+        getServletContext().log("[rid=" + rid + "] CreateQuestion start");
+
         request.setCharacterEncoding("UTF-8");
 
-        // JSP からの入力（Go 側と一致させる）
-        String contentsText = request.getParameter("questionBody");
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("token") == null) {
+            request.setAttribute("error", "ログインしてください");
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                   .forward(request, response);
+            return;
+        }
 
-        if (contentsText == null || contentsText.isEmpty()) {
-            request.setAttribute("error", "質問内容が入力されていません");
+        String token = (String) session.getAttribute("token");
+
+        // JSP からの入力
+        String content = request.getParameter("content");
+
+        if (content == null || content.isBlank()) {
+            request.setAttribute("error", "質問内容を入力してください");
             request.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
                    .forward(request, response);
             return;
         }
 
-        // Go API 用 JSON 作成
-        Map<String, Object> body = new HashMap<>();
-        body.put("is_question", true);
-        body.put("contents_text", contentsText);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(body);
+        // === Go API 用 JSON ===
+        JSONObject json = new JSONObject();
+        json.put("is_question", true);
+        json.put("contents_text", content);
 
         try {
-            ApiClient api = (ApiClient) getServletContext()
-                    .getAttribute(AppInitListener.API_KEY);
+            ApiClient api =
+                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            ApiResponse res = api.postJson("/posts", json);
+            getServletContext().log("[rid=" + rid + "] Call API POST /posts");
 
-            if (res.status == HttpURLConnection.HTTP_OK
-             || res.status == HttpURLConnection.HTTP_CREATED) {
+            ApiResponse apires = api.postJson("/posts", json.toString());
 
-                // 成功 → 質問一覧へ
+            if (apires.is2xx()) {
+                getServletContext().log("[rid=" + rid + "] CreateQuestion success");
                 response.sendRedirect(request.getContextPath() + "/questions");
 
             } else {
-                request.setAttribute("error", res.body);
+                getServletContext().log(
+                    "[rid=" + rid + "] CreateQuestion failed status=" + apires.status
+                );
+                request.setAttribute("error", "質問の投稿に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_12_CreateQuestion.jsp")
                        .forward(request, response);
             }
 
         } catch (Exception e) {
-            getServletContext().log("CreateQuestion failed", e);
+            getServletContext().log("[rid=" + rid + "] CreateQuestion error", e);
             throw new ServletException(e);
         }
     }
