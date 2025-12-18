@@ -1,60 +1,84 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
+import org.json.JSONObject;
+
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Member;
-import model.MemberDAO;
+import jakarta.servlet.http.HttpSession;
+import listener.AppInitListener;
 
-@WebServlet("/WSP/Login") 
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String rid = (String) request.getAttribute("rid");
+        getServletContext().log("[rid=" + rid + "] Login start");
 
         request.setCharacterEncoding("UTF-8");
-        
-        String username = request.getParameter("Username");
-        String password = request.getParameter("Password");
 
-        // ★ 改善: 未入力チェック
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        String userId = request.getParameter("Username");
+        String password = request.getParameter("Password");
+        getServletContext().log("[rid=" + rid + "] Login Username=" + userId);
+
+        if (userId == null || userId.isEmpty() ||
+                password == null || password.isEmpty()) {
+
             request.setAttribute("error", "ユーザ名とパスワードを入力してください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                    .forward(request, response);
             return;
         }
 
-        Member member = new Member();
-        member.setUsername(username);
-        member.setPassword(password);
-
-        MemberDAO dao = new MemberDAO();
-        boolean result = false;
+        // === Go API に送る JSON ===
+        JSONObject json = new JSONObject();
+        json.put("user_id", userId);
+        json.put("password", password);
 
         try {
-            result = dao.check(member);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // ★ 改善: データベースエラー時のメッセージ
-            request.setAttribute("error", "システムエラーが発生しました。時間をおいて再度お試しください。");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
-            return; // 処理を中断
-        }
+            getServletContext().log("[rid=" + rid + "] Login calling API /api/login");
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiResponse apires = api.postJson(request, "/login", json.toString());
 
-        if (result) {
-        	// ログイン成功
-        	request.getSession().setAttribute("loginUser", member);
-        	request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response); 
-        	} else {
-            // ログイン失敗
-            request.setAttribute("error", "ユーザ名またはパスワードが違います");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp").forward(request, response);
+            if (apires.is2xx()) {
+                JSONObject res = new JSONObject(apires.body);
+
+                String token = res.getString("token");
+                JSONObject user = res.getJSONObject("user");
+
+                HttpSession session = request.getSession();
+                session.setAttribute("token", token);
+                session.setAttribute("userId", user.getString("user_id"));
+                session.setAttribute("displayName", user.getString("display_name"));
+                session.setAttribute("login", true);
+
+                getServletContext().log("[rid=" + rid + "] Login foward -> /questions");
+                // request.getRequestDispatcher("/questions") .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/questions");
+
+            } else {
+                request.setAttribute("error", "ユーザ名またはパスワードが違います");
+                getServletContext().log("[rid=" + rid + "] Login foward -> QA_01_Login.jsp");
+                request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                        .forward(request, response);
+            }
+        } catch (Exception e) {
+            // TODO:
+            getServletContext().log("[rid=" + rid + "] Login failed", e);
+            throw new ServletException(e);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                .forward(request, response);
     }
 }

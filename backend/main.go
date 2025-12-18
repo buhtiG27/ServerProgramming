@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/buhtiG27/ServerProgramming/backend/controllers"
 	"github.com/buhtiG27/ServerProgramming/backend/middlewares"
 	"github.com/buhtiG27/ServerProgramming/backend/models"
@@ -14,6 +16,32 @@ func main() {
 
 	api := router.Group("/api")
 
+	// サーバの生存確認用
+	api.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"ok": true,
+		})
+	})
+	// データベースの生存確認用
+	api.GET("/ready", func(c *gin.Context) {
+		if models.DB == nil {
+			c.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{
+				"error": "db not initialized",
+			})
+			return
+		}
+		if err := models.DB.Exec("SELECT 1").Error; err != nil {
+			c.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"ok": true,
+		})
+	})
+
 	api.POST("/register", controllers.Register)
 	api.POST("/login", controllers.Login)
 
@@ -25,7 +53,7 @@ func main() {
 		protected.GET("/user", controllers.CurrentUser)
 
 		// 投稿
-		protected.POST("/post", controllers.Post)
+		protected.POST("/posts", controllers.Post)
 
 		// 投稿の返信一覧の取得
 		protected.GET("/posts/:id/replies", controllers.GetReply)
@@ -37,7 +65,7 @@ func main() {
 		protected.GET("/subjects", controllers.GetSubjects)
 
 		// 課題の登録
-		protected.POST("/set_practice", controllers.SetPractice)
+		protected.POST("/practice/set", controllers.SetPractice)
 
 		// 科目に紐づいた課題一覧の取得
 		protected.GET("/subjects/:id/practices", controllers.GetPractices)
@@ -51,9 +79,9 @@ func main() {
 		// 時間割の取得
 		protected.GET("/timetables", controllers.GetTimetable)
 
+		// 新着投稿の取得
+		protected.GET("/posts", controllers.GetPosts)
 	}
-	// 新着投稿の取得
-	api.GET("/posts", controllers.GetPosts)
 
 	router.Run(":8080")
 }

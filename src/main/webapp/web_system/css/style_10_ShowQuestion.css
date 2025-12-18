@@ -17,14 +17,6 @@ h1{
     margin: 5px;
     padding: 5px;
 }
-/*上部のForm・button*/
-.top_button{
-	position: fixed;
-	top: 0;
-	width: 100%; 
-	background: white;
-    text-align: center;
-}
 
 .button{
 	position: absolute;
@@ -164,5 +156,8 @@ h1{
 	font-size: 24px;
 	padding: 25px 0;
 }
+
+
+
 
 

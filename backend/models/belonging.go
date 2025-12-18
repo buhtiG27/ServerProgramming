@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Belonging struct {
 	gorm.Model
-	DepartmentCode string `gorm:"not null;" json:"department_code"`
-	Classification uint   `gorm:"not null;" json:"classification"`
+	DepartmentCode *string `json:"department_code"`
+	Classification *uint   `json:"classification"`
 }
 
 func (b *Belonging) Save() (*Belonging, error) {
