@@ -14,7 +14,7 @@
 	<body>
 
 		<header>
-			<jsp:include page="header.jsp" /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+			<jsp:include page="header.jsp" />
 		</header>
 		
 		<main>
