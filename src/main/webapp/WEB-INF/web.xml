@@ -17,6 +17,7 @@
         <url-pattern>/health</url-pattern>
     </servlet-mapping>
 
+    <!-- Filter Zone -->
     <filter>
         <filter-name>AccessLogFilter</filter-name>
         <filter-class>servlet.AccessLogFilter</filter-class>
@@ -24,6 +25,16 @@
 
     <filter-mapping>
         <filter-name>AccessLogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>UnauthorizedRedirectFilter</filter-name>
+        <filter-class>servlet.UnauthorizedRedirectFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UnauthorizedRedirectFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
@@ -39,6 +50,8 @@
     </filter-mapping>
 
 
+    <!-- URl Mapping Zone -->
+    <!-- servletはファイルの順番通りになってる -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

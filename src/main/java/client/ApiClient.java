@@ -34,15 +34,18 @@ public final class ApiClient {
 
     private ApiResponse request(HttpServletRequest request, String method, String path, String jsonBody)
             throws Exception {
-        HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
         String urlStr = baseUrl + path;
         HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
         conn.setRequestMethod(method);
         conn.setConnectTimeout(connectTimeoutMs);
         conn.setReadTimeout(readTimeoutMs);
         conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer " + token);
+
+        HttpSession session = request.getSession(false);
+        String token = (session == null) ? null : (String) session.getAttribute("token");
+        if (token != null && !token.isBlank()) {
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+        }
 
         if (jsonBody != null) {
             conn.setDoOutput(true);
@@ -56,6 +59,9 @@ public final class ApiClient {
         String body = readBody(conn, status);
 
         log.log("[ApiClient] " + method + " " + urlStr + " -> " + status + " body=" + body);
+        if (status == 401 && token != null && !token.isBlank()) {
+            throw new UnauthorizedException("expired or invalid token");
+        }
 
         return new ApiResponse(status, body);
     }

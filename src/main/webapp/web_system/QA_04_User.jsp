@@ -13,8 +13,8 @@
         <div class="top_button">
             <%-- ログアウト部分の作成 --%>
             <form
-                action="${page.Context.request.contextPath}/logoutServlet"
-                method="post"
+                action="${page.Context.request.contextPath}/logout"
+                method="get"
                 class="logout-area"
             >
                 <button type="submit" class="logout-button">ログアウト</button>

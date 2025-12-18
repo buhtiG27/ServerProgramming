@@ -25,7 +25,13 @@
             <% } %> <%-- 入力フォーム --%> <% String errorMessage = (String)
             request.getAttribute("error"); if (errorMessage != null) { %>
             <p style="color: red; font-weight: bold"><%= errorMessage %></p>
+            <% } %> <% String expired = request.getParameter("expired"); if
+            ("1".equals(expired)) { %>
+            <div class="error">
+                セッションの有効期限が切れました。もう一度ログインしてください。
+            </div>
             <% } %>
+
             <form
                 action="${pageContext.request.contextPath}/login"
                 method="post"
