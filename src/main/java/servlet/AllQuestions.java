@@ -53,6 +53,10 @@ public class AllQuestions extends HttpServlet {
 
             // 認証付き GET
             ApiResponse apires = api.get("/posts");
+<<<<<<< HEAD
+=======
+            //ApiResponse apires = api.get("/posts", token);
+>>>>>>> refs/remotes/origin/main
 
             if (!apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] API error status=" + apires.status);
@@ -95,4 +99,14 @@ public class AllQuestions extends HttpServlet {
             throws ServletException, IOException {
         doGet(req, res);
     }
+<<<<<<< HEAD
+=======
+    /*
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+    */
+>>>>>>> refs/remotes/origin/main
 }

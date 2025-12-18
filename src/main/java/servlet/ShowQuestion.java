@@ -60,6 +60,10 @@ public class ShowQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
+<<<<<<< HEAD
+=======
+            //ApiResponse apires = api.get("/posts", token);
+>>>>>>> refs/remotes/origin/main
             ApiResponse apires = api.get("/posts");
 
             if (!apires.is2xx()) {
