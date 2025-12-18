@@ -11,7 +11,7 @@ import (
 // Usersのテーブル定義
 type User struct {
 	gorm.Model
-	UserID           string     `gorm:"not null;uniqueIndex" json:"user_id"`
+	AccountID        string     `gorm:"not null;uniqueIndex" json:"account_id"`
 	Password         string     `gorm:"not null;" json:"password"`
 	Email            string     `gorm:"not null;" json:"email"`
 	DisplayName      string     `gorm:"not null;" json:"display_name"`
@@ -58,7 +58,7 @@ func Authenticate(userID string, password string) (*User, error) {
 	var user User
 
 	// ユーザ名を検索する
-	err := DB.Where("user_id = ?", userID).First(&user).Error
+	err := DB.Where("account_id = ?", userID).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ type PublicUser struct {
 func (u *User) ToPublic() *PublicUser {
 	return &PublicUser{
 		ID:          u.ID,
-		UserID:      u.UserID,
+		UserID:      u.AccountID,
 		DisplayName: u.DisplayName,
 		Description: *u.Description,
 		IconPath:    *u.IconPath,

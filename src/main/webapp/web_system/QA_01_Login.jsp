@@ -8,7 +8,11 @@
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_1_Login.css"
         />
-        <link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
+        <link
+            rel="icon"
+            href="<%= request.getContextPath() %>/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
     </head>
@@ -37,7 +41,7 @@
                 action="${pageContext.request.contextPath}/login"
                 method="post"
             >
-                <label for="name">ユーザ名：</label>
+                <label for="name">メールアドレス：</label>
                 <input class="txt" type="text" size="20" name="Username" />
                 <br /><br />
                 <label for="pw">パスワード：</label>

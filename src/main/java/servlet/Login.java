@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 
         // === Go API に送る JSON ===
         JSONObject json = new JSONObject();
-        json.put("user_id", userId);
+        json.put("account_id", userId);
         json.put("password", password);
 
         try {
@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
 
                 HttpSession session = request.getSession();
                 session.setAttribute("token", token);
-                session.setAttribute("userId", user.getString("user_id"));
+                session.setAttribute("userId", user.getString("account_id"));
                 session.setAttribute("displayName", user.getString("display_name"));
                 session.setAttribute("login", true);
 

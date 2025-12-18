@@ -11,7 +11,7 @@ import (
 
 // TODO:他のユーザ登録情報をどうするか検討して，変更する
 type RegisterInput struct {
-	UserID           string `json:"user_id" binding:"required"`
+	AccountID        string `json:"account_id" binding:"required"`
 	Password         string `json:"password" binding:"required,min=8"`
 	Email            string `json:"email" binding:"required,email"`
 	DisplayName      string `json:"display_name" binding:"required"`
@@ -66,7 +66,7 @@ func Register(c *gin.Context) {
 
 	// ユーザオブジェクトを作成し，データベースに保存する
 	user := &models.User{
-		UserID:           input.UserID,
+		AccountID:        input.AccountID,
 		Password:         input.Password,
 		Email:            input.Email,
 		DisplayName:      input.DisplayName,
@@ -91,8 +91,8 @@ func Register(c *gin.Context) {
 }
 
 type LoginInput struct {
-	UserID   string `json:"user_id" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	AccountID string `json:"account_id" binding:"required"`
+	Password  string `json:"password" binding:"required"`
 }
 
 // ログイン情報から認証トークンを生成して返す
@@ -106,7 +106,7 @@ func Login(c *gin.Context) {
 	}
 
 	// ユーザオブジェクトからトークンを生成する
-	user, err := models.Authenticate(input.UserID, input.Password)
+	user, err := models.Authenticate(input.AccountID, input.Password)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
@@ -128,7 +128,7 @@ func Login(c *gin.Context) {
 // トークンからユーザ情報を返す
 func CurrentUser(c *gin.Context) {
 	// トークンからユーザIDを抽出する
-	userId, err := token.ExtractTokenId(c)
+	accountID, err := token.ExtractTokenId(c)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
@@ -136,7 +136,7 @@ func CurrentUser(c *gin.Context) {
 
 	var user models.User
 	// ユーザIDに基づいてユーザ情報をデータベースから取得する
-	err = models.DB.First(&user, userId).Error
+	err = models.DB.First(&user, accountID).Error
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return

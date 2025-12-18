@@ -5,9 +5,9 @@ import "gorm.io/gorm"
 type Timetable struct {
 	gorm.Model
 	UserID    uint    `gorm:"not null;index:idx_user_subject,unique;" json:"user_id"`
-	User      User    `gorm:"not null;foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	User      User    `gorm:"not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	SubjectID uint    `gorm:"not null;index:idx_user_subject,unique;" json:"subject_id"`
-	Subject   Subject `gorm:"not null;foreignKey:SubjectID;constraint:OnUpdate:CASCADE,OnDelete:RESTROCT;"`
+	Subject   Subject `gorm:"not null;constraint:OnUpdate:CASCADE,OnDelete:RESTRICT;"`
 }
 
 func (t *Timetable) Save() (*Timetable, error) {

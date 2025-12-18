@@ -10,7 +10,7 @@ import (
 )
 
 type CreatePostInput struct {
-	PracticeID   uint   `json:"practice_id" binding:"required"`
+	PracticeID   uint   `json:"practice_id"`
 	IsQuestion   bool   `json:"is_question" binding:"required"`
 	ParentID     uint   `json:"parent_id"`
 	ContentsText string `json:"contents_text" binding:"required"`
