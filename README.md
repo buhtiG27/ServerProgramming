@@ -5,13 +5,15 @@
 ```java
             getServletContext().log("[rid=" + rid + "] Login calling API /api/login"); // API呼び出しをログに書き込む（任意）
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-            ApiResponse apires = api.postJson("/login", json.toString()); // api.getかapi.postJsonを入れる
+            ApiResponse apires = api.postJson(request, "/login", json.toString()); // api.getかapi.postJsonを入れる
+            // requestはdoGetやdoPostの引数名に合わせる
             // api.getは/apiを除くパスとあればパラメータを入れる
             // api.postJsonは第二引数にjsonをStringで入れる
             int status = apires.status
             String jsonString = apires.body
             // または
             JSONObject jsonObj = new JSONObject(apires.body);
+            // ステータスコードによる条件分岐は
             if(apires.is2xx()){
                 // 成功時処理...
             } else {
@@ -48,9 +50,8 @@ String rid = (String) request.getAttribute("rid");
 これで <http://localhost:8000/> (.envでNGINX_PORT=8000にした場合)にアクセスするとページが表示される  
 
 3. 実行中にソースコードを変更し反映させたい場合  
-以下のコマンドを順に実行する  
-`docker compose up -d --build java-web`  
-`docker compose restart nginx`  
+以下のコマンドを実行する  
+`docker compose up -d --build java-web && docker compose restart nginx`  
 
 4. 終了するとき  
 `docker compose down`  
