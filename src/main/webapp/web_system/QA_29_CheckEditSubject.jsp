@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>科目編集確認画面</title>
-		<link rel="stylesheet" href="css/style_29_CheckEditSubject.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_29_CheckEditSubject.css">
 	</head>
 	<body>
 		<%
@@ -30,7 +30,7 @@
     		教室名：<%= room %><br><br>
     		
     		<div class="bottom_buttons">
-    			<form class="form" action="QA_28_EditSubject.jsp" method="post">
+    			<form class="form" action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="post">
     				<input type="hidden" name="actionType" value="correction"> 
     				<input type="hidden" name="classname" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
@@ -38,7 +38,7 @@
     				<button class="correctButton" type="submit">訂正</button>
     			</form>
     			
-    			<form class="form" action="QA_21_DetailSubject.jsp" method="post">
+    			<form class="form" action="${pageContext.request.contextPath}/web_system/QA_21_DetailSubject.jsp" method="post">
     				<input type="hidden" name="classname" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
     				<input type="hidden" name="roomname" value="<%= room %>">

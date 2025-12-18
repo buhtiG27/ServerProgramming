@@ -6,24 +6,21 @@
         <title>登録内容確認</title>
         <link
             rel="stylesheet"
-            href="<%= request.getContextPath() %>/web_system/css/style_6_NewCheck.css"
+            href="${page.Context.request.contextPath}/web_system/css/style_6_NewCheck.css"
         />
     </head>
     <body>
-        <% 
-        request.setCharacterEncoding("UTF-8"); 
-        // リクエスト・パラメータ取得
-        String email = (String) request.getAttribute("Address"); 
-        String pw = (String) request.getAttribute("Password"); 
-        String user = (String) request.getAttribute("Username"); 
-        String grade = (String) request.getAttribute("Grade"); 
-        String classification = (String) request.getAttribute("Classification"); 
-        %>
+        <% request.setCharacterEncoding("UTF-8"); // リクエスト・パラメータ取得
+        String email = (String) request.getAttribute("Address"); String pw =
+        (String) request.getAttribute("Password"); String user = (String)
+        request.getAttribute("Username"); String grade = (String)
+        request.getAttribute("Grade"); String classification = (String)
+        request.getAttribute("Classification"); %>
 
         <div class="top_button">
             <h1>TDU</h1>
             <form
-                action="<%= request.getContextPath() %>/web_system/QA_01_Login.jsp"
+                action="${page.Context.request.contextPath}/web_system/QA_01_Login.jsp"
                 method="get"
             >
                 <button class="button" type="submit">戻る</button>
@@ -31,16 +28,12 @@
             <br />
             <a>登録内容確認</a>
         </div>
-        <%
-		String errorMessage = (String) request.getAttribute("error");
-		if (errorMessage != null) {
-		%>
-    	<p style="color: red; font-weight: bold">
-        	【エラー】<%= errorMessage %>
-    	</p>
-		<%
-		}
-		%>
+        <% String errorMessage = (String) request.getAttribute("error"); if
+        (errorMessage != null) { %>
+        <p style="color: red; font-weight: bold">
+            【エラー】<%= errorMessage %>
+        </p>
+        <% } %>
         <div class="request_list">
             <br />
             メールアドレス：<%= email %><br /><br />
@@ -52,7 +45,7 @@
             <div class="bottom_buttons">
                 <form
                     class="form"
-                    action="<%= request.getContextPath() %>/register/check"
+                    action="${page.Context.request.contextPath}/register/check"
                     method="post"
                 >
                     <input type="hidden" name="actionType" value="correction" />
@@ -70,7 +63,7 @@
 
                 <form
                     class="form"
-                    action="<%= request.getContextPath() %>/register"
+                    action="${page.Context.request.contextPath}/register"
                     method="post"
                 >
                     <input type="hidden" name="Address" value="<%= email %>" />

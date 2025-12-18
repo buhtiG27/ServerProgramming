@@ -1,5 +1,6 @@
 package client;
 
+import java.lang.Exception;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -7,6 +8,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class ApiClient {
     private final String baseUrl;
@@ -21,21 +24,28 @@ public final class ApiClient {
         this.log = log;
     }
 
-    public ApiResponse get(String path) throws Exception {
-        return request("GET", path, null);
+    public ApiResponse get(HttpServletRequest request, String path) throws Exception {
+        return request(request, "GET", path, null);
     }
 
-    public ApiResponse postJson(String path, String jsonBody) throws Exception {
-        return request("POST", path, jsonBody);
+    public ApiResponse postJson(HttpServletRequest request, String path, String jsonBody) throws Exception {
+        return request(request, "POST", path, jsonBody);
     }
 
-    private ApiResponse request(String method, String path, String jsonBody) throws Exception {
+    private ApiResponse request(HttpServletRequest request, String method, String path, String jsonBody)
+            throws Exception {
         String urlStr = baseUrl + path;
         HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
         conn.setRequestMethod(method);
         conn.setConnectTimeout(connectTimeoutMs);
         conn.setReadTimeout(readTimeoutMs);
         conn.setRequestProperty("Accept", "application/json");
+
+        HttpSession session = request.getSession(false);
+        String token = (session == null) ? null : (String) session.getAttribute("token");
+        if (token != null && !token.isBlank()) {
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+        }
 
         if (jsonBody != null) {
             conn.setDoOutput(true);
@@ -49,6 +59,9 @@ public final class ApiClient {
         String body = readBody(conn, status);
 
         log.log("[ApiClient] " + method + " " + urlStr + " -> " + status + " body=" + body);
+        if (status == 401 && token != null && !token.isBlank()) {
+            throw new UnauthorizedException("expired or invalid token");
+        }
 
         return new ApiResponse(status, body);
     }

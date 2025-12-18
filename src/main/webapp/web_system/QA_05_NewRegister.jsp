@@ -16,13 +16,13 @@ String cls = (String) request.getAttribute("Classification");
 	<head>
 	<meta charset="utf-8">
 	<title>新規ログイン</title>
-	<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_5_New.css">
+	<link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_5_New.css">
 </head>
 	<body>
 
     <div class="top_button">
         <h1>TDU</h1>
-        <form action="<%= request.getContextPath() %>/web_system/QA_01_Login.jsp" method="get">
+        <form action="${page.Context.request.contextPath}/login" method="get">
             <button class="button" type="submit" name="back" value="send">戻る</button>
         </form>
         <br>
@@ -36,10 +36,10 @@ String cls = (String) request.getAttribute("Classification");
             <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
         <% } %>
 
-        <form action="<%= request.getContextPath() %>/register/check" method="post">
+        <form action="${page.Context.request.contextPath}/register/check" method="post">
 
             <label for="email">メールアドレス（@ms.dendai.ac.jp）：</label><br>
-            <input class="txt" type="text" size="256" name="Address"　placeholder="s123456@ms.dendai.ac.jp"
+            <input class="txt" type="text" size="256" name="Address" placeholder="s123456@ms.dendai.ac.jp"
                        value="<%= (email != null ? email : "") %>"/>
             <br><br>
 
