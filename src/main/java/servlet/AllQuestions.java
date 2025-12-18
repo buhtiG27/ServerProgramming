@@ -10,14 +10,12 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
-@WebServlet("/questions")
 public class AllQuestions extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -53,6 +51,8 @@ public class AllQuestions extends HttpServlet {
 
             // 認証付き GET
             ApiResponse apires = api.get("/posts");
+            
+            // この部分の修正が必要（多分go）
             //ApiResponse apires = api.get("/posts", token);
 
             if (!apires.is2xx()) {
