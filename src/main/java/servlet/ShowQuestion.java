@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import client.ApiClient;
 import client.ApiResponse;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,7 +59,8 @@ public class ShowQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
-            ApiResponse apires = api.get("/posts", token);
+            //ApiResponse apires = api.get("/posts", token);
+            ApiResponse apires = api.get("/posts");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");

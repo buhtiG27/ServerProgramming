@@ -52,7 +52,8 @@ public class AllQuestions extends HttpServlet {
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
             // 認証付き GET
-            ApiResponse apires = api.get("/posts", token);
+            ApiResponse apires = api.get("/posts");
+            //ApiResponse apires = api.get("/posts", token);
 
             if (!apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] API error status=" + apires.status);
