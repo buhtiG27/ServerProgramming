@@ -1,6 +1,7 @@
-/*全ページ共通の設定(これがないとページ間でちょっとずれたりする)*/
+/*全ページ共通の設定*/
 html{
 	overflow-y: scroll;/*スクロールバーを常に表示する*/
+	overflow-x:hidden;
 }
 html, body {
   margin: 0;
