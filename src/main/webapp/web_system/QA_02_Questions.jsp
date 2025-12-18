@@ -78,7 +78,20 @@
 		</main>
 	
 		<nav>
-			<jsp:include page="navigation.jsp" />
+			<div class="bottom_button">
+                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_02_Questions.jsp" method="get">
+                    <button class="pageButton toQuestions" type="submit">
+                        <img src="<%= request.getContextPath() %>/web_system/images/icon_home.png" alt="(質問一覧だよ！)" class="icon_toQuestions">
+                        <img src="<%= request.getContextPath() %>/web_system/images/icon_home_hukidashi.png" alt="(質問一覧だよ！)" class="icon_toQuestions_hukidashi">
+                    </button>
+                </form>
+                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_03_MyTime.jsp" method="get">
+                    <button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_calender.png" alt="(マイ時間割へ)"></button>
+                </form>
+                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_04_User.jsp" method="get">
+                    <button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_gear.png" alt="(ユーザ情報へ)"></button>
+                </form>
+            </div>
 		</nav>
 
 	</body>
