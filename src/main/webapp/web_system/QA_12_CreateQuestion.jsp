@@ -1,7 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%
-request.setCharacterEncoding("UTF-8");
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> <%
+request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -9,27 +7,29 @@ request.setCharacterEncoding("UTF-8");
         <title>質問作成画面</title>
         <link
             rel="stylesheet"
-            href="<%= request.getContextPath() %>/web_system/css/style_12_CreateQuestion.css"
+            href="${page.Context.request.contextPath}/web_system/css/style_12_CreateQuestion.css"
         />
     </head>
     <body>
         <div class="header_area">
-		<div class="button_left">
-			<form class="back_form" action="<%= request.getContextPath() %>/questions" method="get"> 
-				<button class="back_button" type="submit">戻る</button>
-			</form>
-		</div>
-
-        
-	</div>
-	<% String errorMessage = (String)
-            request.getAttribute("error"); if (errorMessage != null) { %>
-            <p style="color: red; font-weight: bold"><%= errorMessage %></p>
-            <% } %>
+            <div class="button_left">
+                <form
+                    class="back_form"
+                    action="${page.Context.request.contextPath}/questions"
+                    method="get"
+                >
+                    <button class="back_button" type="submit">戻る</button>
+                </form>
+            </div>
+        </div>
+        <% String errorMessage = (String) request.getAttribute("error"); if
+        (errorMessage != null) { %>
+        <p style="color: red; font-weight: bold"><%= errorMessage %></p>
+        <% } %>
 
         <form
             id="questionForm"
-            action="<%= request.getContextPath() %>/questions/create"
+            action="${page.Context.request.contextPath}/questions/create"
             method="post"
             enctype="multipart/form-data"
         >
@@ -56,8 +56,7 @@ request.setCharacterEncoding("UTF-8");
                 </div>
             </div>
             <div class="header_right">
-
-            <button
+                <button
                     class="save_button"
                     type="submit"
                     form="questionForm"
@@ -66,37 +65,10 @@ request.setCharacterEncoding("UTF-8");
                 >
                     保存
                 </button>
-        </div>
+            </div>
         </form>
-
-        <div class="bottom_buttons">
-            <form class="form" action="" method="get">
-                <button class="pageButton" type="submit" name="toQuestion">
-                    質問一覧
-                </button>
-            </form>
-            <form
-                class="form"
-                action="<%= request.getContextPath() %>/web_system/QA_03_MyTime.jsp"
-                method="get"
-            >
-                <button class="pageButton" type="submit" name="toTimetable">
-                    マイ時間割
-                </button>
-            </form>
-            <form
-                class="form"
-                action="<%= request.getContextPath() %>/web_system/QA_04_UserInfo.jsp"
-                method="get"
-            >
-                <button
-                    class="pageButton"
-                    type="submit"
-                    name="toUserInformation"
-                >
-                    ユーザ画面
-                </button>
-            </form>
-        </div>
+        <nav>
+            <jsp:include page="navigation.jsp" />
+        </nav>
     </body>
 </html>

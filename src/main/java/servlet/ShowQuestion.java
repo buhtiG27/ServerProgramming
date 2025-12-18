@@ -1,4 +1,5 @@
 package servlet;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,38 +36,23 @@ public class ShowQuestion extends HttpServlet {
         if (questionIdStr == null) {
             request.setAttribute("error", "質問IDが不正です");
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
             return;
         }
 
         long questionId = Long.parseLong(questionIdStr);
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("token") == null) {
-            request.setAttribute("error", "ログインしてください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
-            return;
-        }
-
-        String token = (String) session.getAttribute("token");
-
         try {
-            ApiClient api =
-                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            getServletContext().log("[rid=" + rid + "] Call API GET /posts");
+            getServletContext().log("[rid=" + rid + "] ShowQuestion Call API GET /posts");
 
-            //ApiResponse apires = api.get("/posts", token);
-            ApiResponse apires = api.get("/posts");
-            
-            // この部分の修正が必要（多分go）
-            //ApiResponse apires = api.get("/posts", token);
+            ApiResponse apires = api.get(request, "/posts");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                       .forward(request, response);
+                        .forward(request, response);
                 return;
             }
 
@@ -86,8 +72,8 @@ public class ShowQuestion extends HttpServlet {
                 }
 
                 if (p.has("parent_id") &&
-                    !p.isNull("parent_id") &&
-                    p.getLong("parent_id") == questionId) {
+                        !p.isNull("parent_id") &&
+                        p.getLong("parent_id") == questionId) {
 
                     answers.add(p);
                 }
@@ -103,8 +89,7 @@ public class ShowQuestion extends HttpServlet {
             request.setAttribute("questionId", questionId);
 
             getServletContext().log(
-                "[rid=" + rid + "] ShowQuestion success answers=" + answers.size()
-            );
+                    "[rid=" + rid + "] ShowQuestion success answers=" + answers.size());
 
         } catch (Exception e) {
             getServletContext().log("[rid=" + rid + "] ShowQuestion failed", e);
@@ -112,6 +97,6 @@ public class ShowQuestion extends HttpServlet {
         }
 
         request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 }

@@ -15,7 +15,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Subject;
 
-public class MyTimeCheckServlet extends HttpServlet {
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
+public class Timetable extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -25,36 +30,30 @@ public class MyTimeCheckServlet extends HttpServlet {
     }
 
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         // [時限1～8][曜日0～5]
         Subject[][] myTimeTable = new Subject[9][6];
 
         try {
             // ===== Go API 呼び出し =====
-            URL url = new URL("http://localhost:8080/timetable");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Authorization",
-                    request.getSession().getAttribute("token").toString());
+            getServletContext().log("[rid=" + rid + "] Timetable calling API /api/timetable"); // API呼び出しをログに書き込む（任意）
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
+            ApiResponse apires = api.get(request, "/timetable"); // api.getかapi.postJsonを入れる
 
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            if (!apires.is2xx()) {
+                // TODO:アクセス失敗時処理
+                throw new IOException("Go API error");
             }
-            br.close();
 
-            JSONObject json = new JSONObject(sb.toString());
+            JSONObject json = new JSONObject(apires.body);
             JSONArray arr = json.getJSONArray("timetables");
-            //json.put("subject_id", subjectId);
+            // json.put("subject_id", subjectId);
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject t = arr.getJSONObject(i);
                 JSONObject s = t.getJSONObject("subject");
@@ -65,7 +64,7 @@ public class MyTimeCheckServlet extends HttpServlet {
                 sub.setTeacher(s.optString("teacher"));
                 sub.setClassRoom(s.optString("class_room"));
 
-                int period = s.getInt("koma");          // 時限
+                int period = s.getInt("koma"); // 時限
                 int day = convertWeekday(s.getString("weekday"));
 
                 myTimeTable[period][day] = sub;
@@ -79,18 +78,24 @@ public class MyTimeCheckServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("/web_system/QA_03_MyTime.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 
     // 月〜金 → 0〜4
     private int convertWeekday(String weekday) {
         switch (weekday) {
-            case "Mon": return 0;
-            case "Tue": return 1;
-            case "Wed": return 2;
-            case "Thu": return 3;
-            case "Fri": return 4;
-            default: return 5;
+            case "Mon":
+                return 0;
+            case "Tue":
+                return 1;
+            case "Wed":
+                return 2;
+            case "Thu":
+                return 3;
+            case "Fri":
+                return 4;
+            default:
+                return 5;
         }
     }
 }

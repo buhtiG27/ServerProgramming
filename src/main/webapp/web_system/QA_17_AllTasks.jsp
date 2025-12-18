@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>課題一覧画面</title>
-		<link rel="stylesheet" href="css/style_17_AllTask.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_17_AllTasks.css">
 	</head>
 	<body>
 		<div class="top_button_area">
@@ -13,7 +13,7 @@
 			</form>
 		</div>
 		<div class="header_area">
-			<form action="QA_03_MyTime.jsp" method="get">
+			<form action="${pageContext.request.contextPath}/timetable" method="get">
 				<button class="back_button" type="submit" name="filterbyNew" value="send">戻る</button>
 			</form>
 			<h2>課題一覧</h2>
@@ -35,20 +35,12 @@
 					<button class="show_button" type="submit" name="filterbyNew" value="send">課題2</button>
 				</form>
 				<p>サンプル表示</p>	
-			</div>	
-			<br>
-			<br>
-			<div class="bottom_buttons">
-			<form class="form" action="QA_02_Questions.jsp" method="get">
-				<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-			</form>
-			<form class="form" action="" method="get">
-				<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
-			</form>
-			<form class="form" action="QA_04_User.jsp" method="get">
-				<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
-			</form>
 		</div>	
+		<br>
+		<br>
+		<nav>
+			<jsp:include page="navigation.jsp" />
+		</nav>
 
 	</body>
 </html>
