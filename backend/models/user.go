@@ -11,18 +11,18 @@ import (
 // Usersのテーブル定義
 type User struct {
 	gorm.Model
-	UserID           string  `gorm:"not null;uniqueIndex" json:"user_id"`
-	Password         string  `gorm:"not null;" json:"password"`
-	Email            string  `gorm:"not null;" json:"email"`
-	DisplayName      string  `gorm:"not null;" json:"display_name"`
-	Description      *string `json:"description"`
-	YearOfEnrollment *int    `json:"year_of_enrollment"`
-	Grade            *int    `json:"grade"`
-	BelongingID      *uint
-	Belonging        *Belonging `json:"belonging"`
+	AccountID        string     `gorm:"not null;uniqueIndex" json:"account_id"`
+	Password         string     `gorm:"not null;" json:"password"`
+	Email            string     `gorm:"not null;" json:"email"`
+	DisplayName      string     `gorm:"not null;" json:"display_name"`
+	Description      *string    `json:"description"`
+	YearOfEnrollment *int       `json:"year_of_enrollment"`
+	Grade            *int       `json:"grade"`
+	BelongingID      *uint      `json:"belonging_id"`
+	Belonging        *Belonging `gorm:"foreignKey:BelongingID;constraint:OnUpdate:CASCADE,OnDelete:RESTRICT;" json:"belonging"`
 	IconPath         *string    `json:"icon_path"`
 	HeaderPath       *string    `json:"header_path"`
-	Restriction      bool       `gorm:"not null"`
+	Restriction      bool
 }
 
 // Userオブジェクトをデータベースに保存する
@@ -58,7 +58,7 @@ func Authenticate(userID string, password string) (*User, error) {
 	var user User
 
 	// ユーザ名を検索する
-	err := DB.Where("user_id = ?", userID).First(&user).Error
+	err := DB.Where("account_id = ?", userID).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,4 +80,24 @@ func GenerateTokenFromUser(user *User) (string, error) {
 	}
 
 	return token, nil
+}
+
+type PublicUser struct {
+	ID          uint   `json:"id"`
+	UserID      string `json:"user_id"`
+	DisplayName string `json:"display_name"`
+	Description string `json:"description"`
+	IconPath    string `json:"icon_path"`
+	HeaderPath  string `json:"header_path"`
+}
+
+func (u *User) ToPublic() *PublicUser {
+	return &PublicUser{
+		ID:          u.ID,
+		UserID:      u.AccountID,
+		DisplayName: u.DisplayName,
+		Description: *u.Description,
+		IconPath:    *u.IconPath,
+		HeaderPath:  *u.HeaderPath,
+	}
 }

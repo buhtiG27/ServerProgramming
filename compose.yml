@@ -48,7 +48,12 @@ services:
     container_name: java_web
     env_file:
       - ./env/java.env
-    command: ["sh", "-c", "touch /usr/local/tomcat/logs/catalina.$(date +%F).log /usr/local/tomcat/logs/localhost.$(date +%F).log; tail -F /usr/local/tomcat/logs/*.log & exec catalina.sh run"]
+    environment:
+      - TZ=Asia/Tokyo
+    command: ["sh","-c","
+      touch /usr/local/tomcat/logs/catalina.$(date +%F).log /usr/local/tomcat/logs/localhost.$(date +%F).log;
+      tail -F /usr/local/tomcat/logs/*.log /usr/local/tomcat/logs/*.txt &
+      exec catalina.sh run "]
     depends_on:
       go-api:
         condition: service_healthy

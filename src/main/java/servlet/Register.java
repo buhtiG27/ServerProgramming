@@ -59,7 +59,7 @@ public class Register extends HttpServlet {
         // 確認画面からの値取得
         JSONObject json = new JSONObject();
 
-        json.put("user_id", user);
+        json.put("account_id", email);
         json.put("password", pw);
         json.put("email", email);
         json.put("display_name", user);
