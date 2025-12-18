@@ -27,7 +27,7 @@ Request(JSON)
 
 ```json
 {
-  "user_id": "s1234567",
+  "account_id": "s1234567",
   "password": "password123",
   "email": "xxx@ms.dendai.ac.jp",
   "display_name": "Haru",
@@ -46,7 +46,7 @@ Request(JSON)
 Response(200)
 
 ```json
-{ "data": { "id": 1, "user_id": "...", "...": "..." } }
+{ "data": { "id": 1, "account_id": "...", "...": "..." } }
 ```
 
 （passwordは除外される）
@@ -64,7 +64,7 @@ Errors
 Request(JSON)
 
 ```json
-{ "user_id": "s1234567", "password": "password123" }
+{ "account_id": "s1234567", "password": "password123" }
 ```
 
 Response(200)
@@ -72,7 +72,7 @@ Response(200)
 ```json
 {
   "token": "<JWT>",
-  "user": { "id": 1, "user_id": "...", "...": "..." }
+  "user": { "id": 1, "account_id": "...", "...": "..." }
 }
 ```
 
@@ -109,7 +109,7 @@ Response(200)
       "image_path": "",
       "creator": {
         "id": 1,
-        "user_id": "s123",
+        "account_id": "s123",
         "display_name": "Haru",
         "description": "...",
         "icon_path": "",
@@ -135,7 +135,7 @@ Headers: Authorization required
 Response(200)
 
 ```json
-{ "data": { "id": 1, "user_id": "...", "...": "..." } }
+{ "data": { "id": 1, "account_id": "...", "...": "..." } }
 ```
 
 ---
