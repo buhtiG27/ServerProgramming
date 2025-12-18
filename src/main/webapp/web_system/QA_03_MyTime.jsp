@@ -3,10 +3,15 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
-        <title>マイ時間割画面</title>
+        <title>マイ時間割 | 電大生のQ&A</title>
+        <link
+            rel="icon"
+            href="${page.Context.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
-            href="${pageContext.request.contextPath}/web_system/css/style_3_MyTime.css"
+            href="${page.Context.request.contextPath}/web_system/css/style_3_MyTime.css"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
@@ -15,10 +20,7 @@
         <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
 
         <div class="header_area">
-            <form
-                action="${page.Context.request.contextPath}/web_system/QA_18_DeleteMyTime.jsp"
-                method="get"
-            >
+            <form action="QA_18_DeleteMyTime.jsp" method="get">
                 <button
                     class="delete_button"
                     type="submit"
@@ -30,7 +32,7 @@
             </form>
             <h2>マイ時間割</h2>
             <form
-                action="${page.Context.request.contextPath}/web_system/QA_17_AllTask.jsp"
+                action="${page.Context.request.contextPath}/tasks"
                 method="get"
             >
                 <button

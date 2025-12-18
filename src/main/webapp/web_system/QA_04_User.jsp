@@ -3,11 +3,18 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
-        <title>ユーザ画面</title>
+        <title>ユーザ情報 | 電大生のQ&A</title>
+        <link
+            rel="icon"
+            href="${page.Context.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
             href="${page.Context.request.contextPath}/web_system/css/style_4_User.css"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- cssでスマホ用のデザインをするために書く -->
     </head>
     <body>
         <div class="top_button">
