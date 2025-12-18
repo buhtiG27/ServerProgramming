@@ -1,24 +1,16 @@
 package servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
 
 public class Login extends HttpServlet {
@@ -68,7 +60,7 @@ public class Login extends HttpServlet {
 
                 getServletContext().log("[rid=" + rid + "] Login foward -> /questions");
                 request.getRequestDispatcher("/questions")
-                        .forward(request, response);
+                .forward(request, response);
 
             } else {
                 request.setAttribute("error", "ユーザ名またはパスワードが違います");
@@ -83,8 +75,10 @@ public class Login extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(req, res);
+        request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
+                .forward(request, response);
     }
 }
