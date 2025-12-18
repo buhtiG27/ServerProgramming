@@ -50,10 +50,14 @@ func Post(c *gin.Context) {
 	}
 
 	// TODO:プラクティスが存在するかチェックする
+	practiceID := &input.PracticeID
+	if *practiceID == 0 {
+		practiceID = nil
+	}
 
 	// ポストオブジェクトを作成し，データベースに保存する
 	post := &models.Post{
-		PracticeID:   &input.PracticeID,
+		PracticeID:   practiceID,
 		IsQuestion:   input.IsQuestion,
 		ParentID:     parentID,
 		CreatorID:    creatorID,
