@@ -32,7 +32,7 @@ public class Timetable extends HttpServlet {
         // getServletContext().log("[rid=" + rid + "] Login calling API /api/login");
         // ApiClient api = (ApiClient)
         // getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-        // ApiResponse apires = api.get("/timetables");
+        // ApiResponse apires = api.get(request, "/timetables");
 
         // JSONObject timetableJSON = new JSONObject(apires.body)
 

@@ -58,7 +58,7 @@ public class ShowQuestion extends HttpServlet {
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
             // ApiResponse apires = api.get("/posts", token);
-            ApiResponse apires = api.get("/posts");
+            ApiResponse apires = api.get(request, "/posts");
 
             // この部分の修正が必要（多分go）
             // ApiResponse apires = api.get("/posts", token);

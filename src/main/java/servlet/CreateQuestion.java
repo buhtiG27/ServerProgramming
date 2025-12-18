@@ -56,7 +56,7 @@ public class CreateQuestion extends HttpServlet {
             getServletContext().log("[rid=" + rid + "] Call API POST /posts");
 
             // api.setBearerToken(token);
-            ApiResponse apires = api.postJson("/posts", json.toString());
+            ApiResponse apires = api.postJson(request, "/posts", json.toString());
 
             if (apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] CreateQuestion success");

@@ -68,7 +68,7 @@ public class Register extends HttpServlet {
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse res = api.postJson("/register", json.toString());
+            ApiResponse res = api.postJson(request, "/register", json.toString());
 
             if (res.is2xx()) {
                 response.sendRedirect(request.getContextPath() + "/login");

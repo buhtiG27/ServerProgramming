@@ -51,7 +51,7 @@ public class UpdateQuestion extends HttpServlet {
         // TODO:編集機能を実装したらコメントアウト
         // ApiClient api = (ApiClient)
         // getServletContext().getAttribute(AppInitListener.API_KEY);
-        // ApiResponse res = api.put("/questions/" + questionId, json);
+        // ApiResponse res = api.put(request, "/questions/" + questionId, json);
         if (status == HttpURLConnection.HTTP_OK) {
             response.sendRedirect(
                     request.getContextPath() + "/questions/show?questionId=" + questionId);

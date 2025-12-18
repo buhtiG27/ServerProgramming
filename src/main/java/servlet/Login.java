@@ -44,7 +44,7 @@ public class Login extends HttpServlet {
         try {
             getServletContext().log("[rid=" + rid + "] Login calling API /api/login");
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse apires = api.postJson("/login", json.toString());
+            ApiResponse apires = api.postJson(request, "/login", json.toString());
 
             if (apires.is2xx()) {
                 JSONObject res = new JSONObject(apires.body);

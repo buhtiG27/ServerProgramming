@@ -6,7 +6,7 @@
         <title>ログイン画面</title>
         <link
             rel="stylesheet"
-            href="${pageContext.request.contextPath}/css/style_1_Login.css"
+            href="${pageContext.request.contextPath}/web_system/css/style_1_Login.css"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
@@ -36,7 +36,12 @@
                 <label for="pw">パスワード：</label>
                 <input class="txt" type="password" size="32" name="Password" />
                 <br /><br />
-                <button class="login_button" type="submit" name="Login" value="send">
+                <button
+                    class="login_button"
+                    type="submit"
+                    name="Login"
+                    value="send"
+                >
                     LOG IN
                 </button>
             </form>

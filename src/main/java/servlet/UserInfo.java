@@ -32,10 +32,11 @@ public class UserInfo extends HttpServlet {
             // API呼び出しをログに書き込む（任意）
             getServletContext().log("[rid=" + rid + "] Login calling API /api/login");
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-            ApiResponse apires = api.get("/user");
+            ApiResponse apires = api.get(request, "/user");
 
             if (apires.is2xx()) {
-                JSONObject userInfo = new JSONObject(apires.body);
+                JSONObject responseJSON = new JSONObject(apires.body);
+                JSONObject userInfo = responseJSON.getJSONObject("data");
                 String name = userInfo.getString("display_name");
                 String description = userInfo.getString("description");
 

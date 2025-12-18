@@ -30,7 +30,7 @@ public class TimetableSearch extends HttpServlet {
         // API呼び出しをログに書き込む（任意）
         // ApiClient api = (ApiClient)
         // getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-        // ApiResponse apires = api.postJson("/timetable", json.toString());
+        // ApiResponse apires = api.postJson(request, "/timetable", json.toString());
 
         response.setContentType("text/plain; charset=UTF-8");
 
