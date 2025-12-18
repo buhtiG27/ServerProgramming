@@ -15,7 +15,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Subject;
 
-public class MyTimeCheckServlet extends HttpServlet {
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
+public class Timetable extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -30,6 +35,7 @@ public class MyTimeCheckServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         // [時限1～8][曜日0～5]
         Subject[][] myTimeTable = new Subject[9][6];

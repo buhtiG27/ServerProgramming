@@ -12,6 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class SubjectRegister extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +30,7 @@ public class SubjectRegister extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         String classname = request.getParameter("Classname");
         String teacher = request.getParameter("Teacher");

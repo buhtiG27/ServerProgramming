@@ -17,6 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Task;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class AllTasks extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +42,7 @@ public class AllTasks extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         List<Task> taskList = new ArrayList<>();
 

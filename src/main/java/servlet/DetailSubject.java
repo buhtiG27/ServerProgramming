@@ -16,6 +16,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Subject;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 @WebServlet("/DetailSubject")
 public class DetailSubject extends HttpServlet {
 
@@ -24,6 +29,7 @@ public class DetailSubject extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
         String classname = request.getParameter("classname");
 
         try {

@@ -14,6 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Task;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 public class ViewTask extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -23,6 +28,7 @@ public class ViewTask extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         // パラメータ取得（課題ID）
         String practiceId = request.getParameter("id");

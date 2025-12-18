@@ -18,6 +18,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Subject;
 
+import client.ApiClient;
+import client.ApiResponse;
+import config.AppConfig;
+import listener.AppInitListener;
+
 @SuppressWarnings("deprecation")
 public class AllSubjects extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -33,6 +38,7 @@ public class AllSubjects extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String rid = (String) request.getAttribute("rid");
 
         try {
             // ===== Go API 呼び出し =====
