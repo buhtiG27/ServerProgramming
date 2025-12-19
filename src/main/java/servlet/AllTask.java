@@ -3,18 +3,18 @@ package servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import client.ApiClient;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import listener.AppInitListener;
 import model.Task;
 
 public class AllTask extends HttpServlet {
@@ -31,24 +31,41 @@ public class AllTask extends HttpServlet {
         doGet(request, response);
     }
 
-    @SuppressWarnings("deprecation")
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	String rid = (String) request.getAttribute("rid");
+        getServletContext().log("[rid=" + rid + "] AllQuestions start");
 
         request.setCharacterEncoding("UTF-8");
 
         List<Task> taskList = new ArrayList<>();
+        
+        //String token = (String) session.getAttribute("token");
 
         try {
-            // ===== Go API 呼び出し =====
-            URL url = new URL("http://localhost:8081/practice");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+        	ApiClient api =
+                    (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new IOException("Go API error");
+        	getServletContext().log("[rid=" + rid + "] Call API GET /posts");
+
+        	//課題用
+        	//ApiResponse apires = api.get("/");
+        	
+        	// この部分の修正が必要（多分go）
+            //ApiResponse apires = api.get("/", token);
+
+        	/*
+        	if (!apires.is2xx()) {
+                request.setAttribute("error", "科目の取得に失敗しました");
+                request.getRequestDispatcher("/web_system/QA_17_AllTask.jsp")
+                       .forward(request, response);
+                return;
             }
+            */
+            
+            
 
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(con.getInputStream(), "UTF-8"));
