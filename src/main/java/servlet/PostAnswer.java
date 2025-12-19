@@ -36,7 +36,7 @@ public class PostAnswer extends HttpServlet {
             ApiClient api =
                 (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            ApiResponse apires = api.get("/posts");
+            ApiResponse apires = api.get(request, "/posts");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");

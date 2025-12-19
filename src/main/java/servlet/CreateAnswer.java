@@ -52,7 +52,7 @@ public class CreateAnswer extends HttpServlet {
             ApiClient api =
                 (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            ApiResponse apires = api.postJson("/posts", json.toString());
+            ApiResponse apires = api.postJson(request, "/posts", json.toString());
 
             if (apires.is2xx()) {
                 response.sendRedirect(

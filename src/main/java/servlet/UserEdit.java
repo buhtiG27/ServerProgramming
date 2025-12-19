@@ -37,7 +37,7 @@ public class UserEdit extends HttpServlet {
                 (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             // ※ Go 側の CurrentUser
-            ApiResponse apires = api.get("/current_user");
+            ApiResponse apires = api.get(request,"/current_user");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "ユーザ情報の取得に失敗しました");
