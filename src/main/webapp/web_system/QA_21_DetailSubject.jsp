@@ -4,19 +4,19 @@
 	<head>
 		<meta charset="utf-8">
 		<title>科目詳細画面</title>
-		<link rel="stylesheet" href="css/style_21_DetailSubject.css">
+		<link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_21_DetailSubject.css">
 	</head>
 	<body>
 		<%--　ロゴに置き換える --%>
 		<div class="top_button_area">
-			<form action="QA_02_Questions.jsp" method="get">
+			<form action="${page.Context.request.contextPath}/web_system/QA_02_Questions.jsp" method="get">
 			<button class="top_button" type="submit" name="back" value="send">TDU</button>
 			</form>
 		</div>
 		
 		<!-- 戻るボタンとタイトル -->
 		<div class="header_area">
-			<form action="QA_19_AllMyTime.jsp" method="get">
+			<form action="${page.Context.request.contextPath}/web_system/QA_19_AllMyTime.jsp" method="get">
 				<button class="back_button" type="submit" name="back" value="send">戻る</button>
 			</form>
 			<h1 class="page_title">科目詳細</h1>
@@ -31,7 +31,7 @@
 				--%>
 			</h2>
 			<div class="edit_create">
-				<form action="QA_28_EditSubject.jsp" method="get">
+				<form action="${page.Context.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="get">
 					<button class="edit_button" type="submit" name="edit" value="send">編集</button>
 				</form>
 			</div>
@@ -62,7 +62,7 @@
 			</div>
 			<label>課題：
 				<div class="new_create">
-					<form action="QA_23_NewCreateTask.jsp" method="get">
+					<form action="${page.Context.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="get">
 						<button class="new_create_button" type="submit" name="edit" value="send">新規作成</button>
 					</form>
 				</div>
@@ -75,13 +75,13 @@
 					for (Task t : tasks) {
 				--%>
 				<div class="task_item">
-					<form action="QA_13_ViewTask.jsp"> 
+					<form action="${page.Context.request.contextPath}/web_system/QA_13_ViewTask.jsp"> 
 						<input type="hidden" name="source" value="DetailSubject" /> <%--  隠しフィールド --%>
 						<button class="task_link">課題１</button>
 					</form>
 				</div>
 				<div class="task_item">
-					<form action="QA_13_ViewTask.jsp"> 
+					<form action="${page.Context.request.contextPath}/web_system/QA_13_ViewTask.jsp"> 
 						<input type="hidden" name="source" value="DetailSubject" /> <%--  隠しフィールド --%>
 						<button class="task_link">課題２</button>
 					</form>
@@ -93,16 +93,8 @@
    		    	</ul>	
 			</div>
 		</div>
-		<div class="bottom_buttons">
-			<form class="form" action="" method="get">
-				<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-			</form>
-			<form class="form" action="QA_03_MyTime.jsp" method="get">
-				<button class="pageButton" type="submit" name="toTimetable">マイ時間割</button>
-			</form>
-			<form class="form" action="QA_04_User.jsp" method="get">
-				<button class="pageButton" type="submit" name="toUserInformation">ユーザ画面</button>
-			</form>
-		</div>
+		<nav>
+			<jsp:include page="navigation.jsp" />
+		</nav>
 	</body>
 </html>

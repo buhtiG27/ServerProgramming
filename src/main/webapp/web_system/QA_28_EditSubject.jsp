@@ -54,19 +54,17 @@
 	<head>
 		<meta charset="utf-8">
 		<title>科目編集画面</title>
-		<link rel="stylesheet" href="css/style_28_EditSubject.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_28_EditSubject.css">
 	</head>
 	<body>
 		<%-- トップボタン --%>
-		<div class="top_button_area">
-			<form action="QA_02_Questions.jsp" method="get">
-				<button class="top_button" type="submit" name="back" value="send">TDU</button>
-			</form>
-		</div>
+		<header>
+			<jsp:include page="header.jsp" /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+		</header>
 		
 		<!-- 戻るボタンとタイトル -->
 		<div class="header_area">
-			<form action="QA_21_DetailSubject.jsp" method="get">
+			<form action="${pageContext.request.contextPath}/web_system/QA_21_DetailSubject.jsp" method="get">
 				<button class="back_button" type="submit" name="back" value="send">戻る</button>
 			</form>
 			<h1 class="page_title">科目編集</h1>
@@ -133,17 +131,9 @@
 			<br>
 		</div>
 		
-		<div class="bottom_buttons">
-			<form class="form" action="" method="get">
-				<button class="pageButton" type="submit" name="toQuestion">質問一覧</button>
-			</form>
-			<form class="form" action="QA_03_MyTime.jsp" method="get">
-				<button class="pageButton" action="Sample_MyTime.jsp" type="submit" name="toTimetable">マイ時間割</button>
-			</form>
-			<form class="form" action="QA_04_User.jsp" method="get">
-				<button class="pageButton" action="Sample_Uses.jsp" type="submit" name="toUserInformation">ユーザ画面</button>
-			</form>
-		</div>
+		<nav>
+			<jsp:include page="navigation.jsp" />
+		</nav>
 		
 	</body>
 </html>

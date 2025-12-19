@@ -59,7 +59,7 @@ public class Register extends HttpServlet {
         // 確認画面からの値取得
         JSONObject json = new JSONObject();
 
-        json.put("user_id", user);
+        json.put("account_id", email);
         json.put("password", pw);
         json.put("email", email);
         json.put("display_name", user);
@@ -68,11 +68,10 @@ public class Register extends HttpServlet {
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse res = api.postJson("/register", json.toString());
+            ApiResponse res = api.postJson(request, "/register", json.toString());
 
             if (res.is2xx()) {
-                request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                        .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 request.setAttribute("error", "登録に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
@@ -83,5 +82,13 @@ public class Register extends HttpServlet {
             getServletContext().log("[Register] failed", e);
             throw new ServletException(e);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/plain; charset=UTF-8");
+
+        request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
+                .forward(request, response);
     }
 }

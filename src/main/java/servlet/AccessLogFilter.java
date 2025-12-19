@@ -7,7 +7,6 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
 public class AccessLogFilter implements Filter {
     public static final String RID_ATTR = "rid";
     public static final String RID_HEADER = "X-Request-Id";

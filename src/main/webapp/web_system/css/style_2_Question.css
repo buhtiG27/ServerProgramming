@@ -79,3 +79,79 @@ show_button{
     right:15px;
 }
 
+
+/*ナビゲーション-------------------------------------------------------------------------------------------------*/
+
+/*全ページ共通の設定*/
+html{
+	overflow-y: scroll;/*スクロールバーを常に表示する*/
+	overflow-x:hidden;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.bottom_button{/*下部のナビゲーション全体*/
+	position: fixed;
+	left:0;
+	width: 100%;
+	height:10%;
+	bottom: -1%;
+	display: flex;
+    justify-content: center;
+    gap: 0;
+}
+
+.form{
+	flex: 1;
+}
+
+.pageButton{
+	position:relative;
+	width: 100%; 
+	height:120%;
+	border-radius:25px 25px 0 0;
+	background-color:rgb(255, 255, 255);
+	color:rgb(0, 0, 0); 
+	font-size: 24px;
+}
+
+.pageButton.toQuestions{
+    height:150%;
+	transform: translateY(-25%);
+}
+
+.icon_toQuestions{
+    position: absolute;
+	left:50%;
+	bottom:20%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.icon_toQuestions_hukidashi{
+    position: absolute;
+	top:5%;
+    left: 175px;
+    transform: translateX(-50%);
+    width: 93px;
+    height: 62px;
+    z-index: 2;
+
+}
+
+/* =========================== */
+/*  スマホ向けデザイン         */
+/* =========================== */
+@media screen and (max-width : 768px) {/*F12で確認できるスマホ用のレイアウト*/
+	.bottom_button{
+		position: fixed;
+		left:-0.25%;
+		top:0;
+		width: 100.5%;
+		height:10vh;
+		background: white;
+    }
+}
+/*---------------------------------------------------------------------------------------------------------------*/
