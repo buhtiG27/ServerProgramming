@@ -35,12 +35,14 @@ X02Questions
 			%>
 			
 				<div class="post">
+				
 					<div class="post_sideParts">
 						<form action="" method="get">
 							<!--アイコンを押したらこのユーザのユーザ情報を表示する？-->
 							<button class="iconButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_Monozu.png" alt="(ユーザ1のアイコン)"></button>
 						</form>
 					</div>
+					
 					<div class="post_upperParts">
 						<form action="<%= request.getContextPath() %>/web_system/QA_10_ShowQuestion.jsp" method="get" class="post_upperParts_form">
 							<button class="post_upperParts_atarihantei"></button><!-- post_upperPartsは空白の部分を押せば質問詳細を表示。これはその「空白の部分」。 -->
@@ -48,6 +50,7 @@ X02Questions
 							<div class="created_at">昨日0:15</div><!-- 投稿時刻 -->
 						</form>
 					</div>
+					
 					<div class="post_mainParts">
 						<form action="<%= request.getContextPath() %>/web_system/QA_10_ShowQuestion.jsp" method="get" class="post_mainParts_form">
 							<button class="post_mainParts_atarihantei"><!-- 投稿内容を押しても質問詳細を表示。これはその「投稿内容を押したかどうか」を判定する部分。 -->
@@ -55,6 +58,7 @@ X02Questions
 							</button>
 						</form>
 					</div>
+					
 					<div class="post_bottomParts">
 						<form action="" method="get" class="post_bottomParts_form">
 							<button class="goodButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
@@ -66,6 +70,7 @@ X02Questions
 							<button class="flagButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 						</form>
 					</div>
+					
 				</div>
 			<%
     				}
