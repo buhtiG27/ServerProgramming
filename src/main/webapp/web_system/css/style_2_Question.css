@@ -114,34 +114,113 @@ ul li *{
 	   
     font-weight: bold;
     border: solid 3px #000000;
-    z-index:-1;
+	z-index:-1;
 }
-show_button{
-	background-color:rgb(192, 192, 192);
-	color:rgb(0, 0, 0);
-	border: none;
-	width: 30%; 
-	height: 50px; 
-	font-size: 16px;	
-	padding: 15px 30px;
-}
+
 .post{
+	height:200px;
 	background-color: white;
-	padding: 15px;
-	/*border: 1px solid rgb(0, 0, 0);
-	border-radius: 8px;*/
+	display:flex;
+	flex-direction:column;
 }
-.post h3{
-	color:black;
+.post_sideParts{
+	position:absolute;
+	top:0;
+	left:0;
+	width:8%;
+	height:100%;
 }
-.button-post{
-	margin: 10px;
+.iconButton{
+	position:absolute;
+	left:0;
+	background:white;
+	border:none;
+	border-radius:50%;
+	
 }
-.like_button{
-	font-size: 12px;
-	box-sizing: border-box;
-	margin: 5px;
-    padding: 5px;
+.post_upperParts{
+	position:absolute;
+	left:8%;
+	width:92%;
+	height:20%;
+	font-size:20px;
+}
+.post_upperParts_form{
+	display:flex;
+	width:100%;
+	height:100%;
+}
+.post_upperParts_atarihantei{
+	width:100%;
+	height:100%;
+	background:white;
+	border:none;
+}
+.creatorName{
+	position:absolute;
+	top:0;
+	left:0;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.created_at{
+	position:absolute;
+	top:0;
+	right:2%;
+	margin:5px;
+}
+.post_mainParts{
+	position:absolute;
+	left:8%;
+	top:20%;
+	width:90%;
+	height:55%;
+	font-size:31px;
+}
+.post_mainParts_form{
+	width:100%;
+	height:100%;
+}
+.post_mainParts_atarihantei{
+	all:unset;
+	width:100%;
+	height:100%;
+}
+.contents_text{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	/*margin-top:10px;*/
+	margin-bottom:10px;
+	text-align:left;
+}
+.post_bottomParts{
+	position:absolute;
+	left:8%;
+	top:75%;
+	width:90%;
+	height:25%;
+	font-size:16px;
+	display:flex;
+}
+.post_bottomParts_form{
+	flex:1;
+}
+.goodButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.replyButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.flagButton{
+	height:100%;
+	border:none;
+	background:white;
 }
 /*作成button*/
 .createbutton{

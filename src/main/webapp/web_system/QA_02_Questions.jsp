@@ -21,22 +21,8 @@ X02Questions
 		</header>
 		
 		<main>
-			<div class="filters">
-				<div class="searchbyKeyword">
-					<form action="" method="post">
-        				<input class="txt" type="text" name="searchbyKeyword" size="20" placeholder="質問を検索">
-						<span class="fa-solid fa-magnifying-glass"></span>
-    				</form>
-				</div>
-				<ul>
-    				<li><button class="filter" type="submit" name="filterbyNew" value="send" data-text="新着">新着</button></li>
-    				<li><button class="filter" type="submit" name="filterbySameGrade" value="send" data-text="学科">学科</button></li>
-    				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
-				</ul>
-			</div>
-			
 			<div class="post-list">
-    		<%
+			 <%
 				List<Map<String, Object>> questions =(List<Map<String, Object>>) request.getAttribute("questions");
 			%>
     		<%
@@ -47,6 +33,46 @@ X02Questions
 				} else {
     				for (Map<String, Object> q : questions) {
 			%>
+			
+				<div class="post">
+					<div class="post_sideParts">
+						<form action="" method="get">
+							<!--アイコンを押したらこのユーザのユーザ情報を表示する？-->
+							<button class="iconButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_Monozu.png" alt="(ユーザ1のアイコン)"></button>
+						</form>
+					</div>
+					<div class="post_upperParts">
+						<form action="<%= request.getContextPath() %>/web_system/QA_10_ShowQuestion.jsp" method="get" class="post_upperParts_form">
+							<button class="post_upperParts_atarihantei"></button><!-- post_upperPartsは空白の部分を押せば質問詳細を表示。これはその「空白の部分」。 -->
+							<div class="creatorName">物津　玄師</div><!-- 投稿者名 -->
+							<div class="created_at">昨日0:15</div><!-- 投稿時刻 -->
+						</form>
+					</div>
+					<div class="post_mainParts">
+						<form action="<%= request.getContextPath() %>/web_system/QA_10_ShowQuestion.jsp" method="get" class="post_mainParts_form">
+							<button class="post_mainParts_atarihantei"><!-- 投稿内容を押しても質問詳細を表示。これはその「投稿内容を押したかどうか」を判定する部分。 -->
+								<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div><!-- 投稿内容 -->
+							</button>
+						</form>
+					</div>
+					<div class="post_bottomParts">
+						<form action="" method="get" class="post_bottomParts_form">
+							<button class="goodButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+						</form>
+						<form action="<%= request.getContextPath() %>/web_system/QA_10_ShowQuestion.jsp" method="get" class="post_bottomParts_form">
+							<button class="replyButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						</form>
+						<form action="" method="get" class="post_bottomParts_form">
+							<button class="flagButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						</form>
+					</div>
+				</div>
+			<%
+    				}
+				}
+			%>
+			<!--元のpostクラス
+
 				<div class="post">
     				<form action="${pageContext.request.contextPath}/questions/show" method="get">
         				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
@@ -69,10 +95,8 @@ X02Questions
         				</form>
     				</div>
 				</div>
-			<%
-    				}
-				}
-			%>
+
+			-->
 			</div>
 
 			<br><br>
