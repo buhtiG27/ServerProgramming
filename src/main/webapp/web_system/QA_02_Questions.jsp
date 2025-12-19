@@ -11,6 +11,7 @@ X02Questions
 		<%-- <%= request.getContextPath() %>/web_system/css/○○　このように書かないと反映されない --%>
 		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/web_system/css/style_2_Question.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> <!-- Font Awesome を追加 -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
 	<body>
