@@ -1,3 +1,66 @@
+/*ヘッダ---------------------------------------------------------------------------------------------------------*/
+.top_button{/*上部のアイコン全体*/
+	position: fixed;/*画面を規準に位置を設定*/
+	left:-0.25%;
+	top:0;
+	width: 100.5%;/*横幅=親要素(デフォルトで画面)の横幅の100%*/
+	height:20vh;
+	background: white;/*背景色=白*/
+}
+.icon_tdu{/*上部のアイコンのうち、「TDU」の部分*/
+	position:absolute;/*親要素(ここでは.top_button)を規準に位置を設定*/
+	bottom:0%;/*自分の下端を親要素の下端にぴったりくっつける*/
+	left:50%;/*自分の左端を親要素の真ん中にぴったりくっつける*/
+	transform: translateX(-50%);/*自分の横幅の半分だけ左に動く(left:50%と合わせてぴったり画面中央に配置する)*/
+	width : 20vw;/*横幅=画面の横幅の20%*/
+	height : auto;/*縦幅=widthを見て元の画像の縦横比を維持するように設定*/
+	margin-top:5vh;
+	margin-bottom:5vh;
+}
+.icon_dendaiQA{
+	position:absolute;
+	bottom:0%;
+	left:1%;
+	width:14vw;
+	height:auto;
+	margin-top:5vh;
+	margin-bottom:5vh;
+}
+
+/* =========================== */
+/*  スマホ向けデザイン         */
+/* =========================== */
+@media screen and (max-width : 768px) {/*F12で確認できるスマホ用のレイアウト*/
+	.top_button{
+		position: fixed;
+		left:-0.25%;
+		top:0;
+		width: 100.5%;
+		height:10vh;
+		background: white;
+    }
+    .icon_tdu{
+		position:absolute;
+		bottom:0%;
+		left:50%;
+		transform: translateX(-50%);
+		width : 30vw;
+		height : auto;
+		margin-top:2.5vh;
+		margin-bottom:2.5vh;
+	}
+	.icon_dendaiQA{
+		position:absolute;
+		bottom:0%;
+		left:2.5%;
+		width:25vw;
+		height:auto;
+		margin-top:2.5vh;
+		margin-bottom:2.5vh;
+	}
+}
+/*---------------------------------------------------------------------------------------------------------------*/
+
 body{
 	background-color:#F5F6F7;
 	text-align:center;
@@ -7,7 +70,26 @@ h1{
 	color:rgb(0, 128, 255);
 	
 }
-/*検索*/
+
+main{
+	position:relative;
+	margin-top: 17vh;
+	left:0;
+	width:99.5%;
+	transform:translateX(-1px);
+    font-weight: bold;
+}
+
+/*検索バーとフィルター*/
+.filters{
+	position:absolute;
+	top:0;
+	width:100%;
+	height:105px;
+	padding-right:7.5px;
+	background:white;
+}
+/*検索バー*/
 input[type="text"] {
   width: 100%;
   border: 2px solid #aaa;
@@ -30,6 +112,7 @@ input[type="text"]:focus {
 
 .searchbyKeyword {
   position: relative;
+  left:3.5px;
 }
 
 .searchbyKeyword span {
@@ -40,22 +123,54 @@ input[type="text"]:focus {
   color: #aaa;
   transition: 0.3s;
 }
-/*投稿部分*/
-main{
-	position:absolute;
-	margin-top: 17vh;
-	left:0;
-	width:99%;
-    font-weight: bold;
-    border: solid 3px #000000;
-	
-}
-.filters{
+/*フィルター*/
+ul{
+	display:flex;
+	width:100%;
 	height:50px;
+	margin:0;
+	padding:0;
+
+	background-color:rgba(0,0,0,0.4);
+	border: 2px solid #DDDDDD;
+	border-radius:16px 16px 0 0;
+	text-align:center;
+	overflow:hidden;
 }
+ul li{
+	list-style:none;
+	flex:1;
+	height:100%;
+}
+ul li *{
+	display:inline-block;
+	font-size:1.3em;
+	line-height:50px;
+}
+.filter{
+	width:100%;
+	margin-top:-50px;
+	letter-spacing:-1px;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#000;
+	transition:0.3s	cubic-bezier(0.1,0.1,0.5,1.4);
+}
+.filter:hover{
+	margin-top:0;
+}
+.filter:before{
+	content:attr(data-text);
+	display:block;
+	color:#5434d2;
+}
+
+/*投稿部分*/
 .post-list{
+	position:absolute;
+	top:105px;
 	left:0;
-	width: 99.5%;
+	width: 100%;
 	margin: 0 auto;
 	text-align: center;
 	   
@@ -72,10 +187,10 @@ show_button{
 	padding: 15px 30px;
 }
 .post{
-	border: 1px solid rgb(0, 0, 0);
 	background-color: white;
 	padding: 15px;
-	border-radius: 8px;
+	/*border: 1px solid rgb(0, 0, 0);
+	border-radius: 8px;*/
 }
 .post h3{
 	color:black;
@@ -101,7 +216,6 @@ show_button{
     bottom:180px;
     right:15px;
 }
-
 
 /*ナビゲーション-------------------------------------------------------------------------------------------------*/
 

@@ -21,17 +21,20 @@ X02Questions
 		</header>
 		
 		<main>
-			<div class="searchbyKeyword">
-				<form action="" method="post">
-        			<input class="txt" type="text" name="searchbyKeyword" size="20" placeholder="質問を検索">
-					<span class="fa-solid fa-magnifying-glass"></span><!-- Font Awesomeの虫眼鏡アイコンを使用 -->
-    			</form>
-			</div>
 			<div class="filters">
-    			<button class="button" type="submit" name="filterbyNew" value="send">新着</button>
-    			<button class="button" type="submit" name="filterbySameGrade" value="send">学科</button>
-    			<button class="button" type="submit" name="filterbyFlag" value="send">フラグ付き</button>
+				<div class="searchbyKeyword">
+					<form action="" method="post">
+        				<input class="txt" type="text" name="searchbyKeyword" size="20" placeholder="質問を検索">
+						<span class="fa-solid fa-magnifying-glass"></span>
+    				</form>
+				</div>
+				<ul>
+    				<li><button class="filter" type="submit" name="filterbyNew" value="send" data-text="新着">新着</button></li>
+    				<li><button class="filter" type="submit" name="filterbySameGrade" value="send" data-text="学科">学科</button></li>
+    				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
+				</ul>
 			</div>
+			
 			<div class="post-list">
     		<%
 				List<Map<String, Object>> questions =(List<Map<String, Object>>) request.getAttribute("questions");
