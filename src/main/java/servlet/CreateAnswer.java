@@ -56,7 +56,7 @@ public class CreateAnswer extends HttpServlet {
 
             if (apires.is2xx()) {
                 response.sendRedirect(
-                    request.getContextPath() + "/PostAnswer"
+                    request.getContextPath() + "/questions/answer"
                 );
             } else {
                 request.setAttribute("error", "回答の投稿に失敗しました");
