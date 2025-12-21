@@ -61,13 +61,13 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">昨日23:11</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
 						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+							<div class="contents_text">「寝たいけどみんなが頑張ってるしもう少しやらなきゃ...でも眠い...」ってとき、どうしてますか？</div>
 						</button>
 					</form>
 				</div>
@@ -83,6 +83,8 @@
 					</form>
 				</div>
 			</div>
+			
+			
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
@@ -93,7 +95,7 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">12/13/1:30</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
@@ -115,6 +117,8 @@
 					</form>
 				</div>
 			</div>
+			
+			
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
@@ -125,13 +129,13 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">11/28/18:29</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
 						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+							<div class="contents_text">機械学習第10回の課題で提出するものって、実行結果のpngファイルですか？それともソースコードですか？</div>
 						</button>
 					</form>
 				</div>
@@ -147,6 +151,8 @@
 					</form>
 				</div>
 			</div>
+			
+			
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
@@ -157,13 +163,13 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">2024/12/16/19:42</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
 						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+							<div class="contents_text">明日ってメディア信号処理のテストかと思いますが、開始時間っていつからでしたっけ？</div>
 						</button>
 					</form>
 				</div>
@@ -179,6 +185,31 @@
 					</form>
 				</div>
 			</div>
+			
+			<button id="cycleButton" class="motchyButton">
+				<img id="Shitsumotchy" src="images/Shitsumotchy_1.png" alt="">
+			</button>
+			<script>
+			const button = document.getElementById("cycleButton");
+			const img = document.getElementById("Shitsumotchy");
+			
+			let isVisible = true; 
+			
+			button.addEventListener("click", () => {
+				if (!isVisible) return; // もう消えてたら何もしない
+				 
+				// ① 即時反転
+				img.classList.add("flip");
+				// ② 次のフレームでフェードアウト開始
+				requestAnimationFrame(() => {
+					img.classList.add("fade-out");
+				});
+				
+				// ③ 状態を「非表示」に
+				isVisible = false;
+			});
+			</script>
+			
 		</div>
 
 		<nav>

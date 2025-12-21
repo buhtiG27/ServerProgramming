@@ -93,6 +93,7 @@ ul li *{
 	text-transform:uppercase;
 	color:#000;
 	transition:0.3s	cubic-bezier(0.1,0.1,0.5,1.4);
+	cursor: pointer;
 }
 .filter:hover{
 	margin-top:0;
@@ -222,15 +223,24 @@ ul li *{
 	border:none;
 	background:white;
 }
+.goodButton img{
+	cursor: pointer;
+}
 .replyButton{
 	height:100%;
 	border:none;
 	background:white;
 }
+.replyButton img{
+	cursor: pointer;
+}
 .flagButton{
 	height:100%;
 	border:none;
 	background:white;
+}
+.flagButton img{
+	cursor: pointer;
 }
 /*作成button*/
 .createbutton{
@@ -251,6 +261,7 @@ ul li *{
 .createbutton img{
 	width:175px;
 	height:175px;
+	cursor: pointer;
 }
 
 /*ナビゲーション-------------------------------------------------------------------------------------------------*/
@@ -289,6 +300,7 @@ html, body {
 	background-color:rgb(255, 255, 255);
 	color:rgb(0, 0, 0); 
 	font-size: 24px;
+	cursor: pointer;
 }
 
 .pageButton.toQuestions{
