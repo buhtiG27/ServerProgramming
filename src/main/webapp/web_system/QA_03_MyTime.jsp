@@ -19,7 +19,7 @@
     <body>
         <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
 
-        <div class="header_area">
+        <div class="top_area">
             <form action="QA_18_DeleteMyTime.jsp" method="get">
                 <button
                     class="delete_button"
@@ -45,7 +45,111 @@
                 </button>
             </form>
         </div>
-        <%-- 置き換え --%>
+        
+        <!-- 時間割部分 -->
+		<div class="time-list">
+			<table border="1">
+				<tr>
+					<th></th>
+					<th>月</th>
+					<th>火</th>
+					<th>水</th>
+					<th>木</th>
+					<th>金</th>
+					<th>土</th>
+				</tr>
+			    <!-- 1限〜8限 -->
+				<!-- 1限 -->
+				<tr>
+					<th>1限</th>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button>数理最適化</button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+				
+				<!-- 2限 -->
+				<tr>
+					<th>2限</th>
+					<td><button>応用信号処理</button></td>
+					<td><button></button></td>
+					<td><button>クラウドコンピューティング</button></td>
+					<td><button>ソフトウェア設計</button></td>
+					<td><button>生体情報とVR</button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 3限 -->
+				<tr>
+					<th>3限</th>
+					<td><button>機械学習および演習</button></td>
+					<td><button>サーバプログラミング演習</button></td>
+					<td><button></button></td>
+					<td><button>CGレンダリングおよび演習</button></td>
+					<td><button>情報メディア総合演習</button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 4限 -->
+				<tr>
+					<th>4限</th>
+					<td><button>コンピュータアーキテクチャ</button></td>
+					<td><button>サーバプログラミングおよび演習</button></td>
+					<td><button></button></td>
+					<td><button>CGレンダリングおよび演習</button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 5限 -->
+				<tr>
+					<th>5限</th>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 6限 -->
+				<tr>
+					<th>6限</th>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 7限 -->
+				<tr>
+					<th>7限</th>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+
+				<!-- 8限 -->
+				<tr>
+					<th>8限</th>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+					<td><button></button></td>
+				</tr>
+			</table>
+		</div>
+        <%-- 元のtime-list --%>
+        <!-- 
         <div class="time-list">
             <% String message = request.getParameter("message"); if (message !=
             null && !message.isEmpty()) { %>
@@ -79,6 +183,7 @@
                 <% } %>
             </table>
         </div>
+        -->
         <br />
         <br />
 
