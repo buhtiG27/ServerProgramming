@@ -1,101 +1,95 @@
 package servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Subject;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
 
 public class Timetable extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    @SuppressWarnings("deprecation")
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String rid = (String) request.getAttribute("rid");
 
-        // [時限1～8][曜日0～5]
-        Subject[][] myTimeTable = new Subject[9][6];
+        Map<String, Object>[][] myTimeTable = new HashMap[9][5];
+        Set<Long> registeredSubjectIds = new HashSet<>();
+        List<Map<String, Object>> subjects = new ArrayList<>();
 
         try {
-            // ===== Go API 呼び出し =====
-            getServletContext().log("[rid=" + rid + "] Timetable calling API /api/timetable"); // API呼び出しをログに書き込む（任意）
-            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-            ApiResponse apires = api.get(request, "/timetable"); // api.getかapi.postJsonを入れる
+            ApiClient api =
+                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
-            if (!apires.is2xx()) {
-                // TODO:アクセス失敗時処理
-                throw new IOException("Go API error");
+            /* ===== 時間割取得 ===== */
+            ApiResponse timeRes = api.get(request, "/timetable");
+            if (timeRes.is2xx()) {
+                JSONObject json = new JSONObject(timeRes.body);
+                JSONArray arr = json.getJSONArray("timetables");
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject t = arr.getJSONObject(i);
+                    JSONObject s = t.getJSONObject("subject");
+
+                    Map<String, Object> sub = new HashMap<>();
+                    sub.put("id", s.getLong("id"));
+                    sub.put("subject_name", s.getString("subject_name"));
+                    sub.put("teacher", s.optString("teacher"));
+                    sub.put("class_room", s.optString("class_room"));;
+
+                    int period = s.getInt("koma");
+                    int day = convertWeekday(s.getString("weekday"));
+
+                    if (period >= 1 && period <= 8 && day >= 0 && day < 5) {
+                        myTimeTable[period][day] = sub;
+                    }
+                }
             }
 
-            JSONObject json = new JSONObject(apires.body);
-            JSONArray arr = json.getJSONArray("timetables");
-            // json.put("subject_id", subjectId);
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject t = arr.getJSONObject(i);
-                JSONObject s = t.getJSONObject("subject");
-
-                Subject sub = new Subject();
-                sub.setId(s.getLong("id"));
-                sub.setSubjectName(s.getString("subject_name"));
-                sub.setTeacher(s.optString("teacher"));
-                sub.setClassRoom(s.optString("class_room"));
-
-                int period = s.getInt("koma"); // 時限
-                int day = convertWeekday(s.getString("weekday"));
-
-                myTimeTable[period][day] = sub;
+            /* ===== 科目一覧取得 ===== */
+            ApiResponse subRes = api.get(request, "/subjects");
+            if (subRes.is2xx()) {
+                JSONObject json = new JSONObject(subRes.body);
+                JSONArray arr = json.getJSONArray("subjects");
+                for (int i = 0; i < arr.length(); i++) {
+                    subjects.add(arr.getJSONObject(i).toMap());
+                }
             }
 
             request.setAttribute("myTimeTable", myTimeTable);
+            request.setAttribute("subjects", subjects);
+            request.setAttribute("registeredSubjectIds", registeredSubjectIds);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "時間割の取得に失敗しました");
+            request.setAttribute("error", "時間割データが取得できませんでした");
         }
 
         request.getRequestDispatcher("/web_system/QA_03_MyTime.jsp")
                 .forward(request, response);
     }
 
-    // 月〜金 → 0〜4
     private int convertWeekday(String weekday) {
-        switch (weekday) {
-            case "Mon":
-                return 0;
-            case "Tue":
-                return 1;
-            case "Wed":
-                return 2;
-            case "Thu":
-                return 3;
-            case "Fri":
-                return 4;
-            default:
-                return 5;
-        }
+        return switch (weekday) {
+            case "Mon" -> 0;
+            case "Tue" -> 1;
+            case "Wed" -> 2;
+            case "Thu" -> 3;
+            case "Fri" -> 4;
+            default -> -1;
+        };
     }
 }

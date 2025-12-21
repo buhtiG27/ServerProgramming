@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -6,7 +8,7 @@
         <title>時間割一覧画面</title>
         <link
             rel="stylesheet"
-            href="${page.Context.request.contextPath}/web_system/css/style_19_AllMyTime.css"
+            href="${pageContext.request.contextPath}/web_system/css/style_19_AllMyTime.css"
         />
     </head>
     <body>
@@ -17,7 +19,7 @@
         </header>
         <div class="header_area">
             <form
-                action="${page.Context.request.contextPath}/timetable"
+                action="${pageContext.request.contextPath}/timetable"
                 method="get"
             >
                 <button
@@ -30,110 +32,46 @@
                 </button>
             </form>
             <h2>時間割一覧</h2>
-            <form
-                action="${page.Context.request.contextPath}/web_system/QA_20_CreateSubject.jsp"
-            >
-                <button
-                    class="new_button"
-                    type="submit"
-                    name="filterbySameGrade"
-                    value="send"
-                >
-                    新規作成
-                </button>
-            </form>
+            <form action="${pageContext.request.contextPath}/web_system/QA_20_CreateSubject.jsp">
+    			<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
+    			<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
+    			<button class="new_button" type="submit">新規作成</button>
+			</form>
         </div>
         <br />
         <div class="body_area">
-            <form action="" method="get" class="search_form">
-                <label>検索：</label>
-                <input
-                    class="txt"
-                    type="text"
-                    size="20"
-                    value=""
-                    name="searchbyKeyword"
-                />
+		<form action="" method="get" class="search_form">
+			<label>検索：</label>
+			<input class="txt" type="text" size="20" value="" name="searchbyKeyword" />		
+		</form>
+		<%
+		List<Map<String, Object>> subjects = (List<Map<String, Object>>) request.getAttribute("subjects");			
+		if (subjects == null || subjects.isEmpty()) {
+	%>
+		<p style="color:gray;">登録されている科目はありません</p>
+	<%
+		} else {
+   			for (Map<String, Object> sub : subjects) {
+   				pageContext.setAttribute("sub", sub);
+	%>
+		<div class="subject_area">
+    	<h3>${sub['subject_name']}</h3>
+
+    	<form action="${pageContext.request.contextPath}/subjects/detail" method="get">
+        	<input type="hidden" name="subjectName" value="${sub.subjectName}">
+        	<button class="show_button" type="submit">詳細</button>
+    	</form>
+
+            <form action="${pageContext.request.contextPath}/subjects" method="post">
+                <input type="hidden" name="subjectId" value="${sub.id}">
+                <button class="register_button" type="submit">登録</button>
             </form>
-            <div class="subject_area">
-                <form
-                    action="${page.Context.request.contextPath}/web_system/QA_21_DetailSubject.jsp"
-                    method="get"
-                >
-                    <button
-                        class="show_button"
-                        type="submit"
-                        name="filterbyNew"
-                        value="send"
-                    >
-                        科目1
-                    </button>
-                </form>
-                <p>サンプル表示</p>
-                <form
-                    action="${page.Context.request.contextPath}/web_system/QA_03_MyTime.jsp"
-                    method="post"
-                >
-                    <input
-                        type="hidden"
-                        name="message"
-                        value="登録が完了しました。"
-                    />
-                    <button
-                        class="register_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        登録
-                    </button>
-                </form>
-            </div>
-            <div class="subject_area">
-                <h3>科目1</h3>
-                <p>サンプル表示</p>
-                <form
-                    action="${page.Context.request.contextPath}/web_system/QA_03_MyTime.jsp"
-                    method="post"
-                >
-                    <input
-                        type="hidden"
-                        name="message"
-                        value="登録が完了しました。"
-                    />
-                    <button
-                        class="register_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        登録
-                    </button>
-                </form>
-            </div>
-            <div class="subject_area">
-                <h3>科目1</h3>
-                <p>サンプル表示</p>
-                <form
-                    action="${page.Context.request.contextPath}/web_system/QA_03_MyTime.jsp"
-                    method="post"
-                >
-                    <input
-                        type="hidden"
-                        name="message"
-                        value="登録が完了しました。"
-                    />
-                    <button
-                        class="register_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        登録
-                    </button>
-                </form>
-            </div>
         </div>
+		<%
+		    }
+		}
+		%>
+	</div>
         <br />
         <br />
         <nav>

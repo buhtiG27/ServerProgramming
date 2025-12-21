@@ -25,7 +25,7 @@
             </label>
             <div class="button_left">
                 <form
-                    action="${page.Context.request.contextPath}/web_system/QA_04_User.jsp"
+                    action="${page.Context.request.contextPath}/user"
                     method="get"
                 >
                     <button
@@ -40,7 +40,7 @@
             </div>
             <div class="button_right">
                 <form
-                    action="${page.Context.request.contextPath}/web_system/QA_04_User.jsp"
+                    action="${page.Context.request.contextPath}/user"
                     method="get"
                 >
                     <button
@@ -93,7 +93,7 @@
         <div class="bottom_buttons">
             <form
                 class="form"
-                action="${page.Context.request.contextPath}/web_system/QA_02_Questions.jsp"
+                action="${page.Context.request.contextPath}/questions"
                 method="get"
                 style="display: inline-flex"
             >
@@ -103,7 +103,7 @@
             </form>
             <form
                 class="form"
-                action="${page.Context.request.contextPath}/web_system/QA_03_MyTime.jsp"
+                action="${page.Context.request.contextPath}/timetable"
                 method="get"
                 style="display: inline-flex"
             >
@@ -113,7 +113,7 @@
             </form>
             <form
                 class="form"
-                action=""
+                action="${page.Context.request.contextPath}/user"
                 method="get"
                 style="display: inline-flex"
             >

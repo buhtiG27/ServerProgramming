@@ -6,12 +6,12 @@
         <title>ユーザ情報 | 電大生のQ&A</title>
         <link
             rel="icon"
-            href="${page.Context.request.contextPath}/web_system/images/icon_qa.png"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
         />
         <!-- ファビコン -->
         <link
             rel="stylesheet"
-            href="${page.Context.request.contextPath}/web_system/css/style_4_User.css"
+            href="${pageContext.request.contextPath}/web_system/css/style_4_User.css"
         />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
         <div class="top_button">
             <%-- ログアウト部分の作成 --%>
             <form
-                action="${page.Context.request.contextPath}/logout"
+                action="${pageContext.request.contextPath}/logout"
                 method="get"
                 class="logout-area"
             >
@@ -31,7 +31,7 @@
             <img src="" class="<%= request.getContextPath() %>/web_system/images/kari_image_User.png" class="icon_image" />
             <div class="button">
                 <form
-                    action="${page.Context.request.contextPath}/web_system/QA_09_Edit.jsp"
+                    action="${pageContext.request.contextPath}/web_system/QA_09_Edit.jsp"
                     method="get"
                 >
                     <button
@@ -210,13 +210,13 @@
 
 		<nav>
 			<div class="bottom_button">
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_02_Questions.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/questions" method="get">
                     <button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_home.png" alt="(質問一覧へ)"></button>
                 </form>
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_03_MyTime.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/timetable" method="get">
 					<button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_calender.png" alt="(マイ時間割へ)"></button>
                 </form>
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_04_User.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/user" method="get">
                     <button class="pageButton toUserinfo" type="submit">
 						<img src="<%= request.getContextPath() %>/web_system/images/icon_gear.png" alt="(ユーザ情報だよ！)" class="icon_toUserinfo">
 						<img src="<%= request.getContextPath() %>/web_system/images/icon_gear_hukidashi.png" alt="(ユーザ情報だよ！)" class="icon_toUserinfo_hukidashi">

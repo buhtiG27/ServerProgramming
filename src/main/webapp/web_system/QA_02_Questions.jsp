@@ -130,22 +130,19 @@ X02Questions
 
 		</main>
 		
-		<form action="${pageContext.request.contextPath}/web_system/QA_12_CreateQuestion.html" method="get">
-    		<button class="createbutton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_create_new_question.png" alt="質問作成" style="display:block;margin:auto;"></button>
-		</form>
 	
 		<nav>
 			<div class="bottom_button">
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_02_Questions.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/questions" method="get">
                     <button class="pageButton toQuestions" type="submit">
                         <img src="<%= request.getContextPath() %>/web_system/images/icon_home.png" alt="(質問一覧だよ！)" class="icon_toQuestions">
                         <img src="<%= request.getContextPath() %>/web_system/images/icon_home_hukidashi.png" alt="(質問一覧だよ！)" class="icon_toQuestions_hukidashi">
                     </button>
                 </form>
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_03_MyTime.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/timetable" method="get">
                     <button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_calender.png" alt="(マイ時間割へ)"></button>
                 </form>
-                <form class="form" action="<%= request.getContextPath() %>/web_system/QA_04_User.jsp" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/user" method="get">
                     <button class="pageButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_gear.png" alt="(ユーザ情報へ)"></button>
                 </form>
             </div>
