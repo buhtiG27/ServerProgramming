@@ -7,78 +7,251 @@ h1{
 	color:rgb(0, 128, 255);
 	
 }
-/*検索*/
-.txt{
-	display: inline-block;
-    width: 50%;
-    border: 1px solid rgb(192, 192, 192);
-    box-sizing: border-box;
-    background: white;
-    margin: 5px;
-    padding: 5px;
-}
-/*投稿部分*/
+
 main{
-	position:absolute;
+	position:relative;
 	margin-top: 17vh;
 	left:0;
-	width:99%;
+	width:99.5%;
+	transform:translateX(-1px);
     font-weight: bold;
-    border: solid 3px #000000;
-	
 }
+
+/*検索バーとフィルター*/
 .filters{
-	height:50px;
+	position:absolute;
+	top:0;
+	width:100%;
+	height:105px;
+	padding-right:7.5px;
+	background:white;
+	z-index:1;
 }
+/*検索バー*/
+input[type="text"] {
+  width: 99.5%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.searchbyKeyword input[type="text"] {
+  padding-left: 40px;
+}
+
+.searchbyKeyword {
+  position: relative;
+  left:3.5px;
+}
+
+.searchbyKeyword span {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+/*フィルター*/
+ul{
+	display:flex;
+	width:100%;
+	height:50px;
+	margin:0;
+	padding:0;
+
+	background-color:rgba(0,0,0,0.4);
+	border: 2px solid #DDDDDD;
+	border-radius:16px 16px 0 0;
+	text-align:center;
+	overflow:hidden;
+}
+ul li{
+	list-style:none;
+	flex:1;
+	height:100%;
+}
+ul li *{
+	display:inline-block;
+	font-size:1.3em;
+	line-height:50px;
+}
+.filter{
+	width:100%;
+	margin-top:-50px;
+	letter-spacing:-1px;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#000;
+	transition:0.3s	cubic-bezier(0.1,0.1,0.5,1.4);
+}
+.filter:hover{
+	margin-top:0;
+}
+.filter:before{
+	content:attr(data-text);
+	display:block;
+	color:#5434d2;
+}
+
+/*投稿部分*/
 .post-list{
+	position:relative;
+	top:105px;
 	left:0;
-	width: 99.5%;
-	margin: 0 auto;
+	width: 100%;
+	padding-bottom:10%;
 	text-align: center;
 	   
     font-weight: bold;
-    border: solid 3px #000000;
+    border: solid 3px #DDDDDD;
+	z-index:-1;
 }
-show_button{
-	background-color:rgb(192, 192, 192);
-	color:rgb(0, 0, 0);
-	border: none;
-	width: 30%; 
-	height: 50px; 
-	font-size: 16px;	
-	padding: 15px 30px;
-}
+
 .post{
-	border: 1px solid rgb(0, 0, 0);
+	position:relative;
+	height:200px;
 	background-color: white;
-	padding: 15px;
-	border-radius: 8px;
+	border: solid 1px #979797;
+	display:flex;
+	flex-direction:column;
 }
-.post h3{
-	color:black;
+.post_sideParts{
+	position:absolute;
+	top:0;
+	left:0;
+	width:8%;
+	height:100%;
 }
-.button-post{
-	margin: 10px;
+.iconButton{
+	position:absolute;
+	left:50%;
+	transform:translateX(-50%);
+	width:100px;
+	height:100px;
+	background:white;
+	border:none;
+	border-radius:50%;	
 }
-.like_button{
-	font-size: 12px;
-	box-sizing: border-box;
-	margin: 5px;
-    padding: 5px;
+.iconButton img{
+	width:100%;
+	height:100%;
+	object-fit:contain;
+	border-radius:50%;
+}
+.post_upperParts{
+	position:absolute;
+	left:8%;
+	width:92%;
+	height:20%;
+	font-size:20px;
+}
+.post_upperParts_form{
+	display:flex;
+	width:100%;
+	height:100%;
+}
+.post_upperParts_atarihantei{
+	width:100%;
+	height:100%;
+	background:white;
+	border:none;
+}
+.creatorName{
+	position:absolute;
+	top:0;
+	left:0;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.created_at{
+	position:absolute;
+	top:0;
+	right:2%;
+	margin:5px;
+}
+.post_mainParts{
+	position:absolute;
+	left:8%;
+	top:20%;
+	width:90%;
+	height:55%;
+	font-size:31px;
+}
+.post_mainParts_form{
+	width:100%;
+	height:100%;
+}
+.post_mainParts_atarihantei{
+	all:unset;
+	width:100%;
+	height:100%;
+}
+.contents_text{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	/*margin-top:10px;*/
+	margin-bottom:10px;
+	text-align:left;
+}
+.post_bottomParts{
+	position:absolute;
+	left:8%;
+	bottom:0;
+	width:90%;
+	height:25%;
+	font-size:16px;
+	display:flex;
+}
+.post_bottomParts_form{
+	flex:1;
+}
+.goodButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.replyButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.flagButton{
+	height:100%;
+	border:none;
+	background:white;
 }
 /*作成button*/
 .createbutton{
-	background-color:white;
-	color:black; 
-	font-size: 24px;
-	padding: 15px 30px;
 	position: fixed;
+	right:15px;
+	bottom:10%;
+	z-index:5;
+	width:175px;
+	height:175px;
+	padding: 0;
+	border:none;
+	border-radius:50%;
+	
 	display: flex;
-    justify-content: flex-end;
-    bottom:180px;
-    right:15px;
+	justify-content: center;
+	align-items: center;
 }
-
+.createbutton img{
+	width:175px;
+	height:175px;
+}
 
 /*ナビゲーション-------------------------------------------------------------------------------------------------*/
 
@@ -101,6 +274,7 @@ html, body {
 	display: flex;
     justify-content: center;
     gap: 0;
+    z-index:100;
 }
 
 .form{

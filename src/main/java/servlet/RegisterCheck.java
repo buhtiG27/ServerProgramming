@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,24 +17,27 @@ public class RegisterCheck extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         // ===== パラメータ取得（1回だけ）=====
-        String email = request.getParameter("Address");
+        String user = request.getParameter("Username");
         String pw = request.getParameter("Password");
-        String uname = request.getParameter("Username");
+        String email = request.getParameter("Address");
         String grade = request.getParameter("Grade");
         String cls = request.getParameter("Classification");
-
+        
+        
         // ===== 入力チェック =====
         String error = null;
 
         if (email == null || email.isBlank()) {
             error = "メールアドレスを入力してください。";
         } else if (!email.endsWith("@ms.dendai.ac.jp")) {
-            error = "メールアドレスは @ms.dendai.ac.jp ドメインでなければなりません。";
+            error = "メールアドレスは @ms.dendai.ac.jp ドメインのみ使用可能です。";
+        } else if (pw.length() < 8) {
+            error = "パスワードは8文字以上必要です。";
         } else if (pw == null || pw.isBlank()) {
             error = "パスワードを入力してください。";
         } else if (!pw.matches(".*[A-Za-z].*")) {
             error = "パスワードには英字を1文字以上含めてください。";
-        } else if (uname == null || uname.isBlank()) {
+        } else if (user == null || user.isBlank()) {
             error = "ユーザ名を入力してください。";
         } else if (grade == null || grade.isBlank()) {
             error = "学年を入力してください。";
@@ -44,9 +46,9 @@ public class RegisterCheck extends HttpServlet {
         }
 
         // ===== すべて attribute に詰める =====
-        request.setAttribute("Address", email);
         request.setAttribute("Password", pw);
-        request.setAttribute("Username", uname);
+        request.setAttribute("Username", user);
+        request.setAttribute("Address", email);
         request.setAttribute("Grade", grade);
         request.setAttribute("Classification", cls);
 

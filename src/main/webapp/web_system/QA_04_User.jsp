@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="${page.Context.request.contextPath}/web_system/css/style_4_User.css"
         />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- cssでスマホ用のデザインをするために書く -->
     </head>
@@ -26,8 +27,8 @@
             >
                 <button type="submit" class="logout-button">ログアウト</button>
             </form>
-            <img src="" class="background_image" />
-            <img src="" class="icon_image" />
+            <img src="" class="<%= request.getContextPath() %>/web_system/images/kari_image_sky.jpeg" class="background_image" />
+            <img src="" class="<%= request.getContextPath() %>/web_system/images/kari_image_User.png" class="icon_image" />
             <div class="button">
                 <form
                     action="${page.Context.request.contextPath}/web_system/QA_09_Edit.jsp"
@@ -44,103 +45,141 @@
                 </form>
             </div>
             <br />
-            <h2>${name}</h2>
+            <b class="username">${name}</b>
             <p class="intro_text">${description}</p>
         </div>
         <br />
         <%-- 置き換え --%>
-        <div class="post-list">
-            <div class="post">
-                <h3>投稿１</h3>
-                <p>サンプル投稿を表示</p>
-                <div class="button-post">
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        いいね
-                    </button>
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="FlagButton"
-                        value="send"
-                    >
-                        フラグ
-                    </button>
-                </div>
-            </div>
-            <div class="post">
-                <h3>投稿2</h3>
-                <p>サンプル投稿を表示</p>
-                <div class="button-post">
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        いいね
-                    </button>
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="FlagButton"
-                        value="send"
-                    >
-                        フラグ
-                    </button>
-                </div>
-            </div>
-            <div class="post">
-                <h3>投稿3</h3>
-                <p>サンプル投稿を表示</p>
-                <div class="button-post">
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        いいね
-                    </button>
-                    <button
-                        class="like_button"
-                        type="submit"
-                        name="FlagButton"
-                        value="send"
-                    >
-                        フラグ
-                    </button>
-                </div>
-            </div>
-            <div class="post">
-                <h3>投稿4</h3>
-                <p>サンプル投稿を表示</p>
-                <div class="button-post">
-                    <button
-                        class="button3"
-                        type="submit"
-                        name="LikeButton"
-                        value="send"
-                    >
-                        いいね
-                    </button>
-                    <button
-                        class="button3"
-                        type="submit"
-                        name="FlagButton"
-                        value="send"
-                    >
-                        フラグ
-                    </button>
-                </div>
-            </div>
-        </div>
-        <br />
-        <br />
+		<div class="post-list">
+			<div class="post">
+				<div class="post_sideParts">
+					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
+						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)" style="background-size:cover;"></button>
+					</form>
+				</div>
+				<div class="post_upperParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
+						<button class="post_upperParts_atarihantei"></button>
+						<div class="creatorName">匿名ウサギ</div>
+						<div class="created_at">昨日0:15</div>
+					</form>
+				</div>
+				<div class="post_mainParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
+						<button class="post_mainParts_atarihantei">
+							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+						</button>
+					</form>
+				</div>
+				<div class="post_bottomParts">
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+					</form>
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
+						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+				</div>
+			</div>
+			<div class="post">
+				<div class="post_sideParts">
+					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
+						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+					</form>
+				</div>
+				<div class="post_upperParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
+						<button class="post_upperParts_atarihantei"></button>
+						<div class="creatorName">匿名ウサギ</div>
+						<div class="created_at">昨日0:15</div>
+					</form>
+				</div>
+				<div class="post_mainParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
+						<button class="post_mainParts_atarihantei">
+							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+						</button>
+					</form>
+				</div>
+				<div class="post_bottomParts">
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+					</form>
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
+						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+				</div>
+			</div>
+			<div class="post">
+				<div class="post_sideParts">
+					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
+						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+					</form>
+				</div>
+				<div class="post_upperParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
+						<button class="post_upperParts_atarihantei"></button>
+						<div class="creatorName">匿名ウサギ</div>
+						<div class="created_at">昨日0:15</div>
+					</form>
+				</div>
+				<div class="post_mainParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
+						<button class="post_mainParts_atarihantei">
+							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+						</button>
+					</form>
+				</div>
+				<div class="post_bottomParts">
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+					</form>
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
+						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+				</div>
+			</div>
+			<div class="post">
+				<div class="post_sideParts">
+					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
+						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+					</form>
+				</div>
+				<div class="post_upperParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
+						<button class="post_upperParts_atarihantei"></button>
+						<div class="creatorName">匿名ウサギ</div>
+						<div class="created_at">昨日0:15</div>
+					</form>
+				</div>
+				<div class="post_mainParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
+						<button class="post_mainParts_atarihantei">
+							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+						</button>
+					</form>
+				</div>
+				<div class="post_bottomParts">
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+					</form>
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
+						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+				</div>
+			</div>
+		</div>
 
 		<nav>
 			<div class="bottom_button">

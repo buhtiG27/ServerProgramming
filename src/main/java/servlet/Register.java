@@ -1,21 +1,15 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
 
 @SuppressWarnings("deprecation")
@@ -74,7 +68,12 @@ public class Register extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 request.setAttribute("error", "登録に失敗しました");
-                request.getRequestDispatcher("/web_system/QA_06_NewCheck.jsp")
+                request.setAttribute("Username", user);
+                request.setAttribute("Password", pw);
+                request.setAttribute("Address", email);
+                request.setAttribute("Grade", gradeStr);
+                request.setAttribute("Classification", clsStr);
+                request.getRequestDispatcher("/web_system/QA_05_NewRegister.jsp")
                         .forward(request, response);
             }
         } catch (Exception e) {

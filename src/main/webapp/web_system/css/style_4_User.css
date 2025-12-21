@@ -6,9 +6,13 @@ body{
 .top_button{
 	position: fixed;
 	top: 0;
-	width: 100%; 
+	left:0;
+	width: 99.5%; 
+	height:345px;
 	background: white;
+	border: solid 3px #DDDD;
     text-align: center;
+	z-index:0;
 }
 .logout-area {
     position: fixed;
@@ -62,38 +66,149 @@ body{
 	padding: 8px 20px;	
 }
 .intro_text{
+	position:absolute;
+	left:5px;
 	margin-top: 15px;
-	font-size: 14px;
+	font-size: 18px;
 	display: flex;
 	justify-content: flex-start;
 	color: black;
 }
+.username{
+	position:absolute;
+	left:0;
+	top:200px;
+	font-size:48px;
+}
 /*投稿部分*/
 .post-list{
-	width: 100%;
-	margin: 5px;
-	margin-top: 300px;
-	padding-bottom: 35px;
-	text-align: center;	
+	position:relative;
+	top:300px;
+	left:0;
+	width: 99.5%;
+	height:auto;
+	padding-bottom:10%;
+	text-align: center;
+	   
+    font-weight: bold;
+    border: solid 3px #DDDD;
+	z-index:-1;
 }
 .post{
-	border: 1px solid rgb(0, 0, 0);
+	position:relative;
+	width:100%;
+	height:200px;
 	background-color: white;
-	padding: 15px;
-	margin-bottom: 15px;
-	border-radius: 8px;
+	border: solid 1px #97979797;
+	display:flex;
+	flex-direction:column;
 }
-.post h3{
-	color:black;
+.post_sideParts{
+	position:absolute;
+	top:0;
+	left:0;
+	width:8%;
+	height:100%;
 }
-.button-post{
-	margin: 10px;
+.iconButton{
+	position:absolute;
+	left:50%;
+	transform:translateX(-50%);
+	width:100px;
+	height:100px;
+	background:white;
+	border:none;
+	border-radius:50%;
 }
-.like_button{
-	font-size: 12px;
-	box-sizing: border-box;
-	margin: 5px;
-    padding: 5px;
+.iconButton img{
+	width:100%;
+	height:100%;
+	object-fit:contain;
+	border-radius:50%;
+}
+.post_upperParts{
+	position:absolute;
+	left:8%;
+	width:92%;
+	height:20%;
+	font-size:20px;
+}
+.post_upperParts_form{
+	display:flex;
+	width:100%;
+	height:100%;
+}
+.post_upperParts_atarihantei{
+	width:100%;
+	height:100%;
+	background:white;
+	border:none;
+}
+.creatorName{
+	position:absolute;
+	top:0;
+	left:0;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.created_at{
+	position:absolute;
+	top:0;
+	right:2%;
+	margin:5px;
+}
+.post_mainParts{
+	position:absolute;
+	left:8%;
+	top:20%;
+	width:90%;
+	height:55%;
+	font-size:31px;
+}
+.post_mainParts_form{
+	width:100%;
+	height:100%;
+}
+.post_mainParts_atarihantei{
+	all:unset;
+	width:100%;
+	height:100%;
+}
+.contents_text{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	/*margin-top:10px;*/
+	margin-bottom:10px;
+	text-align:left;
+}
+.post_bottomParts{
+	position:absolute;
+	left:8%;
+	bottom:0;
+	width:90%;
+	height:25%;
+	font-size:16px;
+	display:flex;
+}
+.post_bottomParts_form{
+	flex:1;
+}
+.goodButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.replyButton{
+	height:100%;
+	border:none;
+	background:white;
+}
+.flagButton{
+	height:100%;
+	border:none;
+	background:white;
 }
 
 /*ナビゲーション-------------------------------------------------------------------------------------------------*/
@@ -117,6 +232,7 @@ html, body {
 	display: flex;
     justify-content: center;
     gap: 0;
+    z-index:100;
 }
 
 .form{
