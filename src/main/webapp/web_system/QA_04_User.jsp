@@ -187,7 +187,7 @@
 			</div>
 			
 			<button id="cycleButton" class="motchyButton">
-				<img id="Shitsumotchy" src="images/Shitsumotchy_1.png" alt="">
+				<img id="Shitsumotchy" src="<%= request.getContextPath() %>/web_system/images/Shitsumotchy_1.png" alt="">
 			</button>
 			<script>
 			const button = document.getElementById("cycleButton");
