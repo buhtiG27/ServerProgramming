@@ -102,16 +102,19 @@ X02Questions
 				</div>
 
 			-->
-			</div>
-
-			<br><br>
-
+			</div>			
+			
+			<!-- 
 			<form action="${pageContext.request.contextPath}/web_system/QA_12_CreateQuestion.jsp" method="get">
     			<button class="createbutton" type="submit">質問作成</button>
 			</form>
+			 -->
 
-			<br>
 		</main>
+		
+		<form action="${pageContext.request.contextPath}/web_system/QA_12_CreateQuestion.html" method="get">
+    		<button class="createbutton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_create_new_question.png" alt="質問作成" style="display:block;margin:auto;"></button>
+		</form>
 	
 		<nav>
 			<div class="bottom_button">
