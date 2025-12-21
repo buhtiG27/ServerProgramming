@@ -196,16 +196,12 @@
 			let isVisible = true; 
 			
 			button.addEventListener("click", () => {
-				if (!isVisible) return; // もう消えてたら何もしない
+				if (!isVisible) return;
 				 
-				// ① 即時反転
 				img.classList.add("flip");
-				// ② 次のフレームでフェードアウト開始
 				requestAnimationFrame(() => {
 					img.classList.add("fade-out");
 				});
-				
-				// ③ 状態を「非表示」に
 				isVisible = false;
 			});
 			</script>
