@@ -30,18 +30,9 @@ public class CreateQuestion extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("token") == null) {
-            request.setAttribute("error", "ログインしてください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                    .forward(request, response);
-            return;
-        }
-
-        String token = (String) session.getAttribute("token");
-
         // JSP からの入力
-        String content = request.getParameter("content");
+        String content = request.getParameter("questionBody");
+        getServletContext().log("[rid=" + rid + "] questionBody is " + content);
 
         if (content == null || content.isBlank()) {
             request.setAttribute("error", "質問内容を入力してください");

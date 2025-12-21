@@ -30,7 +30,7 @@ X02Questions
 			</div>
 			<div class="post-list">
     		<%
-				List<Map<String, Object>> questions =(List<Map<String, Object>>) request.getAttribute("questions");
+				List<Map<String, Object>> questions = (List<Map<String, Object>>) request.getAttribute("questions");
 			%>
     		<%
 				if (questions == null || questions.isEmpty()) {
@@ -39,16 +39,19 @@ X02Questions
 			<%
 				} else {
     				for (Map<String, Object> q : questions) {
+						pageContext.setAttribute("q", q);
 			%>
 				<div class="post">
     				<form action="${pageContext.request.contextPath}/questions/show" method="get">
-        				<input type="hidden" name="questionId" value="<%= q.get("id") %>">
+        				<input type="hidden" name="questionId" value="${q['id']}">
        					<button class="show_button" type="submit">
             			<%= q.get("title") %>
         				</button>
     				</form>
 
-    				<p>担当教員：<%= q.get("teacher") %></p>
+    				<p>ユーザ：${q['creator']['display_name']}</p>
+					<p>${q['contents_text']}</p>
+					<p>${q['created_at']}</p>
 
     				<div class="button-post">
         				<form action="${pageContext.request.contextPath}/LikeServlet" method="post">
@@ -66,6 +69,20 @@ X02Questions
     				}
 				}
 			%>
+			<%
+				Object limitObj = request.getAttribute("limit");
+				Object offsetObj = request.getAttribute("offset");
+
+				int limit  = (limitObj instanceof Integer) ? (Integer) limitObj : 20;
+				int offset = (offsetObj instanceof Integer) ? (Integer) offsetObj : 0;
+
+				int prev = Math.max(0, offset - limit);
+				int next = offset + limit;
+			%>
+
+				<a href="<%= request.getContextPath() %>/questions?limit=<%= limit %>&offset=<%= prev %>">前へ</a>
+				<a href="<%= request.getContextPath() %>/questions?limit=<%= limit %>&offset=<%= next %>">次へ</a>
+
 			</div>
 
 			<br><br>

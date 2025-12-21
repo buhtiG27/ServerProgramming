@@ -1,9 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.json.JSONObject" %>
 <%
+String error = (String) request.getAttribute("error");
+	pageContext.setAttribute("error", error);
+
 Map<String, Object> question =
     (Map<String, Object>) request.getAttribute("question");
+	pageContext.setAttribute("question", question);
 
 List<Map<String, Object>> answers =
     (List<Map<String, Object>>) request.getAttribute("answers");
@@ -39,7 +44,8 @@ String loggedInUsername =
 	<div class="post-list">
 		<div class="post" id="questionPost">
 			<h3>投稿</h3>
-			<p id="questionText"><%= question.get("content") %></p>
+			 ${error}
+			<p id="questionText">${question['contents_text']}</p>
 
 			<div class="button-post">
 				<button class="like_button" type="button">いいね</button>
@@ -63,18 +69,20 @@ String loggedInUsername =
 		<h2>回答</h2>
 
 		<%
-		if (answers != null) {
+		if (answers != null && answers.size() > 0) {
 			for (Map<String, Object> answer : answers) {
-				String answerUser = (String) answer.get("username");
+				org.json.JSONObject creator = (org.json.JSONObject) answer.get("creator");
+				String answerUser = creator == null ? "" : creator.optString("display_name", "");
+				String content = (String) answer.get("contents_text");
 				%>
 		<div class="post">
-    		<p class="answerText"><%= answer.get("content") %></p>
+    		<p class="answerText"><%= content %></p>
 
     		<div class="button-post">
         		<% 
         		if (loggedInUsername != null &&loggedInUsername.equals(answerUser)) { 
         		%>
-            		<button class="edit_button" onclick="openEditAnswerModal('<%= answer.get("content") %>')">編集</button>
+            		<button class="edit_button" onclick="openEditAnswerModal('<%= content %>')">編集</button>
         		<% } %>
     		</div>
 		</div>
