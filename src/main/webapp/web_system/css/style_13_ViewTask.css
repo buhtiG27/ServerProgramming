@@ -130,6 +130,7 @@ top_button_area {
 	display: flex;
     justify-content: center;
     gap: 0;
+    z-index:100;
 }
 
 .form{

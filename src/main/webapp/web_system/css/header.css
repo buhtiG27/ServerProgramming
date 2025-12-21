@@ -5,7 +5,7 @@
 	width: 100.5%;
 	height:20vh;
 	background: white;/*背景色=白*/
-	z-index:0;
+	z-index:100;
 }
 .icon_tdu{/*上部のアイコンのうち、「TDU」の部分*/
 	position:absolute;/*親要素(ここでは.top_button)を規準に位置を設定*/

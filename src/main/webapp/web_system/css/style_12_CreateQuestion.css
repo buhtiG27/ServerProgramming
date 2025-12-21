@@ -95,6 +95,7 @@ body {
 	display: flex;
     justify-content: center;
     gap: 0;
+    z-index:100;
 }
 
 .form{

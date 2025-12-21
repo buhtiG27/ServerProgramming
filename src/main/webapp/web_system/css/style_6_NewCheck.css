@@ -52,6 +52,7 @@ h1{
 	width: 100%; 
 	background: white;
 	text-align: center;
+	z-index:100;
 }
 .correctButton{
 	background-color:rgb(192, 192, 192);
