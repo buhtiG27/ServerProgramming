@@ -106,7 +106,7 @@ String loggedInUsername =
 			<div class="modal-content">
 				<span id="closeModal" class="close">&times;</span>
 				<h2>回答を作成</h2>
-				<form action="${page.Context.request.contextPath}/PostAnswerServlet" method="post" enctype="multipart/form-data">
+				<form action="${page.Context.request.contextPath}/questions/answercreate" method="post" enctype="multipart/form-data">
 					<textarea name="answerText" rows="5" cols="50" placeholder="ここに回答内容を入力"></textarea><br><br>
 					<input type="file" name="imageFile" accept="image/*"><br><br>
 					<button type="submit" class="submit_button">送信</button>
@@ -120,7 +120,7 @@ String loggedInUsername =
 			<span class="close" onclick="closeEditQuestionModal()">&times;</span>
 			<h2>質問を編集</h2>
 
-			<form action="${page.Context.request.contextPath}/EditQuestionServlet" method="post">
+			<form action="" method="post">
 				<textarea id="editQuestionText" name="questionText" rows="5" cols="50"></textarea><br>
 				<button type="submit" class="submit_button">変更を保存</button>
 			</form>
@@ -133,7 +133,7 @@ String loggedInUsername =
 			<span class="close" onclick="closeEditAnswerModal()">&times;</span>
 			<h2>回答を編集</h2>
 
-			<form action="${page.Context.request.contextPath}/EditAnswerServlet" method="post">
+			<form action="" method="post">
 				<textarea id="editAnswerText" name="answerText" rows="5" cols="50"></textarea><br>
 				<button type="submit" class="submit_button">変更を保存</button>
 			</form>
