@@ -15,9 +15,12 @@ String loggedInUsername =
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>質問画面</title>
-		<link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_10_ShowQuestion.css">
-	</head>
+		<title>質問一覧 | 電大生のQ&A</title>
+		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
+        <link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_10_ShowQuestion.css" />
+    </head>
 	<body>
 
 	<div class="top_button">
