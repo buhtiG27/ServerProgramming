@@ -73,11 +73,7 @@ X02Questions
 					</div>
 					
 				</div>
-			<%
-    				}
-				}
-			%>
-			<!--元のpostクラス
+			<!--元のpostクラス -->
 
 				<div class="post">
     				<form action="${pageContext.request.contextPath}/questions/show" method="get">
@@ -128,11 +124,9 @@ X02Questions
 			-->
 			</div>
 			
-			<!--
 			<form action="${pageContext.request.contextPath}/web_system/QA_12_CreateQuestion.jsp" method="get">
     			<button class="createbutton" type="submit">質問作成</button>
 			</form>
-			 -->
 
 		</main>
 		
