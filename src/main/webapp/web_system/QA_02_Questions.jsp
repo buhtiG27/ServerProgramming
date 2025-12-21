@@ -39,7 +39,7 @@ X02Questions
 					<div class="post_sideParts">
 						<form action="" method="get">
 							<!--アイコンを押したらこのユーザのユーザ情報を表示する？-->
-							<button class="iconButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/icon_Monozu.png" alt="(ユーザ1のアイコン)"></button>
+							<button class="iconButton" type="submit"><img src="<%= request.getContextPath() %>/web_system/images/kari_image_Monozu.png" alt="(ユーザ1のアイコン)"></button>
 						</form>
 					</div>
 					
