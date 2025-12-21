@@ -61,7 +61,41 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">昨日23:11</div>
+					</form>
+				</div>
+				<div class="post_mainParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
+						<button class="post_mainParts_atarihantei">
+							<div class="contents_text">「寝たいけどみんなが頑張ってるしもう少しやらなきゃ...でも眠い...」ってとき、どうしてますか？</div>
+						</button>
+					</form>
+				</div>
+				<div class="post_bottomParts">
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+					</form>
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
+						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+					<form action="" method="get" class="post_bottomParts_form">
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+					</form>
+				</div>
+			</div>
+			
+			
+			<div class="post">
+				<div class="post_sideParts">
+					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
+						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+					</form>
+				</div>
+				<div class="post_upperParts">
+					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
+						<button class="post_upperParts_atarihantei"></button>
+						<div class="creatorName">匿名ウサギ</div>
+						<div class="created_at">12/13/1:30</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
@@ -83,6 +117,8 @@
 					</form>
 				</div>
 			</div>
+			
+			
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
@@ -93,13 +129,13 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">11/28/18:29</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
 						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+							<div class="contents_text">機械学習第10回の課題で提出するものって、実行結果のpngファイルですか？それともソースコードですか？</div>
 						</button>
 					</form>
 				</div>
@@ -115,6 +151,8 @@
 					</form>
 				</div>
 			</div>
+			
+			
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
@@ -125,45 +163,13 @@
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
 						<button class="post_upperParts_atarihantei"></button>
 						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
+						<div class="created_at">2024/12/16/19:42</div>
 					</form>
 				</div>
 				<div class="post_mainParts">
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
 						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
-						</button>
-					</form>
-				</div>
-				<div class="post_bottomParts">
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
-					</form>
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-				</div>
-			</div>
-			<div class="post">
-				<div class="post_sideParts">
-					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
-					</form>
-				</div>
-				<div class="post_upperParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
-						<button class="post_upperParts_atarihantei"></button>
-						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日0:15</div>
-					</form>
-				</div>
-				<div class="post_mainParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
-						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
+							<div class="contents_text">明日ってメディア信号処理のテストかと思いますが、開始時間っていつからでしたっけ？</div>
 						</button>
 					</form>
 				</div>
