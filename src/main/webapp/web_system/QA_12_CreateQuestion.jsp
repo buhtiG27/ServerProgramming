@@ -31,7 +31,6 @@ request.setCharacterEncoding("UTF-8"); %>
             id="questionForm"
             action="${page.Context.request.contextPath}/questions/create"
             method="post"
-            enctype="multipart/form-data"
         >
             <div class="create_list">
                 <div class="txtarea">

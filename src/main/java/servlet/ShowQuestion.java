@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,7 +48,7 @@ public class ShowQuestion extends HttpServlet {
 
             getServletContext().log("[rid=" + rid + "] ShowQuestion Call API GET /posts");
 
-            ApiResponse apires = api.get(request, "/posts");
+            ApiResponse apires = api.get(request, "/posts/" + questionId + "/replies");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");
@@ -57,25 +58,22 @@ public class ShowQuestion extends HttpServlet {
             }
 
             JSONObject json = new JSONObject(apires.body);
-            JSONArray posts = json.getJSONArray("posts");
+            JSONObject post = json.getJSONObject("parent");
+            JSONArray posts = json.getJSONArray("replies");
 
-            JSONObject question = null;
-            List<JSONObject> answers = new ArrayList<>();
+            Map<String, Object> question = post.toMap();
+            List<Map<String, Object>> answers = new ArrayList<>();
 
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject p = posts.getJSONObject(i);
 
                 long id = p.getLong("id");
 
-                if (id == questionId) {
-                    question = p;
-                }
-
                 if (p.has("parent_id") &&
                         !p.isNull("parent_id") &&
                         p.getLong("parent_id") == questionId) {
-
-                    answers.add(p);
+                    Map<String, Object> answerMap = p.toMap();
+                    answers.add(answerMap);
                 }
             }
 
