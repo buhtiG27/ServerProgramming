@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
@@ -9,14 +11,14 @@
 	<body>
 		<%--　ロゴに置き換える --%>
 		<div class="top_button_area">
-			<form action="${page.Context.request.contextPath}/web_system/QA_02_Questions.jsp" method="get">
+			<form action="${pageContext.request.contextPath}/questions" method="get">
 			<button class="top_button" type="submit" name="back" value="send">TDU</button>
 			</form>
 		</div>
 		
 		<!-- 戻るボタンとタイトル -->
 		<div class="header_area">
-			<form action="${page.Context.request.contextPath}/web_system/QA_19_AllMyTime.jsp" method="get">
+			<form action="${pageContext.request.contextPath}/subjects" method="get">
 				<button class="back_button" type="submit" name="back" value="send">戻る</button>
 			</form>
 			<h1 class="page_title">科目詳細</h1>
@@ -24,72 +26,60 @@
 		
 		<div class="view_list">
 			<h2 class="task_title">
-				科目「プログラミング応用Ⅰ」の表示
-				<%--
-				//授業のリクエスト表示
-				out.print("科目「" + classname + "」の詳細<br />");
-				--%>
+				${sub['subject_name']}
 			</h2>
 			<div class="edit_create">
-				<form action="${page.Context.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="get">
+				<form action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="get">
 					<button class="edit_button" type="submit" name="edit" value="send">編集</button>
 				</form>
 			</div>
 			<div class="info_box">
 				<label>授業名：</label>
-				<div class="content_box">プログラミング応用Ⅰ
-					<%--
-					//授業のリクエスト表示	
-					out.print(classname);
-					--%>
+				<div class="content_box">${sub['subject_name']}
 				</div>
 		
 				<label>教員名：</label>
-				<div class="content_box">サンプル
-					<%--
-					//授業のリクエスト表示
-				 	out.print(teacher);
-					--%>
+				<div class="content_box">${sub['teacher']}
 				</div>
 				
 				<label>教室：</label>
-				<div class="content_box">サンプル
-					<%--
-					//授業のリクエスト表示
-				 	out.print(roomname);
-					--%>
+				<div class="content_box">${sub['class_room']}
 				</div>
 			</div>
 			<label>課題：
 				<div class="new_create">
-					<form action="${page.Context.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="get">
+					<form action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="get">
 						<button class="new_create_button" type="submit" name="edit" value="send">新規作成</button>
 					</form>
 				</div>
 			</label>
 			<div class="textarea_box">
 				<ul>
-				<%--
-				List<Task> tasks = (List<Task>)request.getAttribute("taskList");
+				<%
+				List<Map<String, Object>> tasks = (List<Map<String, Object>>) request.getAttribute("practices");
 				if (tasks != null) {
 					for (Task t : tasks) {
-				--%>
+				%>
+				<%
+				if (tasks == null || tasks.isEmpty()) {
+			%>
+    			<p style="color:gray;">投稿されている質問はありません</p>
+			<%
+				} else {
+    				for (Map<String, Object> t : tasks) {
+						pageContext.setAttribute("t", t);
+			%>
 				<div class="task_item">
-					<form action="${page.Context.request.contextPath}/web_system/QA_13_ViewTask.jsp"> 
-						<input type="hidden" name="source" value="DetailSubject" /> <%--  隠しフィールド --%>
-						<button class="task_link">課題１</button>
+					<form action="${pageContext.request.contextPath}/tasks/view"> 
+						<input type="hidden" name="source" value="<%= q.get("id") %>}" /> <%--  隠しフィールド --%>
+						<button class="task_link">${sub['practice_name']}</button>
 					</form>
 				</div>
-				<div class="task_item">
-					<form action="${page.Context.request.contextPath}/web_system/QA_13_ViewTask.jsp"> 
-						<input type="hidden" name="source" value="DetailSubject" /> <%--  隠しフィールド --%>
-						<button class="task_link">課題２</button>
-					</form>
-				</div>
-    		    <%--
+				
+    		    <%
     		    		}
  		           }
-   		    	--%>
+   		    	%>
    		    	</ul>	
 			</div>
 		</div>

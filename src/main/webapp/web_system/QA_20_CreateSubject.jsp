@@ -1,4 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+request.setCharacterEncoding("UTF-8");
+
+String errorMessage = (String) request.getAttribute("error");
+%>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -6,7 +11,7 @@
         <title>科目作成画面</title>
         <link
             rel="stylesheet"
-            href="${page.Context.request.contextPath}/web_system/css/style_20_CreateSubject.css"
+            href="${pageContext.request.contextPath}/web_system/css/style_20_CreateSubject.css"
         />
     </head>
     <body>
@@ -20,7 +25,7 @@
         <!-- 戻るボタンとタイトル -->
         <div class="header_area">
             <form
-                action="${page.Context.request.contextPath}/web_system/QA_19_AllMyTime.jsp"
+                action="${pageContext.request.contextPath}/subjects"
                 method="get"
             >
                 <button
@@ -35,51 +40,26 @@
             <h1 class="page_title">科目作成</h1>
         </div>
         <div class="create_list">
-            <br />
-            <p>科目作成</p>
-            <form
-                action="${page.Context.request.contextPath}/web_system/QA_19_AllMyTime.jsp"
-                method="get"
-            >
-                <label for="classname">授業名：</label>
-                <br />
-                <input
-                    class="txt"
-                    type="text"
-                    size="20"
-                    value=""
-                    name="Classname"
-                />
-                <br /><br />
-                <label for="teacher">教員名：</label>
-                <br />
-                <input
-                    class="txt"
-                    type="text"
-                    size="20"
-                    value=""
-                    name="Teacher"
-                />
-                <br /><br />
-                <label for="roomname">教室：</label>
-                <br />
-                <input
-                    class="txt"
-                    type="text"
-                    size="20"
-                    value=""
-                    name="Roomname"
-                />
-                <br /><br />
-                <button
-                    class="regist_button"
-                    type="submit"
-                    name="Login"
-                    value="send"
-                >
-                    登録
-                </button>
-            </form>
+    <% if (errorMessage != null) { %>
+        <p style="color:red; font-weight:bold;"><%= errorMessage %></p>
+    <% } %>
+    
+    <form action="${pageContext.request.contextPath}/subjects/register" method="post">
+        <input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
+        <input type="hidden" name="time" value="<%= request.getParameter("time") %>">
+
+        <label>授業名：</label><br />
+        <input class="txt" type="text" name="subjectName" required /><br /><br />
+
+        <label>教員名：</label><br />
+        <input class="txt" type="text" name="teacher" required /><br /><br />
+
+        <label>教室：</label><br />
+        <input class="txt" type="text" name="classRoom" required /><br /><br />
+
+        <button class="regist_button" type="submit">登録</button>
+    </form>
+	</div>
         </div>
     </body>
 </html>
