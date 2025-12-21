@@ -185,6 +185,31 @@
 					</form>
 				</div>
 			</div>
+			
+			<button id="cycleButton" class="motchyButton">
+				<img id="Shitsumotchy" src="images/Shitsumotchy_1.png" alt="">
+			</button>
+			<script>
+			const button = document.getElementById("cycleButton");
+			const img = document.getElementById("Shitsumotchy");
+			
+			let isVisible = true; 
+			
+			button.addEventListener("click", () => {
+				if (!isVisible) return; // もう消えてたら何もしない
+				 
+				// ① 即時反転
+				img.classList.add("flip");
+				// ② 次のフレームでフェードアウト開始
+				requestAnimationFrame(() => {
+					img.classList.add("fade-out");
+				});
+				
+				// ③ 状態を「非表示」に
+				isVisible = false;
+			});
+			</script>
+			
 		</div>
 
 		<nav>
