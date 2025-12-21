@@ -105,7 +105,7 @@ ul li *{
 
 /*投稿部分*/
 .post-list{
-	position:absolute;
+	position:relative;
 	top:105px;
 	left:0;
 	width: 100%;
@@ -113,13 +113,15 @@ ul li *{
 	text-align: center;
 	   
     font-weight: bold;
-    border: solid 3px #000000;
+    border: solid 3px #DDDDDD;
 	z-index:-1;
 }
 
 .post{
+	position:relative;
 	height:200px;
 	background-color: white;
+	border: solid 1px #979797;
 	display:flex;
 	flex-direction:column;
 }
