@@ -82,7 +82,7 @@ Errors
 
 ---
 
-### GET `/api/posts`
+### GET `/api/posts`(認証ありに変更)
 
 新着投稿（質問のみ）一覧＋ページング
 
@@ -140,7 +140,7 @@ Response(200)
 
 ---
 
-### POST `/api/post`
+### POST `/api/posts`
 
 投稿作成
 
@@ -182,7 +182,7 @@ Example
 Response(200)
 
 ```json
-{ "replies": [ /* PostResponse[] */ ] }
+{ "parent":{ /* PostResponce */ }, "replies": [ /* PostResponse[] */ ] }
 ```
 
 （creatorはPublicUser）

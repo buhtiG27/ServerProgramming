@@ -111,8 +111,8 @@ func GetPostsTemplate(posts []models.Post) []PostResponse {
 }
 
 type GetPostsQuery struct {
-	Limit  int `form:"limit" binding:"required"`
-	Offset int `form:"offset" binding:"required"`
+	Limit  int `form:"limit" binding:"gte=1,lte=100"`
+	Offset int `form:"offset" binding:"gte=0"`
 }
 
 func GetPosts(c *gin.Context) {
@@ -122,6 +122,10 @@ func GetPosts(c *gin.Context) {
 			"error": err.Error(),
 		})
 		return
+	}
+
+	if q.Limit == 0 {
+		q.Limit = 20
 	}
 
 	var posts []models.Post
@@ -140,13 +144,13 @@ func GetPosts(c *gin.Context) {
 // ParentIDをパスパラメータで受け取る
 // /posts/:id/replies
 func GetReply(c *gin.Context) {
-	var q GetPostsQuery
-	if err := c.ShouldBindQuery(&q); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	// var q GetPostsQuery
+	// if err := c.ShouldBindQuery(&q); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{
+	// 		"error": err.Error(),
+	// 	})
+	// 	return
+	// }
 
 	parentID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -156,9 +160,20 @@ func GetReply(c *gin.Context) {
 		return
 	}
 
+	// データベースから親投稿を検索
+	var parent models.Post
+	if err := models.DB.Where("id = ?", parentID).Preload("Creator").First(&parent).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	pare := GetPostsTemplate([]models.Post{parent})[0]
+
 	// データベースから返信を検索
 	var replies []models.Post
-	if err := models.DB.Where("parent_id = ?", parentID).Limit(q.Limit).Offset(q.Offset).Preload("Creator").Find(&replies).Error; err != nil {
+	if err := models.DB.Where("parent_id = ?", parentID).Preload("Creator").Find(&replies).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
@@ -168,6 +183,7 @@ func GetReply(c *gin.Context) {
 	resp := GetPostsTemplate(replies)
 
 	c.JSON(http.StatusOK, gin.H{
+		"parent":  pare,
 		"replies": resp,
 	})
 }
