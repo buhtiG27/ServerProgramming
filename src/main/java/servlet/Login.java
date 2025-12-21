@@ -23,12 +23,11 @@ public class Login extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String email = request.getParameter("Address");
+        String userID = request.getParameter("Username");
         String password = request.getParameter("Password");
-        String name = request.getParameter("Username");
-        getServletContext().log("[rid=" + rid + "] Login Username=" + name);
+        getServletContext().log("[rid=" + rid + "] Login Username=" + userID);
 
-        if (email == null || email.isEmpty() ||
+        if (userID == null || userID.isEmpty() ||
                 password == null || password.isEmpty()) {
 
             request.setAttribute("error", "メールアドレスとパスワードを入力してください");
@@ -39,7 +38,7 @@ public class Login extends HttpServlet {
 
         // === Go API に送る JSON ===
         JSONObject json = new JSONObject();
-        json.put("account_id", email);
+        json.put("account_id", userID);
         json.put("password", password);
 
         try {

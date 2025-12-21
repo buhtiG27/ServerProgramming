@@ -67,7 +67,8 @@ public class Register extends HttpServlet {
             if (res.is2xx()) {
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
-                request.setAttribute("error", "登録に失敗しました");
+                String error = res.body;
+                request.setAttribute("error", "登録に失敗しました: " + error);
                 request.setAttribute("Username", user);
                 request.setAttribute("Password", pw);
                 request.setAttribute("Address", email);

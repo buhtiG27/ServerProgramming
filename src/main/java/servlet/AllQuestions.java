@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,13 +33,37 @@ public class AllQuestions extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
+        String limitStr = request.getParameter("limit");
+        String offsetStr = request.getParameter("offset");
+
+        int limit = 20; // デフォルト
+        int offset = 0;
+
+        try {
+            if (limitStr != null)
+                limit = Integer.parseInt(limitStr);
+            if (offsetStr != null)
+                offset = Integer.parseInt(offsetStr);
+        } catch (NumberFormatException ignore) {
+        }
+
+        // 安全ガード（超重要）
+        if (limit < 1)
+            limit = 20;
+        if (limit > 100)
+            limit = 100;
+        if (offset < 0)
+            offset = 0;
+
+        String query = "?limit=" + limit + "&offset=" + offset;
+
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             getServletContext().log("[rid=" + rid + "] Call API GET /posts");
 
             // 認証付き GET
-            ApiResponse apires = api.get(request, "/posts");
+            ApiResponse apires = api.get(request, "/posts" + query);
 
             if (!apires.is2xx()) {
                 getServletContext().log("[rid=" + rid + "] API error status=" + apires.status);
@@ -51,12 +76,16 @@ public class AllQuestions extends HttpServlet {
             JSONObject json = new JSONObject(apires.body);
             JSONArray posts = json.getJSONArray("posts");
 
-            List<JSONObject> questions = new ArrayList<>();
+            List<Map<String, Object>> questions = new ArrayList<>();
             for (int i = 0; i < posts.length(); i++) {
-                questions.add(posts.getJSONObject(i));
+                JSONObject postJSON = posts.getJSONObject(i);
+                Map<String, Object> postMap = postJSON.toMap();
+                questions.add(postMap);
             }
 
             request.setAttribute("questions", questions);
+            request.setAttribute("limit", limit);
+            request.setAttribute("offset", offset);
 
             getServletContext().log(
                     "[rid=" + rid + "] AllQuestions success count=" + questions.size());
