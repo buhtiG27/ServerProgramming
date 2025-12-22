@@ -63,9 +63,6 @@
 
 	<%
     Map<String, Map<String, Object>> timetable = (Map<String, Map<String, Object>>) request.getAttribute("timetable");
-	// Object[][] table = (Object[][]) request.getAttribute("myTimeTable");
-	// List<Map<String,Object>> subjects = (List<Map<String,Object>>) request.getAttribute("subjects");
-	// Set<Long> registeredIds = (Set<Long>) request.getAttribute("registeredSubjectIds");
 	if (timetable == null) {
 	%>
 	    <p style="color:red;">時間割データが取得できませんでした</p>
@@ -86,28 +83,17 @@ for (int p = 1; p <= 8; p++) {
 
         Long subId = null;
         String displayName = "＋"; // 空セルのデフォルト表示
-        // boolean isRegistered = false;
         String actionUrl = request.getContextPath() + "/subjects"; // デフォルトは一覧
 
         if (sub != null) {
-            // displayName = "〇";
             Object idObj = sub.get("id");
             subId = Long.valueOf(idObj.toString());
             
-            // 登録済みかチェック
-            // isRegistered = (subId != null && registeredIds != null && registeredIds.contains(subId));
             
-                // 登録済みの場合：詳細へ
             displayName = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "名称未設定";
             actionUrl = request.getContextPath() + "/subjects/detail";
-            // if (isRegistered) {
-            // } else {
-                // String name = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "";
-                // displayName = name + "<br><span style='font-size:0.8em;'>(未登録)</span>";
-            // }
         }
 
-        // String finalSubId = (subId != null) ? subId.toString() : "";
     %>
     <td style="text-align: center;">
     <form action="<%= actionUrl %>" method="get" style="margin:0;">
