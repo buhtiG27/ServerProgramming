@@ -3,18 +3,19 @@ X02Questions
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧 | 電大生のQ&A</title>
+        <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
 		<%-- ${pageContext.request.contextPath}/web_system/css/○○　このように書かないと反映されない --%>	
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_2_Question.css">
-		<link 
-			rel="icon" 
-			href="${pageContext.request.contextPath}/web_system/images/icon_qa.png" 
-		/>
-		<!-- ファビコン -->	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>

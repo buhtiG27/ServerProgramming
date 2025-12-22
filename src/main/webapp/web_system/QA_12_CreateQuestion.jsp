@@ -28,12 +28,7 @@ request.setCharacterEncoding("UTF-8"); %>
                 <button type="button" id="backButton" class="back_button">
                     戻る
                 </button>
-                <img
-                    src="<%= request.getContextPath() %>/web_system/images/Anone_1.png"
-                    id="anoneImage"
-                    class="anone"
-                    alt=""
-                />
+                <img src="<%= request.getContextPath() %>/web_system/images/Anone_1.png" id="anoneImage" class="anone" alt="" />
             </div>
             <h2>質問を作成</h2>
             <button
@@ -58,12 +53,8 @@ request.setCharacterEncoding("UTF-8"); %>
             method="post"
         >
             <div class="create_list">
-                <label> </label>
-                <img
-                    id="previewImage"
-                    src="images/icon_image.png"
-                    class="insert_Image"
-                />
+                <label> 
+                	<img id="previewImage" src="${page.Context.request.contextPath}/web_system/images/icon_image.png" class="insert_Image" />
                 <!-- <input
                     type="file"
                     id="imageInput"
@@ -77,6 +68,7 @@ request.setCharacterEncoding("UTF-8"); %>
                             img.src = 'images/icon_image.png';
                         }"
                 /> -->
+                </label>
                 <br />
                 <br />
                 <textarea
@@ -92,12 +84,12 @@ request.setCharacterEncoding("UTF-8"); %>
                 <form class="form" action="QA_02_Questions.html" method="get">
                     <button class="pageButton toQuestions" type="submit">
                         <img
-                            src="images/icon_home.png"
+                            src="${page.Context.request.contextPath}/web_system/images/icon_home.png"
                             alt="(質問一覧だよ！)"
                             class="icon_toQuestions"
                         />
                         <img
-                            src="images/icon_home_hukidashi.png"
+                            src="${page.Context.request.contextPath}/web_system/images/icon_home_hukidashi.png"
                             alt="(質問一覧だよ！)"
                             class="icon_toQuestions_hukidashi"
                         />
@@ -106,14 +98,14 @@ request.setCharacterEncoding("UTF-8"); %>
                 <form class="form" action="QA_03_MyTime.html" method="get">
                     <button class="pageButton" type="submit">
                         <img
-                            src="images/icon_calender.png"
+                            src="${page.Context.request.contextPath}/web_system/images/icon_calender.png"
                             alt="(マイ時間割へ)"
                         />
                     </button>
                 </form>
                 <form class="form" action="QA_04_User.html" method="get">
                     <button class="pageButton" type="submit">
-                        <img src="images/icon_gear.png" alt="(ユーザ情報へ)" />
+                        <img src="${page.Context.request.contextPath}/web_system/images/icon_gear.png" alt="(ユーザ情報へ)" />
                     </button>
                 </form>
             </div>
