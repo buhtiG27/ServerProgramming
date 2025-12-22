@@ -106,7 +106,6 @@ for (int p = 1; p <= 8; p++) {
                 displayName = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "名称未設定";
                 actionUrl = request.getContextPath() + "/subjects/detail";
             } else {
-                // コマに科目はあるが自分は未登録の場合：一覧へ（検索のヒントとして名前を表示）
                 String name = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "";
                 displayName = name + "<br><span style='font-size:0.8em;'>(未登録)</span>";
                 actionUrl = request.getContextPath() + "/subjects";

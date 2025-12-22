@@ -186,6 +186,16 @@
         <servlet-name>RegisterCheck</servlet-name>
         <url-pattern>/register/check</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>RegisterTimetable</servlet-name>
+        <servlet-class>servlet.RegisterTimetable</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterTimetable</servlet-name>
+        <url-pattern>/timetable/register</url-pattern>
+    </servlet-mapping>
 
 
     <!-- TODO:パラメータ対応 -->

@@ -71,10 +71,14 @@ public class SubjectRegister extends HttpServlet {
             json.put("class_room", classRoom);
             json.put("koma", 1); 
             json.put("weekday", weekdayStr); 
-            json.put("time", timeVal); // int型として送信
+            json.put("time", String.valueOf(timeVal));
+            
+            json.put("description", "");
+            json.put("units", 2); 
+            json.put("period", "前期");
 
             // ===== Go API POST =====
-            getServletContext().log("[rid=" + rid + "] SubjectRegister calling API /subjects JSON=" + json.toString());
+            getServletContext().log("Sending JSON: " + json.toString());
             
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             ApiResponse apires = api.postJson(request, "/subjects", json.toString());

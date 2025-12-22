@@ -1,20 +1,15 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
 
 public class CreateTask extends HttpServlet {
@@ -34,42 +29,45 @@ public class CreateTask extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String rid = (String) request.getAttribute("rid");
-
+        
+        // JSPのname属性と完全に一致させる
         String practiceName = request.getParameter("content");
-        String place = request.getParameter("output");
-        String description = request.getParameter("detail");
-        String deadline = request.getParameter("limmit");
-        String subjectId = request.getParameter("subjectId");
+        String place        = request.getParameter("output");
+        String description  = request.getParameter("detail"); // JSP側も"detail"にする
+        String deadline     = request.getParameter("limmit");
+        String subjectId    = request.getParameter("subjectId");
 
         try {
+            // デバッグログ
+            getServletContext().log("[DEBUG] CreateTask - subjectId: " + subjectId);
+
+            if (subjectId == null || subjectId.isEmpty()) {
+                throw new Exception("subjectId is missing");
+            }
+
             JSONObject json = new JSONObject();
-            json.put("subject_id", Integer.parseInt(subjectId));
+            json.put("subject_id", Integer.parseInt(subjectId)); // ここで数値に変換
             json.put("practice_name", practiceName);
             json.put("place", place);
             json.put("description", description);
             json.put("deadline", deadline);
 
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-
-            getServletContext().log("[rid=" + rid + "] Call API POST /posts");
-
+            
+            // Go側のエンドポイントが "/practices" か "/me/practices" か確認
             ApiResponse apires = api.postJson(request, "/practices", json.toString());
 
             if (apires.is2xx()) {
-                request.getRequestDispatcher("/web_system/QA_25_CompleteTask.jsp")
-                        .forward(request, response);
+                request.getRequestDispatcher("/web_system/QA_25_CompleteTask.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "課題作成に失敗しました");
-                request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp")
-                        .forward(request, response);
+                getServletContext().log("[DEBUG] API Error: " + apires.body);
+                request.setAttribute("error", "APIエラー: " + apires.status);
+                request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp").forward(request, response);
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "システムエラーが発生しました");
-            request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp")
-                    .forward(request, response);
+            getServletContext().log("[DEBUG] Exception: ", e);
+            request.setAttribute("error", "システムエラー: " + e.getMessage());
+            request.getRequestDispatcher("/web_system/QA_24_CheckNewTask.jsp").forward(request, response);
         }
     }
 }

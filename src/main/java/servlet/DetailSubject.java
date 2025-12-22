@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -22,63 +21,57 @@ public class DetailSubject extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String rid = (String) request.getAttribute("rid");
-        getServletContext().log("[rid=" + rid + "] DetailSubject start");
-
         request.setCharacterEncoding("UTF-8");
+        String subjectIdStr = request.getParameter("subjectId");
+        String weekday = request.getParameter("weekday"); // 03画面から渡す必要がある
+        String time = request.getParameter("time");       // 03画面から渡す必要がある
 
-        String classname = request.getParameter("classname");
-        if (classname == null || classname.isBlank()) {
-            request.setAttribute("error", "科目名が不正です");
-            request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp")
-                    .forward(request, response);
+        // デバッグログ
+        getServletContext().log("[DEBUG] Detail: id=" + subjectIdStr + ", day=" + weekday + ", time=" + time);
+
+        if (subjectIdStr == null || weekday == null || time == null) {
+            // パラメータが足りない場合は一覧へ（GoのAPI制約のため）
+            getServletContext().log("[DEBUG] Missing parameters. Redirecting...");
+            response.sendRedirect(request.getContextPath() + "/timetable");
             return;
         }
 
         try {
-            String query = "?subject_name=" + URLEncoder.encode(classname, "UTF-8");
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            
+            // 1. Goの曜日の形式に変換 (0->Mon など)
+            String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+            String dayStr = days[Integer.parseInt(weekday)];
 
-            ApiClient api =
-                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            // 2. API呼び出し (requiredなクエリを送る)
+            String query = String.format("?weekday=%s&time=%s", dayStr, time);
+            ApiResponse apires = api.get(request, "/subjects" + query);
 
-            getServletContext().log(
-                "[rid=" + rid + "] Call API GET /subjects" + query);
+            if (apires.is2xx()) {
+                JSONObject json = new JSONObject(apires.body);
+                JSONArray array = json.getJSONArray("subjects");
+                
+                long targetId = Long.parseLong(subjectIdStr);
+                Map<String, Object> foundSubject = null;
 
-            String subjectId = request.getParameter("subjectId");
-            ApiResponse apires = api.get(request, "/subjects/" + subjectId);
+                // 3. 取得したリストからIDが一致するものを探す
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    if (obj.getLong("ID") == targetId) {
+                        foundSubject = obj.toMap();
+                        break;
+                    }
+                }
 
-            if (!apires.is2xx()) {
-                request.setAttribute("error", "科目情報の取得に失敗しました");
-                request.getRequestDispatcher("/web_system/QA_21_DetailSubject.jsp")
-                        .forward(request, response);
-                return;
+                if (foundSubject != null) {
+                    request.setAttribute("subject", foundSubject);
+                    getServletContext().log("[DEBUG] Found subject: " + foundSubject.get("subject_name"));
+                }
             }
-
-            JSONObject json = new JSONObject(apires.body);
-            JSONArray subjects = json.getJSONArray("subjects");
-
-            if (subjects.isEmpty()) {
-                request.setAttribute("error", "該当する科目が見つかりません");
-                request.getRequestDispatcher("/web_system/QA_21_DetailSubject.jsp")
-                        .forward(request, response);
-                return;
-            }
-
-            JSONObject subjectJson = subjects.getJSONObject(0);
-
-            // ShowQuestion と同じく Map に変換
-            Map<String, Object> subject = subjectJson.toMap();
-
-            request.setAttribute("subject", subject);
-
-            getServletContext().log("[rid=" + rid + "] DetailSubject success");
-
         } catch (Exception e) {
-            getServletContext().log("[rid=" + rid + "] DetailSubject failed", e);
-            request.setAttribute("error", "科目情報の取得に失敗しました");
+            getServletContext().log("[DEBUG] Error", e);
         }
 
-        request.getRequestDispatcher("/web_system/QA_21_DetailSubject.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/web_system/QA_21_DetailSubject.jsp").forward(request, response);
     }
 }

@@ -10,12 +10,15 @@
         />
     </head>
     <body>
-        <% request.setCharacterEncoding("UTF-8"); // リクエスト・パラメータ取得
-        String cls = request.getParameter("classneme"); String con =
-        request.getParameter("content"); String lim =
-        request.getParameter("limmit"); String output =
-        request.getParameter("output"); String ditail =
-        request.getParameter("detailcontent"); %>
+    <% 
+    	request.setCharacterEncoding("UTF-8");
+    	String subId = request.getParameter("subjectId"); // 追加
+    	String cls = request.getParameter("classneme"); 
+    	String con = request.getParameter("content"); 
+    	String lim = request.getParameter("limmit"); 
+    	String output = request.getParameter("output"); 
+    	String ditail = request.getParameter("detailcontent"); 
+	%>
 
         <div class="top_button">
             <h1>TDU</h1>
@@ -32,46 +35,26 @@
             補足説明：<%= ditail %><br /><br />
 
             <div class="bottom_buttons">
-                <form
-                    class="form"
-                    action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp"
-                    method="post"
-                >
-                    <input type="hidden" name="actionType" value="correction" />
-                    <input type="hidden" name="classname" value="<%= cls %>" />
-                    <input type="hidden" name="content" value="<%= con %>" />
-                    <input type="hidden" name="limmit" value="<%= lim %>" />
-                    <input type="hidden" name="output" value="<%= output %>" />
-                    <input
-                        type="hidden"
-                        name="detailcontent"
-                        value="<%= ditail %>"
-                    />
-                    <button class="correctButton" type="submit">訂正</button>
-                </form>
+    <form class="form" action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="post">
+        <input type="hidden" name="actionType" value="correction" />
+        <input type="hidden" name="subjectId" value="<%= subId %>" /> <input type="hidden" name="classneme" value="<%= cls %>" />
+        <input type="hidden" name="content" value="<%= con %>" />
+        <input type="hidden" name="limmit" value="<%= lim %>" />
+        <input type="hidden" name="output" value="<%= output %>" />
+        <input type="hidden" name="detailcontent" value="<%= ditail %>" />
+        <button class="correctButton" type="submit">訂正</button>
+    </form>
 
-                <form
-                    class="form"
-                    action="${pageContext.request.contextPath}/web_system/QA_21_DetailSubject.jsp"
-                    method="post"
-                >
-                    <input type="hidden" name="classname" value="<%= cls %>" />
-                    <input type="hidden" name="content" value="<%= con %>" />
-                    <input type="hidden" name="limmit" value="<%= lim %>" />
-                    <input type="hidden" name="output" value="<%= output %>" />
-                    <input
-                        type="hidden"
-                        name="detailcontent"
-                        value="<%= ditail %>"
-                    />
-                    <input
-                        type="hidden"
-                        name="message"
-                        value="登録が完了しました。"
-                    />
-                    <button class="registerButton" type="submit">登録</button>
-                </form>
-            </div>
+    <form class="form" action="${pageContext.request.contextPath}/tasks/create" method="post">
+        <input type="hidden" name="subjectId" value="<%= subId %>" /> <input type="hidden" name="classname" value="<%= cls %>" />
+        <input type="hidden" name="content" value="<%= con %>" />
+        <input type="hidden" name="limmit" value="<%= lim %>" />
+        <input type="hidden" name="output" value="<%= output %>" />
+
+        <input type="hidden" name="detail" value="<%= ditail %>" />
+        <button class="registerButton" type="submit">登録</button>
+    </form>
+	</div>
         </div>
     </body>
 </html>

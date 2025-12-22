@@ -25,64 +25,57 @@ public class AllSubjects extends HttpServlet {
             throws ServletException, IOException {
 
         String rid = (String) request.getAttribute("rid");
-        getServletContext().log("[rid=" + rid + "] AllSubjects start");
 
         request.setCharacterEncoding("UTF-8");
 
         String weekday = request.getParameter("weekday");
         String time    = request.getParameter("time");
-
-        // クエリ組み立て（任意）
-        StringBuilder query = new StringBuilder();
-        if (weekday != null && !weekday.isBlank()) {
-            query.append(query.length() == 0 ? "?" : "&")
-                 .append("weekday=").append(URLEncoder.encode(weekday, "UTF-8"));
+        
+        String[] weekdayLabels = {"Mon", "Tue", "Wed", "Thu", "Fri",""};
+        String weekdayQuery = "Mon";
+        if (weekday != null && !weekday.isEmpty()) {
+            try {
+                int idx = Integer.parseInt(weekday);
+                if (idx >= 0 && idx < weekdayLabels.length) {
+                    weekdayQuery = weekdayLabels[idx]; // "0" -> "Mon" に変換
+                }
+            } catch (NumberFormatException e) {
+                weekdayQuery = "Mon"; // 既に文字列の場合はそのまま
+            }
         }
-        if (time != null && !time.isBlank()) {
-            query.append(query.length() == 0 ? "?" : "&")
-                 .append("time=").append(URLEncoder.encode(time, "UTF-8"));
-        }
+        String timeQuery = (time != null && !time.isEmpty()) ? time : "1";
+        
+        String queryString = String.format("?weekday=%s&time=%s", 
+                URLEncoder.encode(weekdayQuery, "UTF-8"),
+                URLEncoder.encode(timeQuery, "UTF-8"));
 
         try {
             ApiClient api =
                 (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             getServletContext().log(
-                "[rid=" + rid + "] Call API GET /subjects" + query);
+                "[rid=" + rid + "] Call API GET /subjects" + queryString);
 
-            ApiResponse apires = api.get(request, "/subjects" + query);
+            ApiResponse apires = api.get(request, "/subjects" + queryString);
 
-            if (!apires.is2xx()) {
-                getServletContext().log(
-                    "[rid=" + rid + "] API error status=" + apires.status);
-                request.setAttribute("error", "科目一覧の取得に失敗しました");
-                request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp")
-                        .forward(request, response);
-                return;
+            if (apires.is2xx()) {
+                JSONObject json = new JSONObject(apires.body);
+                JSONArray subjectsJson = json.getJSONArray("subjects");
+
+                List<Map<String, Object>> subjects = new ArrayList<>();
+                for (int i = 0; i < subjectsJson.length(); i++) {
+                    // Mapに変換する際、キーは "subject_name" のまま保持される
+                    subjects.add(subjectsJson.getJSONObject(i).toMap());
+                }
+                request.setAttribute("subjects", subjects);
+            } else {
+                request.setAttribute("error", "API Error: " + apires.status);
             }
-
-            JSONObject json = new JSONObject(apires.body);
-            JSONArray subjectsJson = json.getJSONArray("subjects");
-
-            List<Map<String, Object>> subjects = new ArrayList<>();
-            for (int i = 0; i < subjectsJson.length(); i++) {
-                JSONObject s = subjectsJson.getJSONObject(i);
-                subjects.add(s.toMap());
-            }
-
-            request.setAttribute("subjects", subjects);
-
-            getServletContext().log(
-                "[rid=" + rid + "] AllSubjects success count=" + subjects.size());
-
-            request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp")
-                    .forward(request, response);
+            
+            request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp").forward(request, response);
 
         } catch (Exception e) {
-            getServletContext().log("[rid=" + rid + "] AllSubjects failed", e);
-            request.setAttribute("error", "科目一覧の取得に失敗しました");
-            request.getRequestDispatcher("/web_system/QA_19_AllMyTime.jsp")
-                    .forward(request, response);
+            throw new ServletException(e);
         }
     }
 

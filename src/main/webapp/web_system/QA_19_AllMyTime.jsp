@@ -56,14 +56,20 @@
 	%>
 		<div class="subject_area">
     	<h3>${sub['subject_name']}</h3>
+        <p>教員: ${sub['teacher']}</p>
 
     	<form action="${pageContext.request.contextPath}/subjects/detail" method="get">
-        	<input type="hidden" name="subjectName" value="${sub.subjectName}">
-        	<button class="show_button" type="submit">詳細</button>
-    	</form>
+    		<input type="hidden" name="subjectId" value="${sub['ID']}">
+    
+    		<%-- 追加：GoのAPIを叩くために必要な情報を引き継ぐ --%>
+    		<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
+    		<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
+    
+    		<button class="show_button" type="submit">詳細</button>
+		</form>
 
-            <form action="${pageContext.request.contextPath}/subjects" method="post">
-                <input type="hidden" name="subjectId" value="${sub.id}">
+            <form action="${pageContext.request.contextPath}/timetable/register" method="post">
+                <input type="hidden" name="subjectId" value="${sub['ID']}">
                 <button class="register_button" type="submit">登録</button>
             </form>
         </div>
