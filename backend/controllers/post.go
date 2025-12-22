@@ -11,7 +11,7 @@ import (
 
 type CreatePostInput struct {
 	PracticeID   uint   `json:"practice_id"`
-	IsQuestion   bool   `json:"is_question" binding:"required"`
+	IsQuestion   bool   `json:"is_question"`
 	ParentID     uint   `json:"parent_id"`
 	ContentsText string `json:"contents_text" binding:"required"`
 	ImagePath    string `json:"image_path"`

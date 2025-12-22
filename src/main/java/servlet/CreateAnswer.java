@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import org.json.JSONObject;
 
@@ -22,21 +23,19 @@ public class CreateAnswer extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("token") == null) {
-            request.setAttribute("error", "ログインしてください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
-            return;
-        }
-
-        String content = request.getParameter("content");
+        Enumeration<String> paramsNames = request.getParameterNames();
+        String content = request.getParameter("answerText");
         String parentIdStr = request.getParameter("question_id");
 
+        String paramsString = ",";
+        while (paramsNames.hasMoreElements()) {
+            paramsString += paramsNames.nextElement().toString() + ", ";
+        }
+
         if (content == null || content.isBlank()) {
-            request.setAttribute("error", "回答内容を入力してください");
+            request.setAttribute("error", "回答内容を入力してくださいいいい" + paramsString);
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
             return;
         }
 
@@ -49,19 +48,20 @@ public class CreateAnswer extends HttpServlet {
         json.put("contents_text", content);
 
         try {
-            ApiClient api =
-                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             ApiResponse apires = api.postJson(request, "/posts", json.toString());
 
             if (apires.is2xx()) {
+                String query = "?questionId=" + parentId;
                 response.sendRedirect(
-                    request.getContextPath() + "/questions/answer"
-                );
+                        request.getContextPath() + "/questions/show" + query);
             } else {
-                request.setAttribute("error", "回答の投稿に失敗しました");
+                JSONObject errJSON = new JSONObject(apires.body);
+                String error = errJSON.getString("error");
+                request.setAttribute("error", "回答の投稿に失敗しました: " + error);
                 request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                       .forward(request, response);
+                        .forward(request, response);
             }
 
         } catch (Exception e) {
