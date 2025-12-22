@@ -81,7 +81,7 @@ request.setCharacterEncoding("UTF-8"); %>
 
         <nav>
             <div class="bottom_button">
-                <form class="form" action="QA_02_Questions.html" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/questions" method="get">
                     <button class="pageButton toQuestions" type="submit">
                         <img
                             src="${page.Context.request.contextPath}/web_system/images/icon_home.png"
@@ -95,7 +95,7 @@ request.setCharacterEncoding("UTF-8"); %>
                         />
                     </button>
                 </form>
-                <form class="form" action="QA_03_MyTime.html" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/timetable" method="get">
                     <button class="pageButton" type="submit">
                         <img
                             src="${page.Context.request.contextPath}/web_system/images/icon_calender.png"
@@ -103,7 +103,7 @@ request.setCharacterEncoding("UTF-8"); %>
                         />
                     </button>
                 </form>
-                <form class="form" action="QA_04_User.html" method="get">
+                <form class="form" action="<%= request.getContextPath() %>/user" method="get">
                     <button class="pageButton" type="submit">
                         <img src="${page.Context.request.contextPath}/web_system/images/icon_gear.png" alt="(ユーザ情報へ)" />
                     </button>
