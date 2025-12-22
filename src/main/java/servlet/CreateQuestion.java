@@ -31,7 +31,7 @@ public class CreateQuestion extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         // JSP からの入力
-        String content = request.getParameter("questionBody");
+        String content = (String) request.getParameter("questionBody");
         getServletContext().log("[rid=" + rid + "] questionBody is " + content);
 
         if (content == null || content.isBlank()) {

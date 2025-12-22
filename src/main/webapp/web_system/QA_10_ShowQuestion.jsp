@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.json.JSONObject" %>
 <%
 String error = (String) request.getAttribute("error");
 	pageContext.setAttribute("error", error);
@@ -14,7 +13,7 @@ List<Map<String, Object>> answers =
     (List<Map<String, Object>>) request.getAttribute("answers");
 
 String loggedInUsername =
-    (String) session.getAttribute("loggedInUsername");
+    (String) session.getAttribute("userId");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -37,7 +36,8 @@ String loggedInUsername =
 		</div>
 
 		<br>
-		<a>質問</a>
+		<a>質問</a><br />
+		${error}
 		<br>
 	</div>
 
@@ -47,7 +47,6 @@ String loggedInUsername =
 	<div class="post-list">
 		<div class="post" id="questionPost">
 			<h3>投稿</h3>
-			 ${error}
 			<p id="questionText">${question['contents_text']}</p>
 
 			<div class="button-post">
@@ -74,18 +73,18 @@ String loggedInUsername =
 		<%
 		if (answers != null && answers.size() > 0) {
 			for (Map<String, Object> answer : answers) {
-				org.json.JSONObject creator = (org.json.JSONObject) answer.get("creator");
-				String answerUser = creator == null ? "" : creator.optString("display_name", "");
-				String content = (String) answer.get("contents_text");
+				Map<String, Object> creator = (Map<String, Object>) answer.get("creator");
+				pageContext.setAttribute("answer", answer);
+				String answerUser = creator == null ? "" : (String) creator.get("user_id");
 				%>
 		<div class="post">
-    		<p class="answerText"><%= content %></p>
-
+    		<p class="answerText">${answer['contents_text']}</p>
+			<p class="answerUser">${answer['creator']['display_name']}</p>
     		<div class="button-post">
         		<% 
         		if (loggedInUsername != null &&loggedInUsername.equals(answerUser)) { 
         		%>
-            		<button class="edit_button" onclick="openEditAnswerModal('<%= content %>')">編集</button>
+            		<button class="edit_button" onclick="openEditAnswerModal('${answer['content_text']}')">編集</button>
         		<% } %>
     		</div>
 		</div>
@@ -106,9 +105,10 @@ String loggedInUsername =
 			<div class="modal-content">
 				<span id="closeModal" class="close">&times;</span>
 				<h2>回答を作成</h2>
-				<form action="${page.Context.request.contextPath}/questions/answercreate" method="post" enctype="multipart/form-data">
+				<form action="${page.Context.request.contextPath}/questions/answercreate" method="post">
 					<textarea name="answerText" rows="5" cols="50" placeholder="ここに回答内容を入力"></textarea><br><br>
-					<input type="file" name="imageFile" accept="image/*"><br><br>
+					<!-- <input type="file" name="imageFile" accept="image/*"><br><br> -->
+					 <input type="hidden" name="question_id" value="${question['id']}" />
 					<button type="submit" class="submit_button">送信</button>
 				</form>
 			</div>

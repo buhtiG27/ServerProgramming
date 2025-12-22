@@ -1,4 +1,5 @@
 package servlet;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +25,15 @@ public class PostAnswer extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("token") == null) {
-            request.setAttribute("error", "ログインしてください");
-            request.getRequestDispatcher("/web_system/QA_01_Login.jsp")
-                   .forward(request, response);
-            return;
-        }
-
         try {
-            ApiClient api =
-                (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
 
             ApiResponse apires = api.get(request, "/posts");
 
             if (!apires.is2xx()) {
                 request.setAttribute("error", "質問の取得に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                       .forward(request, response);
+                        .forward(request, response);
                 return;
             }
 
@@ -56,7 +48,7 @@ public class PostAnswer extends HttpServlet {
             request.setAttribute("questions", questions);
 
             request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
         } catch (Exception e) {
             throw new ServletException(e);
