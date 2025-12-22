@@ -12,9 +12,10 @@ request.setCharacterEncoding("UTF-8"); %>
     </head>
     <body>
         <div class="top_area">
-			<form class="back_form" action="QA_02_Questions.html" method="get"> 
-			    <button class="back_button" type="submit">戻る</button>
-			</form>
+            <div class="back_container" id="backContainer">
+                <button type="button" id="backButton" class="back_button">戻る</button>
+                <img src="<%= request.getContextPath() %>/web_system/images/Anone_1.png" id="anoneImage" class="anone" alt="" />
+            </div>
             <h2>質問を作成</h2>
             <button class="save_button" type="submit" form="questionForm" name="save" value="send">投稿</button>
 		</div>
@@ -63,6 +64,28 @@ request.setCharacterEncoding("UTF-8"); %>
                 </form>
             </div>
 		</nav>
+		
+		<script>
+		const backBtn = document.getElementById("backButton");
+		const container = document.getElementById("backContainer");
+
+		let visible = true;
+
+		backBtn.addEventListener("click", (e) => {
+			e.stopPropagation();
+			if (!visible) return;
+
+			backBtn.classList.add("is-hidden");
+			visible = false;
+		});
+
+		container.addEventListener("click", () => {
+			if (visible) return;
+
+			backBtn.classList.remove("is-hidden");
+			visible = true;
+		});
+		</script>
         
     </body>
 </html>

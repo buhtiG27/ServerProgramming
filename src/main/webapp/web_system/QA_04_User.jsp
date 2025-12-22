@@ -187,7 +187,7 @@
 			</div>
 			
 			<button id="cycleButton" class="motchyButton">
-				<img id="Shitsumotchy" src="images/Shitsumotchy_1.png" alt="">
+				<img id="Shitsumotchy" src="<%= request.getContextPath() %>/web_system/images/Shitsumotchy_1.png" alt="">
 			</button>
 			<script>
 			const button = document.getElementById("cycleButton");
@@ -196,16 +196,12 @@
 			let isVisible = true; 
 			
 			button.addEventListener("click", () => {
-				if (!isVisible) return; // もう消えてたら何もしない
+				if (!isVisible) return;
 				 
-				// ① 即時反転
 				img.classList.add("flip");
-				// ② 次のフレームでフェードアウト開始
 				requestAnimationFrame(() => {
 					img.classList.add("fade-out");
 				});
-				
-				// ③ 状態を「非表示」に
 				isVisible = false;
 			});
 			</script>

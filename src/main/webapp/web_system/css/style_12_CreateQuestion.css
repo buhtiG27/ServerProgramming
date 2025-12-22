@@ -14,7 +14,21 @@ body {
     border-bottom: 1px solid #ccc;
     z-index: 100;
 }
+.top_area h2 {
+    position:absolute;
+    left:50%;
+    top:10%;
+    transform:translateX(-50%);
+    margin: 0;
+    font-size: 28px;
+}
+
 /* 戻るボタンのスタイル */
+.back_container {
+    position: relative;
+    width: 300px;
+    height: 60px;
+}
 .back_button {
     position:absolute;
     bottom:0;
@@ -26,15 +40,21 @@ body {
     padding: 10px 40px; 
     border: 1px solid #ccc;
     cursor: pointer;
+    z-index:1;
+
+    transition: opacity 0.4s ease;
 }
-.top_area h2 {
-    position:absolute;
-    left:50%;
-    top:10%;
-    transform:translateX(-50%);
-    margin: 0;
-    font-size: 28px;
+.back_button.is-hidden {
+    opacity: 0;
+    pointer-events: none;
 }
+.anone {
+    position: absolute;
+    left: 60px;
+    top: 0;
+    height: 60px;
+}
+
 /* 保存ボタンのスタイル */
 .save_button {
     position:absolute;
