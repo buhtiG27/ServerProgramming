@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,10 +78,17 @@ public class AllQuestions extends HttpServlet {
             JSONObject json = new JSONObject(apires.body);
             JSONArray posts = json.getJSONArray("posts");
 
+            DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
             List<Map<String, Object>> questions = new ArrayList<>();
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
                 Map<String, Object> postMap = postJSON.toMap();
+                String iso = (String) postMap.get("created_at");
+                if (iso != null) {
+                    OffsetDateTime odt = OffsetDateTime.parse(iso);
+                    postMap.put("created_at_fmt", odt.format(outFmt));
+                }
                 questions.add(postMap);
             }
 
