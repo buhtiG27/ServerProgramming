@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
+<%
+    // サーブレットが受け取った「数値」をそのまま取得しておく
+    String rawWeekday = request.getParameter("weekday");
+    String rawTime = request.getParameter("time");
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,6 +21,8 @@
     
     <div class="header_area">
         <form action="${pageContext.request.contextPath}/subjects" method="get">
+                    <input type="hidden" name="weekday" value="<%= rawWeekday %>">
+    				<input type="hidden" name="time" value="<%= rawTime %>">
             <button class="back_button" type="submit">戻る</button>
         </form>
         <h1 class="page_title">科目詳細</h1>
@@ -61,36 +68,46 @@
             <div class="new_create">
                 <form action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="get">
                     <input type="hidden" name="subjectId" value="${subject['ID']}">
+                    <input type="hidden" name="weekday" value="<%= rawWeekday %>">
+    				<input type="hidden" name="time" value="<%= rawTime %>">
+    				<input type="hidden" name="classname" value="${subject['subject_name']}">
                     <button class="new_create_button" type="submit">新規作成</button>
                 </form>
             </div>
         </label>
 
         <div class="textarea_box">
-            <ul>
-            <%
-                List<Map<String, Object>> tasks = (List<Map<String, Object>>) request.getAttribute("practices");
-                if (tasks == null || tasks.isEmpty()) {
-            %>
-                <p style="color:gray;">登録されている課題はありません</p>
-            <%
-                } else {
-                    for (Map<String, Object> t : tasks) {
-                        pageContext.setAttribute("t", t);
-            %>
-                <div class="task_item">
-                    <form action="${pageContext.request.contextPath}/tasks/view" method="get"> 
-                        <%-- 課題のIDを渡す --%>
-                        <input type="hidden" name="taskId" value="${t['ID']}" />
-                        <button class="task_link" type="submit">${t['practice_name']}</button>
-                    </form>
-                </div>
-            <%
-                    }
-                }
-            %>
-            </ul>   
+    <ul>
+    <%
+        // request.getAttribute("practices") が List<Object> として届く
+        Object practicesObj = request.getAttribute("practices");
+        List<Map<String, Object>> tasks = (List<Map<String, Object>>) practicesObj;
+        
+        if (tasks == null || tasks.isEmpty()) {
+    %>
+        <p style="color:gray;">登録されている課題はありません</p>
+    <%
+        } else {
+            for (Map<String, Object> t : tasks) {
+                // デバッグ用にキーを確認する場合（任意）: System.out.println("Keys: " + t.keySet());
+                
+                // キー名が 'practice_name' か 'PracticeName' か 'subject_id' になっていないか確認
+                String pName = (t.get("practice_name") != null) ? t.get("practice_name").toString() 
+                             : (t.get("PracticeName") != null) ? t.get("PracticeName").toString() : "名称未設定";
+                Object pId = (t.get("ID") != null) ? t.get("ID") : t.get("id");
+    %>
+        <div class="task_item">
+            <form action="${pageContext.request.contextPath}/tasks/view" method="get"> 
+                <input type="hidden" name="taskId" value="<%= pId %>" />
+                <button class="task_link" type="submit"><%= pName %></button>
+            </form>
         </div>
+    <%
+            }
+        }
+    %>
+    </ul>   
+</div>
     </div>
     <nav>
         <jsp:include page="navigation.jsp" />
