@@ -88,7 +88,7 @@
         <servlet-name>AllTasks</servlet-name>
         <url-pattern>/tasks</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>CreateAnswer</servlet-name>
         <servlet-class>servlet.CreateAnswer</servlet-class>
@@ -122,7 +122,6 @@
     </servlet-mapping>
 
 
-    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>DetailSubject</servlet-name>
         <servlet-class>servlet.DetailSubject</servlet-class>
@@ -154,7 +153,7 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>PostAnswer</servlet-name>
         <servlet-class>servlet.PostAnswer</servlet-class>
@@ -186,7 +185,7 @@
         <servlet-name>RegisterCheck</servlet-name>
         <url-pattern>/register/check</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>RegisterTimetable</servlet-name>
         <servlet-class>servlet.RegisterTimetable</servlet-class>
@@ -198,7 +197,6 @@
     </servlet-mapping>
 
 
-    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>ShowQuestion</servlet-name>
         <servlet-class>servlet.ShowQuestion</servlet-class>
@@ -232,7 +230,6 @@
     </servlet-mapping>
 
 
-    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>TimetableSearch</servlet-name>
         <servlet-class>servlet.TimetableSearch</servlet-class>
@@ -253,7 +250,7 @@
         <servlet-name>UpdateQuestion</servlet-name>
         <url-pattern>/questions/update</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>UserEdit</servlet-name>
         <servlet-class>servlet.UserEdit</servlet-class>

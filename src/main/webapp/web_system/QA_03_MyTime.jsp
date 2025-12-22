@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.util.stream.Collectors" %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -61,13 +62,8 @@
     </tr>
 
 	<%
-	Object[][] table =
-    	(Object[][]) request.getAttribute("myTimeTable");
-	List<Map<String,Object>> subjects =
-    	(List<Map<String,Object>>) request.getAttribute("subjects");
-	Set<Long> registeredIds =
-	(Set<Long>) request.getAttribute("registeredSubjectIds");
-	if (table == null) {
+    Map<String, Map<String, Object>> timetable = (Map<String, Map<String, Object>>) request.getAttribute("timetable");
+	if (timetable == null) {
 	%>
 	    <p style="color:red;">時間割データが取得できませんでした</p>
 	<%
@@ -82,41 +78,26 @@ for (int p = 1; p <= 8; p++) {
     <th><%= p %>限</th>
     <%
     for (int d = 0; d < 5; d++) {
-        Map<String,Object> sub = null;
-        if (table[p][d] != null) {
-            sub = (Map<String,Object>) table[p][d];
-        }
+        String key = p + ":" + d;
+        Map<String,Object> sub = timetable.get(key);
 
         Long subId = null;
         String displayName = "＋"; // 空セルのデフォルト表示
-        boolean isRegistered = false;
         String actionUrl = request.getContextPath() + "/subjects"; // デフォルトは一覧
 
         if (sub != null) {
             Object idObj = sub.get("id");
-            if (idObj != null) {
-                subId = Long.valueOf(idObj.toString());
-            }
+            subId = Long.valueOf(idObj.toString());
             
-            // 登録済みかチェック
-            isRegistered = (subId != null && registeredIds != null && registeredIds.contains(subId));
             
-            if (isRegistered) {
-                // 登録済みの場合：詳細へ
-                displayName = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "名称未設定";
-                actionUrl = request.getContextPath() + "/subjects/detail";
-            } else {
-                String name = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "";
-                displayName = name + "<br><span style='font-size:0.8em;'>(未登録)</span>";
-                actionUrl = request.getContextPath() + "/subjects";
-            }
+            displayName = sub.get("subject_name") != null ? sub.get("subject_name").toString() : "名称未設定";
+            actionUrl = request.getContextPath() + "/subjects/detail";
         }
 
-        String finalSubId = (subId != null) ? subId.toString() : "";
     %>
     <td style="text-align: center;">
     <form action="<%= actionUrl %>" method="get" style="margin:0;">
-        <input type="hidden" name="subjectId" value="<%= finalSubId %>">
+        <input type="hidden" name="subjectId" value="<%= subId %>">
         <input type="hidden" name="weekday" value="<%= d %>">
         <input type="hidden" name="time" value="<%= p %>">
         
