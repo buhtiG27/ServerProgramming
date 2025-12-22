@@ -52,16 +52,17 @@
     </form>
 
     <form class="form" action="${pageContext.request.contextPath}/tasks/create" method="post">
-    	<input type="hidden" name="subjectId" value="<%= subId %>" /> 
-    	<input type="hidden" name="classname" value="<%= cls %>" />
-    	<input type="hidden" name="content" value="<%= con %>" />
-    	<input type="hidden" name="limmit" value="<%= lim %>" />
-    	<input type="hidden" name="output" value="<%= output %>" />
-    	<input type="hidden" name="detailcontent" value="<%= ditail %>" />
-    	<input type="hidden" name="weekday" value="<%= weekday %>" />
-    	<input type="hidden" name="time" value="<%= time %>" />
-    	<button class="registerButton" type="submit">登録</button>
-	</form>
+    <%-- 変数名 subId を使用。空文字やnullでないことを確認 --%>
+    <input type="hidden" name="subjectId" value="<%= (subId != null) ? subId : "" %>" /> 
+    <input type="hidden" name="classname" value="<%= cls %>" />
+    <input type="hidden" name="content" value="<%= con %>" />
+    <input type="hidden" name="limmit" value="<%= lim %>" />
+    <input type="hidden" name="output" value="<%= output %>" />
+    <input type="hidden" name="detailcontent" value="<%= ditail %>" />
+    <input type="hidden" name="weekday" value="<%= weekday %>" />
+    <input type="hidden" name="time" value="<%= time %>" />
+    <button class="registerButton" type="submit">登録</button>
+</form>
 	</div>
         </div>
     </body>

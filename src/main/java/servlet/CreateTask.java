@@ -62,8 +62,13 @@ public class CreateTask extends HttpServlet {
 
     	try {
     	    // Goの SubjectSetInput 構造体のタグ名に完全に合わせる
+    		if (subjectId == null || subjectId.trim().isEmpty() || subjectId.equals("null")) {
+    	        throw new Exception("科目IDが正しく取得できませんでした。");
+    	    }
+
     	    JSONObject json = new JSONObject();
-    	    json.put("subject_id", Integer.parseInt(subjectId));
+    	    // 数値変換の前にトリムする
+    	    json.put("subject_id", Integer.parseInt(subjectId.trim()));
     	    json.put("practice_name", practiceName);
     	    json.put("place", place);
     	    json.put("description", description);

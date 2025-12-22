@@ -116,7 +116,7 @@
                     <input class="content_box" type="text" maxlength="200" name="content" value="<%= (con != null ? con : "") %>"/>
                     <br /><br />
 
-                    <label for="lim">期限：</label>
+                    <label for="lim">期限(例：○○/△△)：</label>
                     <br />
                     <input class="content_box" type="text" maxlength="30" name="limmit" value="<%= (lim != null ? lim : "") %>"/>
                     <br /><br />
