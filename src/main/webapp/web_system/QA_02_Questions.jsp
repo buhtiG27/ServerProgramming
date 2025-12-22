@@ -8,9 +8,13 @@ X02Questions
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧 | 電大生のQ&A</title>
-		<%-- ${pageContext.request.contextPath}/web_system/css/○○　このように書かないと反映されない --%>
-		<link rel="icon" href="${pageContext.request.contextPath}/web_system/images/icon_qa.png" /><!-- ファビコン -->
+		<%-- ${pageContext.request.contextPath}/web_system/css/○○　このように書かないと反映されない --%>	
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_2_Question.css">
+		<link 
+			rel="icon" 
+			href="${pageContext.request.contextPath}/web_system/images/icon_qa.png" 
+		/>
+		<!-- ファビコン -->	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
 	</head>
@@ -18,6 +22,20 @@ X02Questions
 
 		<header>
 			<jsp:include page="header.jsp" />
+            <br>
+			<div class="filters">
+				<div class="searchbyKeyword">
+					<form action="" method="post">
+        				<input class="txt" type="text" name="searchbyKeyword" size="20" placeholder="質問を検索">
+						<span class="fa-solid fa-magnifying-glass"></span>
+    				</form>
+				</div>
+				<ul>
+    				<li><button class="filter" type="submit" name="filterbyNew" value="send" data-text="新着">新着</button></li>
+    				<li><button class="filter" type="submit" name="filterbySameGrade" value="send" data-text="学科">学科</button></li>
+    				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
+				</ul>
+			</div>
 		</header>
 		
 		<main>
@@ -99,12 +117,12 @@ X02Questions
 			<br><br>
 
 			</div>
-			
-			<form action="${pageContext.request.contextPath}/questions/create" method="get">
-    			<button class="createbutton" type="submit">質問作成</button>
-			</form>
 
 		</main>
+		
+		<form action="${pageContext.request.contextPath}/questions/create" method="get">
+    		<button class="createbutton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_create_new_question.png" alt="質問作成" style="display:block;margin:auto;"></button>
+		</form>
 		
 	
 		<nav>

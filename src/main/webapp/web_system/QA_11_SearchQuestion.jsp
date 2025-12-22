@@ -100,38 +100,25 @@
             </button>
         </form>
         <br />
-        <div class="bottom_buttons">
-            <form
-                class="form"
-                action="${page.Context.request.contextPath}/questions"
-                method="get"
-            >
-                <button class="pageButton" type="submit" name="toQuestion">
-                    質問一覧
-                </button>
-            </form>
-            <form
-                class="form"
-                action="${page.Context.request.contextPath}/web_system/QA_03_MyTime.jsp"
-                method="get"
-            >
-                <button class="pageButton" type="submit" name="toTimetable">
-                    マイ時間割
-                </button>
-            </form>
-            <form
-                class="form"
-                action="${page.Context.request.contextPath}/web_system/QA_04_User.jsp"
-                method="get"
-            >
-                <button
-                    class="pageButton"
-                    type="submit"
-                    name="toUserInformation"
-                >
-                    ユーザ画面
-                </button>
-            </form>
-        </div>
+
+
+		<nav>
+			<div class="bottom_button">
+                <form class="form" action="${pageContext.request.contextPath}/questions" method="get">
+                    <button class="pageButton toQuestions" type="submit">
+                        <img src="${pageContext.request.contextPath}/web_system/images/icon_home.png" alt="(質問一覧だよ！)" class="icon_toQuestions">
+                        <img src="${pageContext.request.contextPath}/web_system/images/icon_home_hukidashi.png" alt="(質問一覧だよ！)" class="icon_toQuestions_hukidashi">
+                    </button>
+                </form>
+                <form class="form" action="${pageContext.request.contextPath}/timetable" method="get">
+                    <button class="pageButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_calender.png" alt="(マイ時間割へ)"></button>
+                </form>
+                <form class="form" action="${pageContext.request.contextPath}/user" method="get">
+                    <button class="pageButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_gear.png" alt="(ユーザ情報へ)"></button>
+                </form>
+            </div>
+		</nav>
+		
+		
     </body>
 </html>
