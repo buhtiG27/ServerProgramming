@@ -27,8 +27,8 @@
             >
                 <button type="submit" class="logout-button">ログアウト</button>
             </form>
-            <img src="" class="<%= request.getContextPath() %>/web_system/images/kari_image_sky.jpeg" class="background_image" />
-            <img src="" class="<%= request.getContextPath() %>/web_system/images/kari_image_User.png" class="icon_image" />
+            <img src="${pageContext.request.contextPath}/web_system/images/kari_image_sky.jpeg" class="background_image" />
+            <img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" class="icon_image" />
             <div class="button">
                 <form
                     action="${pageContext.request.contextPath}/web_system/QA_09_Edit.jsp"
@@ -54,7 +54,7 @@
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)" style="background-size:cover;"></button>
+						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)" style="background-size:cover;"></button>
 					</form>
 				</div>
 				<div class="post_upperParts">
@@ -73,13 +73,13 @@
 				</div>
 				<div class="post_bottomParts">
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
 					</form>
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 				</div>
 			</div>
@@ -88,7 +88,7 @@
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
 					</form>
 				</div>
 				<div class="post_upperParts">
@@ -107,13 +107,13 @@
 				</div>
 				<div class="post_bottomParts">
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
 					</form>
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 				</div>
 			</div>
@@ -122,7 +122,7 @@
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
 					</form>
 				</div>
 				<div class="post_upperParts">
@@ -141,13 +141,13 @@
 				</div>
 				<div class="post_bottomParts">
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
 					</form>
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 			<div class="post">
 				<div class="post_sideParts">
 					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
+						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
 					</form>
 				</div>
 				<div class="post_upperParts">
@@ -175,13 +175,13 @@
 				</div>
 				<div class="post_bottomParts">
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
 					</form>
 					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 					</form>
 				</div>
 			</div>

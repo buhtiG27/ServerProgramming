@@ -10,7 +10,7 @@ h1{
 
 main{
 	position:relative;
-	margin-top: 17vh;
+	top:10vh;
 	left:0;
 	width:99.5%;
 	transform:translateX(-1px);
@@ -19,8 +19,8 @@ main{
 
 /*検索バーとフィルター*/
 .filters{
-	position:absolute;
-	top:0;
+	position:fixed;
+	top:20vh;
 	width:100%;
 	height:105px;
 	padding-right:7.5px;
@@ -63,6 +63,8 @@ input[type="text"]:focus {
 }
 /*フィルター*/
 ul{
+	position:absolute;
+	bottom:0;
 	display:flex;
 	width:100%;
 	height:50px;
@@ -107,7 +109,7 @@ ul li *{
 /*投稿部分*/
 .post-list{
 	position:relative;
-	top:105px;
+	top:125px;
 	left:0;
 	width: 100%;
 	padding-bottom:10%;
@@ -166,6 +168,7 @@ ul li *{
 	height:100%;
 	background:white;
 	border:none;
+	cursor:pointer;
 }
 .creatorName{
 	position:absolute;
@@ -196,6 +199,7 @@ ul li *{
 	all:unset;
 	width:100%;
 	height:100%;
+	cursor:pointer;
 }
 .contents_text{
 	position:absolute;
@@ -311,7 +315,7 @@ html, body {
 .icon_toQuestions{
     position: absolute;
 	left:50%;
-	bottom:20%;
+	bottom:5%;
     transform: translateX(-50%);
     z-index: 1;
 }

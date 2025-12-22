@@ -1,81 +1,78 @@
 package servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.json.JSONObject;
 
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Task;
-
-import client.ApiClient;
-import client.ApiResponse;
-import config.AppConfig;
 import listener.AppInitListener;
+import model.Task;
 
 public class ViewTask extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        String rid = (String) request.getAttribute("rid");
+        
+        // 1. パラメータ取得（呼び出し元 JSP の name="taskId" に合わせる）
+        String practiceId = request.getParameter("taskId");
+        
+        // 戻るボタンや科目名表示のために他のパラメータも取得しておく
+        String classname = request.getParameter("classname");
+        String weekday = request.getParameter("weekday");
+        String time = request.getParameter("time");
 
-        // パラメータ取得（課題ID）
-        String practiceId = request.getParameter("id");
-
-        // 遷移先
         String destination = "/web_system/QA_13_ViewTask.jsp";
 
         if (practiceId == null || practiceId.isEmpty()) {
-            request.setAttribute("error", "課題IDが指定されていません");
-            request.getRequestDispatcher(destination).forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/timetable");
             return;
         }
 
         try {
-            // Go API 呼び出し
-            getServletContext().log("[rid=" + rid + "] ViewTask calling API /api/practices"); // API呼び出しをログに書き込む（任意）
-            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-            ApiResponse apires = api.get(request, "/practices" + practiceId); // api.getかapi.postJsonを入れる
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            
+            // 2. APIパスの修正（スラッシュを追加）
+            ApiResponse apires = api.get(request, "/practices/" + practiceId);
 
-            if (!apires.is2xx()) {
-                request.setAttribute("error", "課題情報の取得に失敗しました");
-                request.getRequestDispatcher(destination).forward(request, response);
-                return;
+            if (apires.is2xx()) {
+                JSONObject json = new JSONObject(apires.body);
+                // Go側が { "practice": { ... } } で返してくる想定
+                JSONObject p = json.getJSONObject("practice");
+
+                Task task = new Task();
+                task.setId(p.getInt("ID")); // GoのGORMなら大文字の可能性あり
+                task.setSubjectId(p.getInt("subject_id"));
+                task.setContent(p.getString("practice_name"));
+                task.setOutput(p.optString("place", "未設定"));
+                task.setDetail(p.optString("description", "なし"));
+                
+                // 日付の整形（簡易版：TやZを除く）
+                String rawDeadline = p.optString("deadline", "");
+                task.setLimmit(rawDeadline.replace("T", " ").replace("Z", ""));
+
+                // JSPへ渡す
+                request.setAttribute("task", task);
+                request.setAttribute("classname", classname);
+                request.setAttribute("weekday", weekday);
+                request.setAttribute("time", time);
+            } else {
+                request.setAttribute("error", "課題情報が見つかりませんでした");
             }
 
-            // JSON 解析
-            JSONObject json = new JSONObject(apires.body);
-            JSONObject p = json.getJSONObject("practice");
-
-            // Task に詰め替え
-            Task task = new Task();
-            task.setId(p.getInt("id"));
-            task.setSubjectId(p.getInt("subject_id"));
-            task.setContent(p.getString("practice_name"));
-            task.setOutput(p.optString("place", ""));
-            task.setDetail(p.optString("description", ""));
-            task.setLimmit(p.optString("deadline", ""));
-
-            // JSP へ渡す
-            request.setAttribute("task", task);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            getServletContext().log("ViewTask Error", e);
             request.setAttribute("error", "システムエラーが発生しました");
         }
 
-        // 詳細画面へ
         request.getRequestDispatcher(destination).forward(request, response);
     }
 }

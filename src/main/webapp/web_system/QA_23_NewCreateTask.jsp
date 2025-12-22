@@ -8,11 +8,13 @@
 
     // --- フォームの値 (subjectId を追加) ---
     String subId = request.getParameter("subjectId");
-    String cls = request.getParameter("classneme");
+    String cls = request.getParameter("classname");
     String con = request.getParameter("content");
     String lim = request.getParameter("limmit");
     String output = request.getParameter("output");
     String detail = request.getParameter("detailcontent");
+    String weekday = request.getParameter("weekday");   
+    String time    = request.getParameter("time");
 
     // 訂正ボタンからのリクエスト判定用
     String actionType = request.getParameter("actionType");
@@ -43,14 +45,18 @@
                 String encodedLim = URLEncoder.encode(lim, "UTF-8");
                 String encodedOut = URLEncoder.encode(output, "UTF-8");
                 String encodedDetail = URLEncoder.encode(detail, "UTF-8");
+                String encodedWeekday = URLEncoder.encode(weekday, "UTF-8");
+                String encodedTime = URLEncoder.encode(time, "UTF-8");
 
-                String redirectUrl = "QA_24_CheckNewTask.jsp" 
-                    + "?subjectId=" + encodedSubId
-                    + "&classneme=" + encodedCls 
-                    + "&content=" + encodedCon
-                    + "&limmit=" + encodedLim 
-                    + "&output=" + encodedOut 
-                    + "&detailcontent=" + encodedDetail;
+                String redirectUrl = "QA_24_CheckNewTask.jsp"
+                	    + "?subjectId=" + encodedSubId
+                	    + "&weekday=" + encodedWeekday
+                	    + "&time=" + encodedTime
+                	    + "&classname=" + encodedCls
+                	    + "&content=" + encodedCon
+                	    + "&limmit=" + encodedLim
+                	    + "&output=" + encodedOut
+                	    + "&detailcontent=" + encodedDetail;
                 
                 response.sendRedirect(redirectUrl);
                 return;
@@ -78,7 +84,9 @@
         <div class="header_area">
             <%-- 戻るボタンのときも subjectId を送ることで詳細画面に戻れるようにする --%>
             <form action="${pageContext.request.contextPath}/subjects/detail" method="get">
-                <input type="hidden" name="subjectId" value="<%= (subId != null ? subId : "") %>">
+                <input type="hidden" name="subjectId" value="<%= subId %>">
+    			<input type="hidden" name="weekday" value="<%= weekday %>">
+    			<input type="hidden" name="time" value="<%= time %>">
                 <button class="back_button" type="submit">戻る</button>
             </form>
             <h1 class="page_title">課題の新規作成</h1>
@@ -95,10 +103,12 @@
                 <form action="" method="post">
                     <%-- 科目IDを隠しフィールドで保持 --%>
                     <input type="hidden" name="subjectId" value="<%= (subId != null ? subId : "") %>">
+                    <input type="hidden" name="weekday" value="<%= weekday %>">
+					<input type="hidden" name="time" value="<%= time %>">
 
                     <label for="cls">授業名：</label>
                     <br />
-                    <input class="content_box" type="text" maxlength="50" name="classneme" value="<%= (cls != null ? cls : "") %>"/>
+                    <input class="content_box" type="text" maxlength="50" name="classname" value="<%= cls %>" readonly/>
                     <br /><br />
 
                     <label for="con">内容：</label>
@@ -106,7 +116,7 @@
                     <input class="content_box" type="text" maxlength="200" name="content" value="<%= (con != null ? con : "") %>"/>
                     <br /><br />
 
-                    <label for="lim">期限：</label>
+                    <label for="lim">期限(例：○○/△△)：</label>
                     <br />
                     <input class="content_box" type="text" maxlength="30" name="limmit" value="<%= (lim != null ? lim : "") %>"/>
                     <br /><br />
@@ -125,8 +135,21 @@
             </div>
             <br />
         </div>
-        <nav>
-            <jsp:include page="navigation.jsp" />
-        </nav>
+		<nav>
+			<div class="bottom_button">
+                <form class="form" action="${pageContext.request.contextPath}/questions" method="get">
+                    <button class="pageButton toQuestions" type="submit">
+                        <img src="${pageContext.request.contextPath}/web_system/images/icon_home.png" alt="(質問一覧だよ！)" class="icon_toQuestions">
+                        <img src="${pageContext.request.contextPath}/web_system/images/icon_home_hukidashi.png" alt="(質問一覧だよ！)" class="icon_toQuestions_hukidashi">
+                    </button>
+                </form>
+                <form class="form" action="${pageContext.request.contextPath}/timetable" method="get">
+                    <button class="pageButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_calender.png" alt="(マイ時間割へ)"></button>
+                </form>
+                <form class="form" action="${pageContext.request.contextPath}/user" method="get">
+                    <button class="pageButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_gear.png" alt="(ユーザ情報へ)"></button>
+                </form>
+            </div>
+		</nav>
     </body>
 </html>

@@ -13,11 +13,13 @@
     <% 
     	request.setCharacterEncoding("UTF-8");
     	String subId = request.getParameter("subjectId"); // 追加
-    	String cls = request.getParameter("classneme"); 
+    	String cls = request.getParameter("classname"); 
     	String con = request.getParameter("content"); 
     	String lim = request.getParameter("limmit"); 
     	String output = request.getParameter("output"); 
     	String ditail = request.getParameter("detailcontent"); 
+    	String weekday = request.getParameter("weekday");
+    	String time = request.getParameter("time");
 	%>
 
         <div class="top_button">
@@ -37,23 +39,30 @@
             <div class="bottom_buttons">
     <form class="form" action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="post">
         <input type="hidden" name="actionType" value="correction" />
-        <input type="hidden" name="subjectId" value="<%= subId %>" /> <input type="hidden" name="classneme" value="<%= cls %>" />
+        <input type="hidden" name="subjectId" value="<%= subId %>" /> 
+        <input type="hidden" name="classname" value="<%= cls %>" />
         <input type="hidden" name="content" value="<%= con %>" />
         <input type="hidden" name="limmit" value="<%= lim %>" />
         <input type="hidden" name="output" value="<%= output %>" />
         <input type="hidden" name="detailcontent" value="<%= ditail %>" />
+        <input type="hidden" name="subjectId" value="<%= subId %>" />
+		<input type="hidden" name="weekday" value="<%= weekday %>" />
+		<input type="hidden" name="time" value="<%= time %>" />
         <button class="correctButton" type="submit">訂正</button>
     </form>
 
     <form class="form" action="${pageContext.request.contextPath}/tasks/create" method="post">
-        <input type="hidden" name="subjectId" value="<%= subId %>" /> <input type="hidden" name="classname" value="<%= cls %>" />
-        <input type="hidden" name="content" value="<%= con %>" />
-        <input type="hidden" name="limmit" value="<%= lim %>" />
-        <input type="hidden" name="output" value="<%= output %>" />
-
-        <input type="hidden" name="detail" value="<%= ditail %>" />
-        <button class="registerButton" type="submit">登録</button>
-    </form>
+    <%-- 変数名 subId を使用。空文字やnullでないことを確認 --%>
+    <input type="hidden" name="subjectId" value="<%= (subId != null) ? subId : "" %>" /> 
+    <input type="hidden" name="classname" value="<%= cls %>" />
+    <input type="hidden" name="content" value="<%= con %>" />
+    <input type="hidden" name="limmit" value="<%= lim %>" />
+    <input type="hidden" name="output" value="<%= output %>" />
+    <input type="hidden" name="detailcontent" value="<%= ditail %>" />
+    <input type="hidden" name="weekday" value="<%= weekday %>" />
+    <input type="hidden" name="time" value="<%= time %>" />
+    <button class="registerButton" type="submit">登録</button>
+</form>
 	</div>
         </div>
     </body>

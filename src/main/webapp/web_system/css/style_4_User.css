@@ -83,11 +83,11 @@ body{
 /*投稿部分*/
 .post-list{
 	position:relative;
-	top:300px;
+	top:325px;
 	left:0;
 	width: 99.5%;
 	height:auto;
-	padding-bottom:10%;
+	padding-bottom:15%;
 	text-align: center;
 	   
     font-weight: bold;
@@ -215,9 +215,9 @@ body{
 .motchyButton {
 	position:absolute;
 	left:0;
-	bottom:25px;
-    width: 150px;
-    height: 150px;
+	bottom:50px;
+    width: 125px;
+    height: 125px;
     border: none;
     background: none;
     cursor: pointer;
