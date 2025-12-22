@@ -68,7 +68,7 @@
     		<button class="show_button" type="submit">詳細</button>
 		</form>
 
-            <form action="${pageContext.request.contextPath}/timetable/register" method="post">
+            <form action="${pageContext.request.contextPath}/timetable" method="post">
                 <input type="hidden" name="subjectId" value="${sub['ID']}">
                 <button class="register_button" type="submit">登録</button>
             </form>
