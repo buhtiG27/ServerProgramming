@@ -20,26 +20,39 @@ String loggedInUsername =
 	<head>
 		<meta charset="utf-8">
 		<title>質問一覧 | 電大生のQ&A</title>
+		        <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
 		<link rel="icon" href="<%= request.getContextPath() %>/web_system/images/icon_qa.png" /><!-- ファビコン -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> <!-- Font Awesome を追加 -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- cssでスマホ用のデザインをするために書く -->
         <link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_10_ShowQuestion.css" />
     </head>
 	<body>
+	<header>
+            <jsp:include
+                page="header.jsp"
+            /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+            
+            <h2>質問</h2>
+            
+        </header>
+        <div class="header_area">
+            <form
+                action="${pageContext.request.contextPath}/questions"
+                method="get"
+            >
+                <button
+                    class="back_button"
+                    type="submit"
+                >戻る
+                </button>
+            </form>
+            </div>
+	
 
-	<div class="top_button">
-		<h1>TDU</h1>
-		<div class="button">
-			<form action="${page.Context.request.contextPath}/questions" method="get">
-				<button class="back_button" type="submit">戻る</button>
-			</form>
-		</div>
-
-		<br>
-		<a>質問</a><br />
-		${error}
-		<br>
-	</div>
 
 	<br>
 

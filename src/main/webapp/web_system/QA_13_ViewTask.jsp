@@ -7,20 +7,21 @@ import="model.Task" %>
         <meta charset="utf-8" />
         <title>課題詳細画面</title>
         <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
+        <link
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_13_ViewTask.css"
         />
     </head>
     <body>
-        <div class="top_button_area">
-            <%-- page.Context -> pageContext に修正 --%>
-            <form
-                action="${pageContext.request.contextPath}/questions"
-                method="get"
-            >
-                <button class="top_button" type="submit">TDU</button>
-            </form>
-        </div>
+        <header>
+            <jsp:include
+                page="header.jsp"
+            /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+        </header>
 
         <div class="header_area">
             <%-- 戻るボタン：DetailSubjectサーブレット経由で科目詳細に戻る --%>
@@ -37,7 +38,6 @@ import="model.Task" %>
                 <input type="hidden" name="time" value="${time}" />
                 <button class="back_button" type="submit">戻る</button>
             </form>
-            <h1 class="page_title">課題詳細</h1>
         </div>
 
         <%-- エラー表示用 --%>

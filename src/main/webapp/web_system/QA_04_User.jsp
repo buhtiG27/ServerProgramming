@@ -4,10 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <title>ユーザ情報 | 電大生のQ&A</title>
-        <link
-            rel="icon"
-            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
-        />
+        <link rel="icon" href="${pageContext.request.contextPath}/web_system/images/icon_qa.png" />
         <!-- ファビコン -->
         <link
             rel="stylesheet"

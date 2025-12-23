@@ -3,12 +3,19 @@
 request.setCharacterEncoding("UTF-8");
 
 String errorMessage = (String) request.getAttribute("error");
+String rawWeekday = request.getParameter("weekday");
+String rawTime = request.getParameter("time");
 %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
         <title>科目作成画面</title>
+                <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_20_CreateSubject.css"
@@ -28,6 +35,8 @@ String errorMessage = (String) request.getAttribute("error");
                 action="${pageContext.request.contextPath}/subjects"
                 method="get"
             >
+            <input type="hidden" name="weekday" value="<%= rawWeekday %>">
+    		<input type="hidden" name="time" value="<%= rawTime %>">
                 <button
                     class="back_button"
                     type="submit"

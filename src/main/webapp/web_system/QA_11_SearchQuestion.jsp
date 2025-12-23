@@ -3,7 +3,12 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
-        <title>質問一覧画面</title>
+        <title>質問一覧 | 電大生のQ&A</title>
+                <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_11_SearchQuestion.css"
