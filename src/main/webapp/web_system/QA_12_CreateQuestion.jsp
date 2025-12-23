@@ -25,10 +25,15 @@ request.setCharacterEncoding("UTF-8"); %>
     <body>
         <div class="top_area">
             <div class="back_container" id="backContainer">
-                <button type="button" id="backButton" class="back_button">
-                    戻る
-                </button>
-                <img src="<%= request.getContextPath() %>/web_system/images/Anone_1.png" id="anoneImage" class="anone" alt="" />
+                <button type="button" id="backButton" class="back_button">戻る</button>
+                <form action="${page.Context.request.contextPath}/questions" method="get">
+                 <input
+        			type="image"
+        			src="<%= request.getContextPath() %>/web_system/images/Anone_1.png"
+        			class="anone"
+        			alt="戻る"
+    			/>
+   			</form>
             </div>
             <h2>質問を作成</h2>
             <button

@@ -21,6 +21,9 @@
             <jsp:include
                 page="header.jsp"
             /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+            
+            <h2>時間割一覧</h2>
+            
         </header>
         <div class="header_area">
             <form
@@ -36,19 +39,19 @@
                     キャンセル
                 </button>
             </form>
-            <h2>時間割一覧</h2>
-            <form action="${pageContext.request.contextPath}/web_system/QA_20_CreateSubject.jsp">
+		<form action="" method="get" class="search_form">
+			<label>検索：</label>
+			<input class="txt" type="text" size="20" value="" name="searchbyKeyword" />	
+		</form>
+		<form action="${pageContext.request.contextPath}/web_system/QA_20_CreateSubject.jsp">
     			<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
     			<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
     			<button class="new_button" type="submit">新規作成</button>
-			</form>
+			</form>	
         </div>
         <br />
         <div class="body_area">
-		<form action="" method="get" class="search_form">
-			<label>検索：</label>
-			<input class="txt" type="text" size="20" value="" name="searchbyKeyword" />		
-		</form>
+        
 		<%
 		List<Map<String, Object>> subjects = (List<Map<String, Object>>) request.getAttribute("subjects");			
 		if (subjects == null || subjects.isEmpty()) {
