@@ -23,6 +23,7 @@ X02Questions
 
 		<header>
 			<jsp:include page="header.jsp" />
+		</header>
             <br>
 			<div class="filters">
 				<div class="searchbyKeyword">

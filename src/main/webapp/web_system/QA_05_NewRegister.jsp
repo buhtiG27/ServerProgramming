@@ -26,7 +26,7 @@ String cls = (String) request.getAttribute("Classification");
 	<body>
 
     <div class="top_button">
-        <h1>TDU</h1>
+        <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
         <form action="${page.Context.request.contextPath}/login" method="get">
             <button class="button" type="submit" name="back" value="send">戻る</button>
         </form>
