@@ -3,6 +3,8 @@
 request.setCharacterEncoding("UTF-8");
 
 String errorMessage = (String) request.getAttribute("error");
+String rawWeekday = request.getParameter("weekday");
+String rawTime = request.getParameter("time");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -33,6 +35,8 @@ String errorMessage = (String) request.getAttribute("error");
                 action="${pageContext.request.contextPath}/subjects"
                 method="get"
             >
+            <input type="hidden" name="weekday" value="<%= rawWeekday %>">
+    		<input type="hidden" name="time" value="<%= rawTime %>">
                 <button
                     class="back_button"
                     type="submit"

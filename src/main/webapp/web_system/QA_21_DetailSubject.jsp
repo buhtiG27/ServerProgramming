@@ -19,11 +19,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_21_DetailSubject.css">
 </head>
 <body>
-    <div class="top_button_area">
-        <form action="${pageContext.request.contextPath}/questions" method="get">
-            <button class="top_button" type="submit">TDU</button>
-        </form>
-    </div>
+    <header>
+            <jsp:include
+                page="header.jsp"
+            /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+            
+            
+        </header>
     
     <div class="header_area">
         <form action="${pageContext.request.contextPath}/subjects" method="get">
@@ -31,7 +33,6 @@
     				<input type="hidden" name="time" value="<%= rawTime %>">
             <button class="back_button" type="submit">戻る</button>
         </form>
-        <h1 class="page_title">科目詳細</h1>
     </div>
     
     <%-- サーブレットから渡された 'subject' マップを取得 --%>
@@ -76,7 +77,7 @@
                     <input type="hidden" name="subjectId" value="${subject['ID']}">
                     <input type="hidden" name="weekday" value="<%= rawWeekday %>">
     				<input type="hidden" name="time" value="<%= rawTime %>">
-    				<input type="hidden" name="classname" value="${subject['subject_name']}">
+    				<input type="hidden" name="classname" value="<%= rawCls %>">
                     <button class="new_create_button" type="submit">新規作成</button>
                 </form>
             </div>
