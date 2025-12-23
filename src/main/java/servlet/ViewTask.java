@@ -21,10 +21,10 @@ public class ViewTask extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        
+
         // 1. パラメータ取得（呼び出し元 JSP の name="taskId" に合わせる）
         String practiceId = request.getParameter("taskId");
-        
+
         // 戻るボタンや科目名表示のために他のパラメータも取得しておく
         String classname = request.getParameter("classname");
         String weekday = request.getParameter("weekday");
@@ -39,7 +39,7 @@ public class ViewTask extends HttpServlet {
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            
+
             // 2. APIパスの修正（スラッシュを追加）
             ApiResponse apires = api.get(request, "/practices/" + practiceId);
 
@@ -47,14 +47,16 @@ public class ViewTask extends HttpServlet {
                 JSONObject json = new JSONObject(apires.body);
                 // Go側が { "practice": { ... } } で返してくる想定
                 JSONObject p = json.getJSONObject("practice");
+                JSONObject subject = p.getJSONObject("Subject");
 
                 Task task = new Task();
                 task.setId(p.getInt("ID")); // GoのGORMなら大文字の可能性あり
-                task.setSubjectId(p.getInt("subject_id"));
+                task.setSubjectId(subject.getInt("ID"));
+                task.setSubjectName(subject.getString("subject_name"));
                 task.setContent(p.getString("practice_name"));
                 task.setOutput(p.optString("place", "未設定"));
                 task.setDetail(p.optString("description", "なし"));
-                
+
                 // 日付の整形（簡易版：TやZを除く）
                 String rawDeadline = p.optString("deadline", "");
                 task.setLimmit(rawDeadline.replace("T", " ").replace("Z", ""));

@@ -273,7 +273,6 @@
     </servlet-mapping>
 
 
-    <!-- TODO:パラメータ対応 -->
     <servlet>
         <servlet-name>ViewTask</servlet-name>
         <servlet-class>servlet.ViewTask</servlet-class>
