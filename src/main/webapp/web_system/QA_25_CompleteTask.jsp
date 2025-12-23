@@ -4,6 +4,11 @@
 <head>
     <meta charset="utf-8">
     <title>登録完了</title>
+            <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
     <%-- パスを適切に設定 --%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web_system/css/style_6_NewCheck.css">
 </head>

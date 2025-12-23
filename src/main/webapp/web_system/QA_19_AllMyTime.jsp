@@ -6,6 +6,11 @@
     <head>
         <meta charset="utf-8" />
         <title>時間割一覧画面</title>
+                <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_19_AllMyTime.css"

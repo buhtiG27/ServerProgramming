@@ -16,6 +16,11 @@ String cls = (String) request.getAttribute("Classification");
 	<head>
 	<meta charset="utf-8">
 	<title>新規ログイン</title>
+        <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
 	<link rel="stylesheet" href="${page.Context.request.contextPath}/web_system/css/style_5_New.css">
 </head>
 	<body>

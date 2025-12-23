@@ -4,6 +4,11 @@
     <head>
         <meta charset="utf-8" />
         <title>課題編集確認画面</title>
+                <link
+            rel="icon"
+            href="${pageContext.request.contextPath}/web_system/images/icon_qa.png"
+        />
+        <!-- ファビコン -->
         <link
             rel="stylesheet"
             href="${pageContext.request.contextPath}/web_system/css/style_27_CheckEditTask.css"
