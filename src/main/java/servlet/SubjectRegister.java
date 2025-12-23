@@ -31,15 +31,15 @@ public class SubjectRegister extends HttpServlet {
         String subjectName = request.getParameter("subjectName");
         String teacher = request.getParameter("teacher");
         String classRoom = request.getParameter("classRoom");
-        
+
         // 前の画面（マイ時間割など）から渡されるパラメータ
         String weekdayParam = request.getParameter("weekday");
         String timeParam = request.getParameter("time");
 
         // --- パラメータの解析とデフォルト値の設定 ---
-        String[] weekdayLabels = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+        String[] weekdayLabels = { "Mon", "Tue", "Wed", "Thu", "Fri" };
         String weekdayStr = "Mon"; // デフォルト
-        int timeVal = 1;           // デフォルト
+        int timeVal = 1; // デフォルト
 
         try {
             // weekdayParam のチェックと数値変換
@@ -49,14 +49,14 @@ public class SubjectRegister extends HttpServlet {
                     weekdayStr = weekdayLabels[idx];
                 }
             }
-            
+
             // timeParam のチェックと数値変換
             if (timeParam != null && !timeParam.isEmpty() && !timeParam.equals("null")) {
                 timeVal = Integer.parseInt(timeParam);
             } else {
                 // 届かなかった場合はログを出す
                 getServletContext().log("WARNING: timeParam is null. Defaulting to 1.");
-                timeVal = 1; 
+                timeVal = 1;
             }
         } catch (NumberFormatException e) {
             getServletContext().log("[rid=" + rid + "] Parameter parse error: " + e.getMessage());
@@ -69,23 +69,24 @@ public class SubjectRegister extends HttpServlet {
             json.put("subject_name", subjectName);
             json.put("teacher", teacher);
             json.put("class_room", classRoom);
-            json.put("koma", 1); 
-            json.put("weekday", weekdayStr); 
+            json.put("koma", 1);
+            json.put("weekday", weekdayStr);
             json.put("time", String.valueOf(timeVal));
-            
+
             json.put("description", "");
-            json.put("units", 2); 
+            json.put("units", 2);
             json.put("period", "前期");
 
             // ===== Go API POST =====
             getServletContext().log("Sending JSON: " + json.toString());
-            
+
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             ApiResponse apires = api.postJson(request, "/subjects", json.toString());
 
             if (apires.is2xx()) {
                 // 登録成功後は科目一覧サーブレットへ
-                response.sendRedirect(request.getContextPath() + "/subjects");
+                String query = "?weekday=" + weekdayParam + "&time=" + timeParam;
+                response.sendRedirect(request.getContextPath() + "/subjects" + query);
                 return;
             }
 
