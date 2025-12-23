@@ -50,37 +50,54 @@ public class AllTasks extends HttpServlet {
             // ===== Go API 呼び出し =====
             getServletContext().log("[rid=" + rid + "] AllTask calling API /api/practices"); // API呼び出しをログに書き込む（任意）
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY); // この行は基本固定
-            ApiResponse apires = api.get(request, "/practices"); // api.getかapi.postJsonを入れる
-
-            if (!apires.is2xx()) {
-                // TODO:アクセス失敗時処理
-                throw new IOException("Go API error");
+            /* ===== 時間割取得 ===== */
+            ApiResponse timeRes = api.get(request, "/timetables");
+            if (!timeRes.is2xx()) {
+                JSONObject errJSON = new JSONObject(timeRes.body);
+                String error = errJSON.getString("error");
+                getServletContext().log("[rid=" + rid + "] get alltasks failed status=" + timeRes.status);
+                request.setAttribute("error", "課題一覧の取得に失敗しました: " + error);
+                request.getRequestDispatcher("/web_system/QA_03_MyTime.jsp").forward(request, response);
             }
+            JSONObject timeJSON = new JSONObject(timeRes.body);
+            JSONArray timeArr = timeJSON.getJSONArray("timetables");
+            for (int i = 0; i < timeArr.length(); i++) {
+                JSONObject t = timeArr.getJSONObject(i);
+                JSONObject s = t.getJSONObject("Subject");
+                int subID = s.getInt("ID");
 
-            // ===== JSON 解析 =====
-            JSONObject json = new JSONObject(apires.body);
-            JSONArray practices = json.getJSONArray("practices");
+                ApiResponse apires = api.get(request, "/subjects/" + subID + "/practices"); // api.getかapi.postJsonを入れる
 
-            for (int i = 0; i < practices.length(); i++) {
-                JSONObject p = practices.getJSONObject(i);
-
-                Task task = new Task();
-                task.setId(p.getInt("id"));
-                task.setSubjectId(p.getInt("subject_id"));
-                task.setContent(p.getString("practice_name"));
-                task.setOutput(p.optString("place", ""));
-                task.setDetail(p.optString("description", ""));
-                task.setLimmit(p.optString("deadline", ""));
-
-                // Subject 名（存在する場合）
-                if (p.has("subject")) {
-                    JSONObject s = p.getJSONObject("subject");
-                    task.setClassname(s.optString("subject_name", ""));
+                if (!apires.is2xx()) {
+                    // TODO:アクセス失敗時処理
+                    throw new IOException("Go API error");
                 }
 
-                taskList.add(task);
-            }
+                // ===== JSON 解析 =====
+                JSONObject json = new JSONObject(apires.body);
+                JSONArray practices = json.getJSONArray("practices");
 
+                for (int j = 0; j < practices.length(); j++) {
+                    JSONObject p = practices.getJSONObject(j);
+                    JSONObject subject = p.getJSONObject("Subject");
+
+                    Task task = new Task();
+                    task.setId(p.getInt("ID"));
+                    task.setSubjectId(subject.getInt("ID"));
+                    task.setContent(p.getString("practice_name"));
+                    task.setOutput(p.optString("place", ""));
+                    task.setDetail(p.optString("description", ""));
+                    task.setLimmit(p.optString("deadline", ""));
+                    task.setSubjectWeekday(subject.getString("weekday"));
+                    task.setSubjectTime(subject.getString("time"));
+
+                    // Subject 名（存在する場合）
+                    task.setClassname(subject.optString("subject_name", ""));
+
+                    taskList.add(task);
+                }
+
+            }
             request.setAttribute("tasks", taskList);
 
         } catch (Exception e) {
