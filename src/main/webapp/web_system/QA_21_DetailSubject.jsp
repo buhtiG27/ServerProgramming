@@ -73,7 +73,7 @@
 
         <label>課題：
             <div class="new_create">
-                <form action="${pageContext.request.contextPath}/web_system/QA_23_NewCreateTask.jsp" method="get">
+                <form action="${pageContext.request.contextPath}/tasks/create" method="get">
                     <input type="hidden" name="subjectId" value="${subject['ID']}">
                     <input type="hidden" name="weekday" value="<%= rawWeekday %>">
     				<input type="hidden" name="time" value="<%= rawTime %>">
@@ -106,6 +106,8 @@
         <div class="task_item">
             <form action="${pageContext.request.contextPath}/tasks/view" method="get"> 
                 <input type="hidden" name="taskId" value="<%= pId %>" />
+                <input type="hidden" name="weekday" value="<%= rawWeekday %>" />
+                <input type="hidden" name="time" value="<%= rawTime %>" />
                 <button class="task_link" type="submit"><%= pName %></button>
             </form>
         </div>
