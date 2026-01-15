@@ -25,14 +25,25 @@ String cls = (String) request.getAttribute("Classification");
 </head>
 	<body>
 
-    <div class="top_button">
-        <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
-        <form action="${page.Context.request.contextPath}/login" method="get">
-            <button class="button" type="submit" name="back" value="send">戻る</button>
-        </form>
-        <br>
-        <a>新規ログイン</a>
-        <br>
+    <header>
+            <jsp:include
+                page="header.jsp"
+            /><!-- ヘッダ部分は1つの.jspにまとめた→こう書くだけで使いまわせる -->
+        </header>
+        <div class="header_area">
+            <form
+                action="${pageContext.request.contextPath}/timetable"
+                method="get"
+            >
+                <button
+                    class="back_button"
+                    type="submit"
+                    name="filterbyNew"
+                    value="send"
+                >
+                    戻る
+                </button>
+            </form>
     </div>
 
     <div class="request_list">

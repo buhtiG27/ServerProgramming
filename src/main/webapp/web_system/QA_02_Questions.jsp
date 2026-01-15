@@ -1,5 +1,3 @@
-X02Questions
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
@@ -27,14 +25,25 @@ X02Questions
             <br>
 			<div class="filters">
 				<div class="searchbyKeyword">
-					<form action="" method="post">
+    				<form action="${pageContext.request.contextPath}/questions/search" method="get">
         				<input class="txt" type="text" name="searchbyKeyword" size="20" placeholder="質問を検索">
-						<span class="fa-solid fa-magnifying-glass"></span>
+        				<button type="submit" style="background:none; border:none; padding:0;">
+            				<span class="fa-solid fa-magnifying-glass"></span>
+        				</button>
     				</form>
 				</div>
 				<ul>
-    				<li><button class="filter" type="submit" name="filterbyNew" value="send" data-text="新着">新着</button></li>
-    				<li><button class="filter" type="submit" name="filterbySameGrade" value="send" data-text="学科">学科</button></li>
+    				<li>
+        				<a href="${pageContext.request.contextPath}/questions" class="filter-link">
+            				<button class="filter" type="button" data-text="新着">新着</button>
+        				</a>
+    				</li>
+    
+    				<li>
+        				<a href="${pageContext.request.contextPath}/questions/filter?type=department" class="filter-link">
+            				<button class="filter" type="button" data-text="学科">学科</button>
+        				</a>
+    				</li>
     				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
 				</ul>
 			</div>

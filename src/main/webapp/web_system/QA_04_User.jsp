@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -46,142 +49,90 @@
             <p class="intro_text">${description}</p>
         </div>
         <br />
-        <%-- 置き換え --%>
-		<div class="post-list">
-			<div class="post">
-				<div class="post_sideParts">
-					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)" style="background-size:cover;"></button>
-					</form>
-				</div>
-				<div class="post_upperParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
-						<button class="post_upperParts_atarihantei"></button>
-						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">昨日23:11</div>
-					</form>
-				</div>
-				<div class="post_mainParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
-						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">「寝たいけどみんなが頑張ってるしもう少しやらなきゃ...でも眠い...」ってとき、どうしてますか？</div>
-						</button>
-					</form>
-				</div>
-				<div class="post_bottomParts">
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
-					</form>
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-				</div>
-			</div>
-			
-			
-			<div class="post">
-				<div class="post_sideParts">
-					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
-					</form>
-				</div>
-				<div class="post_upperParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
-						<button class="post_upperParts_atarihantei"></button>
-						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">12/13/1:30</div>
-					</form>
-				</div>
-				<div class="post_mainParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
-						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">サーバープログラミング演習で「選択をサーバー上で実行できません」ってエラーを消すにはどうしたら良いのこれええ！！！</div>
-						</button>
-					</form>
-				</div>
-				<div class="post_bottomParts">
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
-					</form>
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-				</div>
-			</div>
-			
-			
-			<div class="post">
-				<div class="post_sideParts">
-					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
-					</form>
-				</div>
-				<div class="post_upperParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
-						<button class="post_upperParts_atarihantei"></button>
-						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">11/28/18:29</div>
-					</form>
-				</div>
-				<div class="post_mainParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
-						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">機械学習第10回の課題で提出するものって、実行結果のpngファイルですか？それともソースコードですか？</div>
-						</button>
-					</form>
-				</div>
-				<div class="post_bottomParts">
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
-					</form>
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-				</div>
-			</div>
-			
-			
-			<div class="post">
-				<div class="post_sideParts">
-					<form action="" method="get"><!--このユーザのユーザ情報を表示する？-->
-						<button class="iconButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(ユーザ1のアイコン)"></button>
-					</form>
-				</div>
-				<div class="post_upperParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_upperParts_form">
-						<button class="post_upperParts_atarihantei"></button>
-						<div class="creatorName">匿名ウサギ</div>
-						<div class="created_at">2024/12/16/19:42</div>
-					</form>
-				</div>
-				<div class="post_mainParts">
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_mainParts_form">
-						<button class="post_mainParts_atarihantei">
-							<div class="contents_text">明日ってメディア信号処理のテストかと思いますが、開始時間っていつからでしたっけ？</div>
-						</button>
-					</form>
-				</div>
-				<div class="post_bottomParts">
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="goodButton" type="submit" name="LikeButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
-					</form>
-					<form action="QA_10_ShowQuestion.html" method="get" class="post_bottomParts_form">
-						<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-					<form action="" method="get" class="post_bottomParts_form">
-						<button class="flagButton" type="submit" name="FlagButton" value="send"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-					</form>
-				</div>
-			</div>
+		<main>
+    		<div class="post-list">
+        		<h2 style="padding: 10px 20px; font-size: 1.2em; border-bottom: 1px solid #eee;">自分の質問一覧</h2>
+        
+        		<%
+            		// サーブレットでセットした "questions" を取得
+            		List<Map<String, Object>> questions = (List<Map<String, Object>>) request.getAttribute("questions");
+            		if (questions == null || questions.isEmpty()) {
+        		%>
+            	<p style="color:gray; padding: 20px;">まだ投稿した質問はありません。</p>
+        		<%
+            		} else {
+                		for (Map<String, Object> q : questions) {
+                    		pageContext.setAttribute("q", q);
+        		%>
+            	<div class="post">
+                	<div class="post_sideParts">
+                    	<form action="" method="get">
+                        	<button class="iconButton" type="submit">
+                            	<img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" alt="(自分のアイコン)">
+                        	</button>
+                    	</form>
+                	</div>
+                
+                <div class="post_upperParts">
+                    <form action="${pageContext.request.contextPath}/questions/show" method="get" class="post_upperParts_form">
+                        <input type="hidden" name="questionId" value="${q['id']}">
+                        <button class="post_upperParts_atarihantei" type="submit"></button>
+                        <div class="creatorName">${q['creator']['display_name']}</div>
+                        <div class="created_at">${q['created_at_fmt']}</div>
+                    </form>
+                </div>
+                
+                <div class="post_mainParts">
+                    <form action="${pageContext.request.contextPath}/questions/show" method="get" class="post_mainParts_form">
+                        <input type="hidden" name="questionId" value="${q['id']}">
+                        <button class="post_mainParts_atarihantei" type="submit">
+                            <div class="contents_text">${q['contents_text']}</div>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="post_bottomParts">
+                    <form action="" method="get" class="post_bottomParts_form">
+                        <button class="goodButton" type="submit">
+                            <img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;">
+                        </button>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/questions/show" method="get" class="post_bottomParts_form">
+                        <input type="hidden" name="questionId" value="${q['id']}">
+                        <button class="replyButton" type="submit">
+                            <img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;">
+                        </button>
+                    </form>
+                    <form action="" method="get" class="post_bottomParts_form">
+                        <button class="flagButton" type="submit">
+                            <img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        	<%
+                	}
+            	}
+        	%>
+
+        	<%
+            	Object limitObj = request.getAttribute("limit");
+            	Object offsetObj = request.getAttribute("offset");
+
+            	int limit  = (limitObj instanceof Integer) ? (Integer) limitObj : 20;
+            	int offset = (offsetObj instanceof Integer) ? (Integer) offsetObj : 0;
+
+            	int prev = Math.max(0, offset - limit);
+            	int next = offset + limit;
+        	%>
+        	<div class="pagination" style="padding: 20px; text-align: center;">
+            	<a href="${pageContext.request.contextPath}/user?limit=<%= limit %>&offset=<%= prev %>">前へ</a>
+            	<span style="margin: 0 15px;"></span>
+            	<a href="${pageContext.request.contextPath}/user?limit=<%= limit %>&offset=<%= next %>">次へ</a>
+        	</div>
+
+    	</div>
+	</main>
 			
 			<button id="cycleButton" class="motchyButton">
 				<img id="Shitsumotchy" src="<%= request.getContextPath() %>/web_system/images/Shitsumotchy_1.png" alt="">
