@@ -26,24 +26,17 @@
             
         </header>
         <div class="header_area">
-            <form
-                action="${pageContext.request.contextPath}/timetable"
-                method="get"
-            >
-                <button
-                    class="cancel_button"
-                    type="submit"
-                    name="filterbyNew"
-                    value="send"
-                >
-                    キャンセル
-                </button>
+            <form action="${pageContext.request.contextPath}/timetable" method="get">
+                <button class="cancel_button" type="submit" name="filterbyNew" value="send" >キャンセル</button>
             </form>
-		<form action="" method="get" class="search_form">
-			<label>検索：</label>
-			<input class="txt" type="text" size="20" value="" name="searchbyKeyword" />	
-		</form>
-		<form action="${pageContext.request.contextPath}/web_system/QA_20_CreateSubject.jsp">
+			<form action="${pageContext.request.contextPath}/subjects/search" method="get" class="search_form">
+    			<label>検索：</label>
+    			<input class="txt" type="text" size="20" value="${keyword}" name="searchbyKeyword" />
+    			<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
+    			<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
+    			<button type="submit">検索</button>
+			</form>
+			<form action="${pageContext.request.contextPath}/web_system/QA_20_CreateSubject.jsp">
     			<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
     			<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
     			<button class="new_button" type="submit">新規作成</button>

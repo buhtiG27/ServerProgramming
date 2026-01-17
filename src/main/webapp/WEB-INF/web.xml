@@ -187,7 +187,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>TimetableSearch</servlet-name>
-    <url-pattern>/timetable/search</url-pattern>
+    <url-pattern>/subjects/search</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>UpdateQuestion</servlet-name>
@@ -222,13 +222,35 @@
     <url-pattern>/tasks/view</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>AllUserQuestions</display-name>
-    <servlet-name>AllUserQuestions</servlet-name>
-    <servlet-class>servlet.AllUserQuestions</servlet-class>
+    <servlet-name>LikedbyQuestion</servlet-name>
+    <servlet-class>servlet.LikedbyQuestion</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AllUserQuestions</servlet-name>
-    <url-pattern>/AllUserQuestions</url-pattern>
+    <servlet-name>LikedbyQuestion</servlet-name>
+    <url-pattern>/questions/like</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FlagbyQuestion</servlet-name>
+    <servlet-class>servlet.FlagbyQuestion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlagbyQuestion</servlet-name>
+    <url-pattern>/questions/flag</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LikedbyAnswer</servlet-name>
+    <servlet-class>servlet.LikedbyAnswer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LikedbyAnswer</servlet-name>
+    <url-pattern>/answers/like</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TimeTableDelete</servlet-name>
+    <servlet-class>servlet.TimeTableDelete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TimeTableDelete</servlet-name>
+    <url-pattern>/timetable/delete</url-pattern>
   </servlet-mapping>
 </web-app>

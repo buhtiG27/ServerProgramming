@@ -44,16 +44,28 @@
             				<button class="filter" type="button" data-text="学科">学科</button>
         				</a>
     				</li>
-    				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
+    				<li>
+        				<a href="${pageContext.request.contextPath}/questions/filter?type=flagged" class="filter-link">
+            				<button class="filter" type="button" data-text="フラグつき">フラグつき</button>
+        				</a>
+    				</li>
 				</ul>
 			</div>
 		</header>
 		
 		<main>
-			<div class="post-list">
+    		<div class="post-list">
     		<%
-				List<Map<String, Object>> questions = (List<Map<String, Object>>) request.getAttribute("questions");
-			%>
+        			Object limitObj = request.getAttribute("limit");
+        			Object offsetObj = request.getAttribute("offset");
+        			
+        			int limit  = (limitObj instanceof Integer) ? (Integer) limitObj : 20;
+        			int offset = (offsetObj instanceof Integer) ? (Integer) offsetObj : 0;
+
+        			String type = (String) request.getAttribute("type");
+        			
+        			List<Map<String, Object>> questions = (List<Map<String, Object>>) request.getAttribute("questions");
+    		%>
     		<%
 				if (questions == null || questions.isEmpty()) {
 			%>
@@ -92,15 +104,23 @@
 					</div>
 					
 					<div class="post_bottomParts">
-						<form action="" method="get" class="post_bottomParts_form">
+						<form action="${pageContext.request.contextPath}/questions/like" method="post" class="post_bottomParts_form">
+							<input type="hidden" name="questionId" value="${q['id']}">
+							<input type="hidden" name="offset" value="<%= offset %>">
+							<input type="hidden" name="type" value="<%= type != null ? type : "" %>">
 							<button class="goodButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="(いいねボタン)" width="auto" height="90%" style="margin-top:10%;"></button>
+							<span class="count-text">${q['like_count'] != null ? q['like_count'] : 0}</span>
 						</form>
 						<form action="${pageContext.request.contextPath}/questions/show" method="get" class="post_bottomParts_form">
 							<input type="hidden" name="questionId" value="${q['id']}">
 							<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 						</form>
-						<form action="" method="get" class="post_bottomParts_form">
+						<form action="${pageContext.request.contextPath}/questions/flag" method="post" class="post_bottomParts_form">
+							<input type="hidden" name="questionId" value="${q['id']}">
+        					<input type="hidden" name="offset" value="<%= offset %>">
+							<input type="hidden" name="type" value="<%= type != null ? type : "" %>">
 							<button class="flagButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
+							<span class="flag-mark">${q['is_flagged'] == true ? "○" : ""}</span>
 						</form>
 					</div>
 					
@@ -110,12 +130,6 @@
 				}
 			%>
 			<%
-				Object limitObj = request.getAttribute("limit");
-				Object offsetObj = request.getAttribute("offset");
-
-				int limit  = (limitObj instanceof Integer) ? (Integer) limitObj : 20;
-				int offset = (offsetObj instanceof Integer) ? (Integer) offsetObj : 0;
-
 				int prev = Math.max(0, offset - limit);
 				int next = offset + limit;
 			%>

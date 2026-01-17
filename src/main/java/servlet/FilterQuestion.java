@@ -30,6 +30,11 @@ public class FilterQuestion extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String filterType = request.getParameter("type");
         
+        String limitStr = request.getParameter("limit");
+        String offsetStr = request.getParameter("offset");
+        int limit = (limitStr != null) ? Integer.parseInt(limitStr) : 20;
+        int offset = (offsetStr != null) ? Integer.parseInt(offsetStr) : 0;
+        
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             
@@ -63,8 +68,15 @@ public class FilterQuestion extends HttpServlet {
                         filteredList.add(postMap);
                     }
                 }
+                else if ("flagged".equals(filterType)) {
+                    if (postJSON.optBoolean("is_flagged", false)) {
+                        addPostToList(postJSON, filteredList, outFmt);
+                    }
+                }
             }
-
+            request.setAttribute("limit", limit);
+            request.setAttribute("offset", offset);
+            request.setAttribute("type", filterType); 
             request.setAttribute("questions", filteredList);
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response);
 
@@ -72,6 +84,14 @@ public class FilterQuestion extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/questions");
         }
+    }
+    private void addPostToList(JSONObject postJSON, List<Map<String, Object>> list, DateTimeFormatter fmt) {
+        Map<String, Object> postMap = postJSON.toMap();
+        String iso = (String) postMap.get("created_at");
+        if (iso != null) {
+            postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(fmt));
+        }
+        list.add(postMap);
     }
 
 

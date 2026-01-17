@@ -57,56 +57,103 @@ String loggedInUsername =
 	<br>
 
 	<!-- 質問表示部 -->
-	<div class="post-list">
-		<div class="post" id="questionPost">
-			<h3>投稿</h3>
-			<p id="questionText">${question['contents_text']}</p>
+	<div class="post-list" style="top: 0; margin-top: 20px;">
+	<div class="post">
+        
+        <div class="post_upperParts" style="left: 2%; width: 96%;">
+            <div class="creatorName">${question['creator']['display_name']}</div>
+            <div class="created_at">${question['created_at_fmt']}</div>
+        </div>
 
-			<div class="button-post">
-				<button class="like_button" type="button">いいね</button>
-				<button class="like_button" type="button">フラグ</button>
+        <div class="post_mainParts" style="left: 2%; width: 96%;">
+            <div class="contents_text" id="questionText">${question['contents_text']}</div>
+        </div>
 
-				<!-- 質問編集ボタン -->
-				<%
-					if (loggedInUsername != null &&
-    					loggedInUsername.equals(question.get("username"))) {
-				%>
-				<button class="edit_button" type="button"
-				    onclick="openEditQuestionModal()">編集</button>
-				<%
-				}
-				%>
-			</div>
-		</div>
+        <div class="post_bottomParts" style="left: 2%; width: 96%;">
+            
+            <form action="${pageContext.request.contextPath}/questions/like" method="post" class="post_bottomParts_form">
+                <input type="hidden" name="questionId" value="${question['id']}">
+                <input type="hidden" name="from" value="show">
+                <button class="goodButton" type="submit">
+                    <img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="いいね" width="auto" height="90%">
+                </button>
+                <span class="count-text">${question['like_count'] != null ? question['like_count'] : 0}</span>
+            </form>
+
+            <form action="${pageContext.request.contextPath}/questions/flag" method="post" class="post_bottomParts_form">
+                <input type="hidden" name="questionId" value="${question['id']}">
+                <input type="hidden" name="from" value="show">
+                <button class="flagButton" type="submit">
+                    <img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="フラグ" width="auto" height="90%">
+                </button>
+                <span class="flag-mark">${question['is_flagged'] == true ? "○" : ""}</span>
+            </form>
+
+            <% if (loggedInUsername != null && loggedInUsername.equals(question.get("username"))) { %>
+                <div class="post_bottomParts_form" style="text-align: right;">
+                    <button class="edit_button" type="button" onclick="openEditQuestionModal()" 
+                            style="background-color: #4caf50; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                        編集
+                    </button>
+                </div>
+            <% } else { %>
+                <div class="post_bottomParts_form"></div> <% } %>
+        </div>
+
+    </div>
 	</div>
 
 	<div class="remaind-list">
-		<h2>回答</h2>
+    <h2>回答</h2>
 
-		<%
-		if (answers != null && answers.size() > 0) {
-			for (Map<String, Object> answer : answers) {
-				Map<String, Object> creator = (Map<String, Object>) answer.get("creator");
-				pageContext.setAttribute("answer", answer);
-				String answerUser = creator == null ? "" : (String) creator.get("user_id");
-				%>
-		<div class="post">
-    		<p class="answerText">${answer['contents_text']}</p>
-			<p class="answerUser">${answer['creator']['display_name']}</p>
-    		<div class="button-post">
-        		<% 
-        		if (loggedInUsername != null &&loggedInUsername.equals(answerUser)) { 
-        		%>
-            		<button class="edit_button" onclick="openEditAnswerModal('${answer['content_text']}')">編集</button>
-        		<% } %>
-    		</div>
-		</div>
-		<%
-		    }
-		}
-		%>
+    <%
+    if (answers != null && answers.size() > 0) {
+        for (Map<String, Object> answer : answers) {
+            Map<String, Object> creator = (Map<String, Object>) answer.get("creator");
+            pageContext.setAttribute("answer", answer);
+            String answerUser = creator == null ? "" : (String) creator.get("user_id");
+    %>
+    <div class="post" style="height: auto; min-height: 150px; margin-bottom: 20px;">
         
+        <div class="post_upperParts" style="left: 2%; width: 96%; height: 30px;">
+            <div class="creatorName" style="font-size: 16px;">${answer['creator']['display_name']}</div>
+            <div class="created_at" style="font-size: 12px;">${answer['created_at_fmt']}</div>
         </div>
+
+        <div class="post_mainParts" style="left: 2%; width: 96%; position: relative; top: 35px; height: auto; min-height: 60px;">
+            <div class="contents_text" style="font-size: 20px; padding: 10px;">${answer['contents_text']}</div>
+        </div>
+
+        <div class="post_bottomParts" style="left: 2%; width: 96%; height: 40px; position: relative; margin-top: 40px;">
+            
+            <form action="${pageContext.request.contextPath}/answers/like" method="post" class="post_bottomParts_form">
+                <input type="hidden" name="answerId" value="${answer['id']}">
+                <input type="hidden" name="questionId" value="${question['id']}"> <button class="goodButton" type="submit">
+                    <img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="いいね" width="auto" height="25px">
+                </button>
+                <span class="count-text">${answer['like_count'] != null ? answer['like_count'] : 0}</span>
+            </form>
+
+            <% if (loggedInUsername != null && loggedInUsername.equals(answerUser)) { %>
+                <div class="post_bottomParts_form" style="text-align: right; flex: 1;">
+                    <button class="edit_button" type="button" 
+                            onclick="openEditAnswerModal('${answer['contents_text']}')"
+                            style="background-color: #4caf50; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                        編集
+                    </button>
+                </div>
+            <% } else { %>
+                <div class="post_bottomParts_form" style="flex: 1;"></div>
+            <% } %>
+        </div>
+    </div>
+    <%
+        }
+    } else {
+    %>
+        <p style="color: gray;">まだ回答はありません</p>
+    <% } %>
+</div>
 
 		<!-- 回答作成ボタン -->
 		<div class="answer">

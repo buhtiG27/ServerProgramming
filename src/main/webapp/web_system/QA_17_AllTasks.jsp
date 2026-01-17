@@ -17,68 +17,50 @@
         />
     </head>
     <body>
-        <div class="top_button_area">
-            <form action="" method="get">
-                <button
-                    class="top_button"
-                    type="submit"
-                    name="back"
-                    value="send"
-                >
-                    TDU
-                </button>
-            </form>
-        </div>
-        <div class="header_area">
-            <form
-                action="${pageContext.request.contextPath}/timetable"
-                method="get"
-            >
-                <button
-                    class="back_button"
-                    type="submit"
-                    name="filterbyNew"
-                    value="send"
-                >
-                    戻る
-                </button>
+    <header><jsp:include page="header.jsp" /><!-- ヘッダ --></header>
+		<div class="header_area">
+            <form action="${pageContext.request.contextPath}/timetable" method="get">
+                <button class="back_button" type="submit" name="back" value="send">戻る</button>
             </form>
             <h2>課題一覧</h2>
         </div>
         <br />
         <div class="body_area">
-            <form action="" method="get" class="search_form">
-                <label>検索：</label>
-                <input
-                    class="txt"
-                    type="text"
-                    size="20"
-                    value=""
-                    name="searchbyKeyword"
-                />
+    	<% 
+    		List<Task> taskList = (List<Task>) request.getAttribute("tasks");
+    		if (taskList == null || taskList.isEmpty()) { 
+    	%>
+        	<p style="color:gray; text-align:center;">課題はありません</p>
+    	<% 
+    	} else {
+        	for (Task task: taskList) { 
+            	pageContext.setAttribute("task", task);
+    	%>
+        <div class="subject_area">
+            <%-- 19の形式に合わせて課題名を大きく表示 --%>
+            <h3>${task.content}</h3>
+            <p>期日：${task.limmit}</p>
+
+            <%-- ボタンエリア --%>
+            <form action="${pageContext.request.contextPath}/tasks/view" method="get">
+                <input type="hidden" name="taskId" value="${task.id}" />
+                <input type="hidden" name="weekday" value="${task.subjectWeekdayNum}" />
+                <input type="hidden" name="time" value="${task.subjectTime}" />
+                <button
+                    class="show_button"
+                    type="submit"
+                >
+                    詳細
+                </button>
             </form>
-            <% List<Task> taskList = (List<Task>) request.getAttribute("tasks");
-			for (Task task: taskList) { 
-				pageContext.setAttribute("task", task);
-			%>
-            <div class="subject_area">
-                <form action="${pageContext.request.contextPath}/tasks/view" method="get">
-					<input type="hidden" name="taskId" value="${task.id}" />
-					<input type="hidden" name="weekday" value="${task.subjectWeekdayNum}" />
-					<input type="hidden" name="time" value="${task.subjectTime}" />
-                    <button
-                        class="show_button"
-                        type="submit"
-                        name="filterbyNew"
-                        value="send"
-                    >
-					${task.content}
-                    </button>
-                </form>
-                <p>期日：${task.limmit}</p>
-            </div>
-            <% } %>
+            
+            <%-- もし19のように完了登録ボタンなどが必要ならここに追加 --%>
         </div>
+    	<% 
+        	} 
+    	} 
+    	%>
+		</div>
         <br />
         <br />
 

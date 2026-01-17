@@ -7,6 +7,16 @@ h1{
 	color:rgb(0, 128, 255);
 	
 }
+
+main{
+	position:relative;
+	top:10vh;
+	left:0;
+	width:99.5%;
+	transform:translateX(-1px);
+    font-weight: bold;
+}
+
 /*検索*/
 .txt{
 	display: inline-block;
@@ -56,30 +66,88 @@ h1{
 	font-size: 16px;
 }
 /*投稿部分*/
-.post-list{
-	width: 100%;
-	margin: 5px;
-	margin-top: 50px;
-	padding-bottom: 35px;
-	text-align: center;	
-}
-.post {
-    position: relative; 
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    background-color: #f9f9f9;
-}
-.post h3{
-	color:black;
+.post-list {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    border: none; /* 外枠が不要なら */
+    z-index: 1;
 }
 
-.like_button{
-	font-size: 12px;
-	box-sizing: border-box;
-	margin: 5px;
-    padding: 5px;
+.post {
+    position: relative;
+    height: 220px; /* 必要に応じて調整 */
+    background-color: white;
+    border: solid 1px #979797;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+/* 上部エリア：名前と日付 */
+.post_upperParts {
+    position: absolute;
+    top: 0;
+    height: 25%;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+}
+
+.creatorName {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.created_at {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* 中央エリア：本文 */
+.post_mainParts {
+    position: absolute;
+    top: 25%;
+    height: 50%;
+    font-size: 24px;
+    overflow-y: auto; /* 長い文章に対応 */
+}
+
+.contents_text {
+    padding: 15px 10px;
+    text-align: left;
+}
+
+/* 下部エリア：ボタン（ここを横並びに） */
+.post_bottomParts {
+    position: absolute;
+    bottom: 0;
+    height: 25%;
+    display: flex; /* 横並びにする */
+    align-items: center;
+    border-top: 1px solid #eee;
+}
+
+.post_bottomParts_form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.goodButton, .flagButton {
+    height: 80%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.count-text, .flag-mark {
+    margin-left: 8px;
+    font-size: 18px;
 }
 .button-post .edit_button {
     position: absolute;
@@ -98,10 +166,22 @@ h1{
     background-color: #45a049;
 }
 .remaind-list {
-    width: 100%;
-    margin-top: 30px;
-    padding-bottom: 250px; /* 下の固定ボタン・ナビ分の逃げ */
-    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 0 10px;
+}
+
+.remaind-list .post_bottomParts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.remaind-list .post_bottomParts_form {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
 }
 /*作成button*/
 .answer{

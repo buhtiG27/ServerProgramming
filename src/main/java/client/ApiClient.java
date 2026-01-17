@@ -1,6 +1,5 @@
 package client;
 
-import java.lang.Exception;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -8,8 +7,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public final class ApiClient {
     private final String baseUrl;
@@ -74,4 +73,9 @@ public final class ApiClient {
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
+
+	 public ApiResponse delete(HttpServletRequest request, String string) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
