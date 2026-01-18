@@ -31,7 +31,8 @@
             </form>
 			<form action="${pageContext.request.contextPath}/subjects/search" method="get" class="search_form">
     			<label>検索：</label>
-    			<input class="txt" type="text" size="20" value="${keyword}" name="searchbyKeyword" />
+    			<input type="text" name="searchbyKeyword" value="${keyword}" class="txt" placeholder="科目名・教員名で検索">
+    			
     			<input type="hidden" name="weekday" value="<%= request.getParameter("weekday") %>">
     			<input type="hidden" name="time" value="<%= request.getParameter("time") %>">
     			<button type="submit">検索</button>

@@ -24,13 +24,13 @@ public class TimetableSearch extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 文字エンコーディングの設定（パラメータ取得前に必須）
         request.setCharacterEncoding("UTF-8");
         String rid = (String) request.getAttribute("rid");
 
         // --- 1. パラメータの取得 ---
         String weekday = request.getParameter("weekday");
         String time = request.getParameter("time");
+        // JSP側の入力項目のname属性に合わせて取得
         String keyword = request.getParameter("searchbyKeyword");
 
         // --- 2. 曜日変換ロジック ---
@@ -55,9 +55,8 @@ public class TimetableSearch extends HttpServlet {
 
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            getServletContext().log("[rid=" + rid + "] Call API GET /subjects/search" + queryString);
-
-            ApiResponse apires = api.get(request, "/subjects/search" + queryString);
+            
+            ApiResponse apires = api.get(request, "/subjects" + queryString);
 
             List<Map<String, Object>> filteredSubjects = new ArrayList<>();
 
@@ -65,29 +64,32 @@ public class TimetableSearch extends HttpServlet {
                 JSONObject json = new JSONObject(apires.body);
                 JSONArray subjectsJson = json.getJSONArray("subjects");
 
-                String lowerKeyword = (keyword != null) ? keyword.replaceAll("　", " ").trim().toLowerCase() : "";
+                // キーワードの正規化（nullチェックとトリミング）
+                String searchWord = "";
+                if (keyword != null && !keyword.trim().isEmpty()) {
+                    searchWord = keyword.replaceAll("　", " ").trim().toLowerCase();
+                }
 
                 for (int i = 0; i < subjectsJson.length(); i++) {
                     JSONObject subJson = subjectsJson.getJSONObject(i);
                     
-                    // キーワードが空の場合は、その時限の科目をすべて追加
-                    if (lowerKeyword.isEmpty()) {
-                        filteredSubjects.add(subJson.toMap());
-                    } else {
-                        String subjectName = subJson.optString("subject_name", "").toLowerCase();
-                        String teacher = subJson.optString("teacher", "").toLowerCase();
+                    // 検索対象
+                    String subjectName = subJson.optString("subject_name", "");
+                    String teacher = subJson.optString("teacher", "");
 
-                        if (subjectName.contains(lowerKeyword) || teacher.contains(lowerKeyword)) {
-                            filteredSubjects.add(subJson.toMap());
-                            System.out.println("Match found: " + subjectName);
-                        }
+                    // キーワードが空、または科目名・教員名に含まれる場合にリストに追加
+                    if (searchWord.isEmpty() || 
+                        subjectName.toLowerCase().contains(searchWord) || 
+                        teacher.toLowerCase().contains(searchWord)) {
+                        
+                        filteredSubjects.add(subJson.toMap());
                     }
                 }
             } else {
-                request.setAttribute("error", "APIからのデータ取得に失敗しました。Status: " + apires.status);
+                request.setAttribute("error", "データの取得に失敗しました。");
             }
 
-            // --- 6. JSPへのデータ受け渡し ---
+            // JSPへ渡す
             request.setAttribute("subjects", filteredSubjects);
             request.setAttribute("keyword", keyword); 
             request.setAttribute("weekday", weekday); 
