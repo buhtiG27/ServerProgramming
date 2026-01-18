@@ -79,6 +79,9 @@ func SetupRouter() *gin.Engine {
 
 		// 新着投稿の取得
 		protected.GET("/posts", controllers.GetPosts)
+
+		// ユーザの投稿一覧の取得
+		protected.GET("/user/posts", controllers.GetUserPosts)
 	}
 	return router
 }
