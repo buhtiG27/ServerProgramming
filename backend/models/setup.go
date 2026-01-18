@@ -42,6 +42,7 @@ func ConnectDataBase() {
 		&Post{},
 		&Practice{},
 		&Timetable{},
+		&Like{},
 	); err != nil {
 		log.Printf("failed to migrate: %v", err)
 	}
