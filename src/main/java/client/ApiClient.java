@@ -74,13 +74,11 @@ public final class ApiClient {
         }
     }
 
-	 public ApiResponse delete(HttpServletRequest request, String string) {
-
-		return null;
+    public ApiResponse delete(HttpServletRequest request, String path) throws Exception {
+		 return request(request, "DELETE", path, null);
 	}
 
-	public ApiResponse putJson(HttpServletRequest request, String string, String string2) {
-
-		return null;
-	}
+    public ApiResponse putJson(HttpServletRequest request, String path, String jsonBody) throws Exception {
+        return request(request, "PUT", path, jsonBody);
+    }
 }

@@ -30,18 +30,13 @@ public class FilterQuestion extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String filterType = request.getParameter("type");
         
-        String limitStr = request.getParameter("limit");
         String offsetStr = request.getParameter("offset");
-        int limit = (limitStr != null) ? Integer.parseInt(limitStr) : 20;
         int offset = (offsetStr != null) ? Integer.parseInt(offsetStr) : 0;
         
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             
-            // 1. ログインユーザーの情報を取得
-            ApiResponse userRes = api.get(request, "/user");
-
-            // 2. 全投稿を取得
+            // 全投稿を取得
             ApiResponse postsRes = api.get(request, "/posts?limit=100"); 
             JSONObject postsJson = new JSONObject(postsRes.body);
             JSONArray posts = postsJson.getJSONArray("posts");
@@ -52,7 +47,7 @@ public class FilterQuestion extends HttpServlet {
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
 
-                // type=flagged の場合、is_flaggedがtrueのものだけを抽出
+                // trueの場合、リストに追加
                 if ("flagged".equals(filterType)) {
                     if (postJSON.optBoolean("is_flagged", false)) {
                         addPostToList(postJSON, filteredList, outFmt);
@@ -60,11 +55,10 @@ public class FilterQuestion extends HttpServlet {
                 }
             }
             
-            request.setAttribute("limit", limit);
-            request.setAttribute("offset", offset);
             request.setAttribute("type", filterType); 
-            request.setAttribute("questions", filteredList);
-            request.setAttribute("isFilterMode", true); 
+            request.setAttribute("questions", filteredList); // JSP側が "${questions}" で受けている場合
+            request.setAttribute("isFilterMode", true);
+            
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response);
 
         } catch (Exception e) {
