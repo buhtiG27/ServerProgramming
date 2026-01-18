@@ -74,7 +74,7 @@ func GetUserPosts(c *gin.Context) {
 
 	var usersPost []models.Post
 	// ユーザIDに基づいてユーザ情報をデータベースから取得する
-	if err := models.DB.Where(&models.Post{CreatorID: accountID}).Preload("Practice").Preload("Parent").Find(&usersPost).Error; err != nil {
+	if err := models.DB.Where(&models.Post{CreatorID: accountID}).Preload("Practice").Preload("Parent").Order("created_at DESC").Find(&usersPost).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}

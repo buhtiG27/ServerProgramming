@@ -38,12 +38,7 @@
             				<button class="filter" type="button" data-text="新着">新着</button>
         				</a>
     				</li>
-    
-    				<li>
-        				<a href="${pageContext.request.contextPath}/questions/filter?type=department" class="filter-link">
-            				<button class="filter" type="button" data-text="学科">学科</button>
-        				</a>
-    				</li>
+
     				<li>
         				<a href="${pageContext.request.contextPath}/questions/filter?type=flagged" class="filter-link">
             				<button class="filter" type="button" data-text="フラグつき">フラグつき</button>
@@ -116,11 +111,18 @@
 							<button class="replyButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_chat.png" alt="(返信ボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
 						</form>
 						<form action="${pageContext.request.contextPath}/questions/flag" method="post" class="post_bottomParts_form">
-							<input type="hidden" name="questionId" value="${q['id']}">
-        					<input type="hidden" name="offset" value="<%= offset %>">
-							<input type="hidden" name="type" value="<%= type != null ? type : "" %>">
-							<button class="flagButton" type="submit"><img src="${pageContext.request.contextPath}/web_system/images/icon_flag.png" alt="(フラグボタン)" width="auto" height="90%" style="margin-top:5%;"></button>
-							<span class="flag-mark">${q['is_flagged'] == true ? "○" : ""}</span>
+    						<input type="hidden" name="questionId" value="${q['id']}">
+    						<input type="hidden" name="offset" value="<%= offset %>">
+    						<input type="hidden" name="type" value="<%= type != null ? type : "" %>">
+    
+    						<button class="flagButton" type="submit">
+
+        					<img src="${pageContext.request.contextPath}/web_system/images/${q['is_flagged'] == true ? 'icon_flag_active.png' : 'icon_flag.png'}" 
+             					alt="(フラグボタン)" 
+             					width="auto" height="90%" 
+             					style="margin-top:5%; ${q['is_flagged'] == true ? 'filter: sepia(100%) saturate(500%) hue-rotate(0deg);' : ''}">
+    						</button>
+    
 						</form>
 					</div>
 					

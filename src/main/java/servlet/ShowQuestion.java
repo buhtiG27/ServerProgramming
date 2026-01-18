@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
 public class ShowQuestion extends HttpServlet {
@@ -59,22 +60,26 @@ public class ShowQuestion extends HttpServlet {
 
             JSONObject json = new JSONObject(apires.body);
             JSONObject post = json.getJSONObject("parent");
-            JSONArray posts = json.getJSONArray("replies");
+            JSONArray replies = json.getJSONArray("replies");
 
             Map<String, Object> question = post.toMap();
             List<Map<String, Object>> answers = new ArrayList<>();
-
-            for (int i = 0; i < posts.length(); i++) {
-                JSONObject p = posts.getJSONObject(i);
-
-                long id = p.getLong("id");
-
-                if (p.has("parent_id") &&
-                        !p.isNull("parent_id") &&
-                        p.getLong("parent_id") == questionId) {
-                    Map<String, Object> answerMap = p.toMap();
-                    answers.add(answerMap);
+            
+            DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            String iso = (String) question.get("created_at");
+            if (iso != null) {
+                OffsetDateTime odt = OffsetDateTime.parse(iso);
+                question.put("created_at_fmt", odt.format(outFmt));
+            }
+            for (int i = 0; i < replies.length(); i++) {
+            	JSONObject p = replies.getJSONObject(i);
+                Map<String, Object> answerMap = p.toMap();
+                
+                String aIso = (String) answerMap.get("created_at");
+                if (aIso != null) {
+                    answerMap.put("created_at_fmt", OffsetDateTime.parse(aIso).format(outFmt));
                 }
+                answers.add(answerMap);
             }
 
             if (question == null) {

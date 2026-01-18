@@ -15,19 +15,21 @@
         />
     </head>
     <body>
-        <% request.setCharacterEncoding("UTF-8"); // リクエスト・パラメータ取得
-        String cls = request.getParameter("classneme"); String con =
-        request.getParameter("content"); String lim =
-        request.getParameter("limmit"); String output =
-        request.getParameter("output"); String ditail =
-        request.getParameter("detailcontent"); %>
+        <%
+    request.setCharacterEncoding("UTF-8");
+    // 全パラメータを受け取る
+    String taskId = request.getParameter("taskId");
+    String weekday = request.getParameter("weekday");
+    String time = request.getParameter("time");
+    
+    String cls = request.getParameter("classneme"); 
+    String con = request.getParameter("content"); 
+    String lim = request.getParameter("limmit"); 
+    String output = request.getParameter("output"); 
+    String ditail = request.getParameter("detailcontent"); 
+%>
 
-        <div class="top_button">
-            <h1>TDU</h1>
-            <br />
-            <a>課題編集確認</a>
-        </div>
-
+        <header><jsp:include page="header.jsp" /></header>
         <div class="request_list">
             <br />
             授業名：<%= cls %><br /><br />
@@ -37,45 +39,29 @@
             補足説明：<%= ditail %><br /><br />
 
             <div class="bottom_buttons">
-                <form
-                    class="form"
-                    action="${pageContext.request.contextPath}/web_system/QA_26_EditTask.jsp"
-                    method="post"
-                >
-                    <input type="hidden" name="actionType" value="correction" />
-                    <input type="hidden" name="classname" value="<%= cls %>" />
-                    <input type="hidden" name="content" value="<%= con %>" />
-                    <input type="hidden" name="limmit" value="<%= lim %>" />
-                    <input type="hidden" name="output" value="<%= output %>" />
-                    <input
-                        type="hidden"
-                        name="detailcontent"
-                        value="<%= ditail %>"
-                    />
-                    <button class="correctButton" type="submit">訂正</button>
-                </form>
+                <form class="form" action="${pageContext.request.contextPath}/web_system/QA_26_EditTask.jsp" method="post">
+            		<input type="hidden" name="actionType" value="correction" />
+            		<input type="hidden" name="taskId" value="<%= taskId %>" />
+            		<input type="hidden" name="weekday" value="<%= weekday %>" />
+            		<input type="hidden" name="time" value="<%= time %>" />
+            		<input type="hidden" name="classneme" value="<%= cls %>" />
+            		<input type="hidden" name="content" value="<%= con %>" />
+            		<input type="hidden" name="limmit" value="<%= lim %>" />
+            		<input type="hidden" name="output" value="<%= output %>" />
+            		<input type="hidden" name="detailcontent" value="<%= ditail %>" />
+            		<button class="correctButton" type="submit">訂正</button>
+        		</form>
 
-                <form
-                    class="form"
-                    action="${pageContext.request.contextPath}/web_system/QA_13_ViewTask.jsp"
-                    method="post"
-                >
-                    <input type="hidden" name="classname" value="<%= cls %>" />
-                    <input type="hidden" name="content" value="<%= con %>" />
-                    <input type="hidden" name="limmit" value="<%= lim %>" />
-                    <input type="hidden" name="output" value="<%= output %>" />
-                    <input
-                        type="hidden"
-                        name="detailcontent"
-                        value="<%= ditail %>"
-                    />
-                    <input
-                        type="hidden"
-                        name="message"
-                        value="編集が完了しました。"
-                    />
-                    <button class="registerButton" type="submit">登録</button>
-                </form>
+                <form class="form" action="${pageContext.request.contextPath}/tasks/update" method="post">
+            		<input type="hidden" name="taskId" value="<%= taskId %>" />
+            		<input type="hidden" name="weekday" value="<%= weekday %>" />
+            		<input type="hidden" name="time" value="<%= time %>" />
+            		<input type="hidden" name="content" value="<%= con %>" />
+            		<input type="hidden" name="limmit" value="<%= lim %>" />
+            		<input type="hidden" name="output" value="<%= output %>" />
+            		<input type="hidden" name="detailcontent" value="<%= ditail %>" />
+            		<button class="registerButton" type="submit">登録</button>
+        		</form>
             </div>
         </div>
     </body>

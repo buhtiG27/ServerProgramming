@@ -49,11 +49,20 @@
     <h2 class="task_title">${subject['subject_name']}</h2>
     
     <div class="edit_create">
-        <form action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="get">
-            <input type="hidden" name="subjectId" value="${subject['ID']}">
-            <button class="edit_button" type="submit">編集</button>
-        </form>
-    </div>
+    <form action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="get">
+        <%-- IDと戻り先情報 --%>
+        <input type="hidden" name="subjectId" value="${subject['ID']}">
+        <input type="hidden" name="weekday" value="<%= rawWeekday %>">
+        <input type="hidden" name="time" value="<%= rawTime %>">
+        
+        <%-- 現在の値を編集画面に引き継ぐ --%>
+        <input type="hidden" name="classneme" value="${subject['subject_name']}">
+        <input type="hidden" name="teacher" value="${subject['teacher']}">
+        <input type="hidden" name="roomname" value="${subject['class_room']}">
+        
+        <button class="edit_button" type="submit">編集</button>
+    </form>
+	</div>
     <div class="info_box">
     	<label>授業名：</label>
     	<div class="content_box">${subject['subject_name']}</div>
