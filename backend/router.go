@@ -82,6 +82,12 @@ func SetupRouter() *gin.Engine {
 
 		// ユーザの投稿一覧の取得
 		protected.GET("/user/posts", controllers.GetUserPosts)
+
+		// いいねをする
+		protected.POST("/posts/like", controllers.DoLike)
+
+		// いいね数の取得
+		protected.GET("/posts/:id/like", controllers.GetLikeCount)
 	}
 	return router
 }
