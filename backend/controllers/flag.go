@@ -58,6 +58,31 @@ func GetFlags(c *gin.Context) {
 	})
 }
 
+func GetFlagInfo(c *gin.Context) {
+
+	postID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	accountID := c.GetUint("userID")
+
+	var flag models.Flag
+	isFlag := false
+	if err := models.DB.Where(&models.Flag{AccountID: accountID, PostID: uint(postID)}).First(&flag).Error; err == nil {
+		isFlag = true
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"flag_id": flag.ID,
+		"is_flag": isFlag,
+		"post_id": postID,
+	})
+}
+
 func UnregisterFlag(c *gin.Context) {
 	flagID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

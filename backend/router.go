@@ -98,6 +98,9 @@ func SetupRouter() *gin.Engine {
 		// フラグの一覧取得
 		protected.GET("/user/flags", controllers.GetFlags)
 
+		// フラグされているか判定
+		protected.GET("/posts/:id/flag", controllers.GetFlagInfo)
+
 		// フラグの登録解除
 		protected.DELETE("/user/flags/:id", controllers.UnregisterFlag)
 	}
