@@ -40,8 +40,6 @@ public class FilterQuestion extends HttpServlet {
             
             // 1. ログインユーザーの情報を取得
             ApiResponse userRes = api.get(request, "/user");
-            JSONObject userJson = new JSONObject(userRes.body);
-            String userDept = userJson.optString("department", ""); 
 
             // 2. 全投稿を取得
             ApiResponse postsRes = api.get(request, "/posts?limit=100"); 
@@ -53,31 +51,20 @@ public class FilterQuestion extends HttpServlet {
 
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
-                
-                JSONObject creator = postJSON.optJSONObject("creator");
-                String postDept = (creator != null) ? creator.optString("department", "") : "";
 
-                // 学科が一致する場合のみリストに追加
-                if ("department".equals(filterType)) {
-                    if (userDept.equals(postDept) && !userDept.isEmpty()) {
-                        Map<String, Object> postMap = postJSON.toMap();
-                        String iso = (String) postMap.get("created_at");
-                        if (iso != null) {
-                            postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(outFmt));
-                        }
-                        filteredList.add(postMap);
-                    }
-                }
-                else if ("flagged".equals(filterType)) {
+                // type=flagged の場合、is_flaggedがtrueのものだけを抽出
+                if ("flagged".equals(filterType)) {
                     if (postJSON.optBoolean("is_flagged", false)) {
                         addPostToList(postJSON, filteredList, outFmt);
                     }
                 }
             }
+            
             request.setAttribute("limit", limit);
             request.setAttribute("offset", offset);
             request.setAttribute("type", filterType); 
             request.setAttribute("questions", filteredList);
+            request.setAttribute("isFilterMode", true); 
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response);
 
         } catch (Exception e) {

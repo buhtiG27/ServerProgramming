@@ -29,20 +29,6 @@ main{
 }
 
 /* --- トップボタン --- */
-.top_button_area {
-	top: 10px;
-	text-align:center;
-}
-
-.top_button {
-	background: white;
-	color: rgb(0, 128, 255);
-	border: none;
-	padding: 8px 16px;
-	font-size: 24px;
-	border-radius: 5px;
-}
-
 
 .header_area {
 	width: 100%;
@@ -149,7 +135,7 @@ main{
     margin-left: 8px;
     font-size: 18px;
 }
-.button-post .edit_button {
+.edit_button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -162,7 +148,7 @@ main{
     font-size: 13px;
 }
 
-.button-post .edit_button:hover {
+.edit_button:hover {
     background-color: #45a049;
 }
 .remaind-list {

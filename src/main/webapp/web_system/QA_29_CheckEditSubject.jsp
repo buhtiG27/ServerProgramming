@@ -13,21 +13,15 @@
 	</head>
 	<body>
 		<%
-		request.setCharacterEncoding("UTF-8");
-		
-		// リクエスト・パラメータ取得 
-		String cls = request.getParameter("classneme");
-		String tea = request.getParameter("teacher");
-		String room = request.getParameter("roomname");
-		//List<Task> tasks = (List<Task>)request.getAttribute("taskList");
+    		request.setCharacterEncoding("UTF-8");
+    		String subId = request.getParameter("subjectId");
+    		String rawWeekday = request.getParameter("weekday");
+    		String rawTime = request.getParameter("time");
+    		String cls = request.getParameter("classneme");
+    		String tea = request.getParameter("teacher");
+    		String room = request.getParameter("roomname");
 		%>
-		
-		<div class="top_button">
-			<h1>TDU</h1>
-			<br>
-			<a>科目編集確認</a>
-		</div>
-		
+        <header><jsp:include page="header.jsp" /></header>
 		<div class="request_list">
 			<br>
     		授業名：<%= cls %><br><br>
@@ -37,19 +31,22 @@
     		<div class="bottom_buttons">
     			<form class="form" action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="post">
     				<input type="hidden" name="actionType" value="correction"> 
-    				<input type="hidden" name="classname" value="<%= cls %>">
+    				<input type="hidden" name="subjectId" value="<%= subId %>">
+    				<input type="hidden" name="weekday" value="<%= rawWeekday %>">
+    				<input type="hidden" name="time" value="<%= rawTime %>">
+    				<input type="hidden" name="classneme" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
     				<input type="hidden" name="roomname" value="<%= room %>">
     				<button class="correctButton" type="submit">訂正</button>
-    			</form>
+				</form>
     			
-    			<form class="form" action="${pageContext.request.contextPath}/web_system/QA_21_DetailSubject.jsp" method="post">
-    				<input type="hidden" name="classname" value="<%= cls %>">
+    			<form class="form" action="${pageContext.request.contextPath}/subjects/update" method="post">
+    				<input type="hidden" name="subjectId" value="<%= subId %>">
+    				<input type="hidden" name="classneme" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
     				<input type="hidden" name="roomname" value="<%= room %>">
-    				<input type="hidden" name="message" value="編集が完了しました。">
     				<button class="registerButton" type="submit">登録</button>
-    			</form>
+				</form>
     		</div>
     	
     	</div>

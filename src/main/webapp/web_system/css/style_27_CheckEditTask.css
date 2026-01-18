@@ -8,15 +8,6 @@ h1{
 	
 }
 
-/*上部のbutton*/
-.top_button{
-	position: fixed;
-	top: 0;
-	width: 100%; 
-	background: white;
-    text-align: center;
-}
-
 /*入力部分*/
 .request_list{
 	width: 100%;

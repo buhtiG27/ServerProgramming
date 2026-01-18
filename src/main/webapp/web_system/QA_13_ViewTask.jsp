@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> <%@ page
-import="model.Task" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.Task" %>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -50,14 +50,22 @@ import="model.Task" %>
             <h2 class="task_title">${task.content}</h2>
 
             <div class="edit">
-                <form
-                    action="${pageContext.request.contextPath}/web_system/QA_26_EditTask.jsp"
-                    method="get"
-                >
-                    <input type="hidden" name="taskId" value="{task.id}" />
-                    <button class="edit_button" type="submit">編集</button>
-                </form>
-            </div>
+    			<form action="${pageContext.request.contextPath}/web_system/QA_26_EditTask.jsp" method="get">
+        			<%-- ID と 戻り先情報 --%>
+        			<input type="hidden" name="taskId" value="${task.id}" />
+        			<input type="hidden" name="weekday" value="${weekday}" />
+        			<input type="hidden" name="time" value="${time}" />
+        
+        			<%-- 初期値として現在の値を渡す --%>
+        			<input type="hidden" name="classneme" value="${task.subjectName}" />
+        			<input type="hidden" name="content" value="${task.content}" />
+        			<input type="hidden" name="limmit" value="${task.limmit}" />
+        			<input type="hidden" name="output" value="${task.output}" />
+        			<input type="hidden" name="detailcontent" value="${task.detail}" />
+        
+        			<button class="edit_button" type="submit">編集</button>
+    			</form>
+			</div>
 
             <div class="info_box">
                 <label>授業名：</label>

@@ -75,7 +75,12 @@ public final class ApiClient {
     }
 
 	 public ApiResponse delete(HttpServletRequest request, String string) {
-		// TODO 自動生成されたメソッド・スタブ
+
+		return null;
+	}
+
+	public ApiResponse putJson(HttpServletRequest request, String string, String string2) {
+
 		return null;
 	}
 }

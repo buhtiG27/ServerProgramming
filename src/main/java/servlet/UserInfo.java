@@ -27,8 +27,7 @@ public class UserInfo extends HttpServlet {
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             
-            // 1. ログインユーザー自身の情報を取得
-         // 1. ログインユーザー自身の情報を取得
+            // 1. ユーザー自身の情報を取得 (/user)
             ApiResponse userRes = api.get(request, "/user");
             if (!userRes.is2xx()) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -36,66 +35,61 @@ public class UserInfo extends HttpServlet {
             }
 
             JSONObject userResponseJSON = new JSONObject(userRes.body);
-
-            // デバッグ用：実際にどのようなJSONが返ってきているかコンソールに出力して確認
-            System.out.println("DEBUG User JSON: " + userResponseJSON.toString());
-
-            // 「data」というキーの中にユーザー情報が入っている場合を考慮
-            JSONObject userInfo;
-            if (userResponseJSON.has("data")) {
-                userInfo = userResponseJSON.getJSONObject("data");
-            } else {
-                userInfo = userResponseJSON;
-            }
-
-            // キーが存在するか確認してから取得する（エラー回避）
-            int myId = 0;
-            if (userInfo.has("id")) {
-                myId = userInfo.getInt("id");
-            } else {
-                // idが見つからない場合の処理（エラーログを出すなど）
-                getServletContext().log("Error: User ID not found in API response");
-            }
+            JSONObject userInfo = userResponseJSON.has("data") ? userResponseJSON.getJSONObject("data") : userResponseJSON;
 
             String name = userInfo.optString("display_name", "");
             String description = userInfo.optString("description", "");
+            String department = userInfo.optString("department", ""); 
 
-            // 2. 全投稿を取得して自分のものだけフィルタリング
-            ApiResponse postsRes = api.get(request, "/posts?limit=100"); // 必要に応じてlimit調整
+            // 2. 「自分の投稿一覧」を専用エンドポイントから取得 (/user/posts)
+            // Go側の controllers.GetUserPosts が対応します
+            ApiResponse postsRes = api.get(request, "/user/posts"); 
             List<Map<String, Object>> myQuestions = new ArrayList<>();
             
             if (postsRes.is2xx()) {
                 JSONObject postsJson = new JSONObject(postsRes.body);
-                JSONArray posts = postsJson.getJSONArray("posts");
-                DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                // Go側のレスポンスキー "usersPost" に合わせる
+                JSONArray posts = postsJson.optJSONArray("usersPost");
+                
+                if (posts != null) {
+                    DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-                for (int i = 0; i < posts.length(); i++) {
-                    JSONObject postJSON = posts.getJSONObject(i);
-                    JSONObject creatorJSON = postJSON.optJSONObject("creator");
-                    
-                    if (creatorJSON != null && creatorJSON.getInt("id") == myId) {
+                    for (int i = 0; i < posts.length(); i++) {
+                        JSONObject postJSON = posts.getJSONObject(i);
                         Map<String, Object> postMap = new HashMap<>();
+                        
                         postMap.put("id", postJSON.optInt("id"));
                         postMap.put("contents_text", postJSON.optString("contents_text"));
-                        
-                        // creator情報を個別にMapとして格納
-                        Map<String, Object> creatorMap = new HashMap<>();
-                        creatorMap.put("display_name", creatorJSON.optString("display_name"));
-                        postMap.put("creator", creatorMap);
-
+                        if (!postJSON.isNull("parent")) {
+                            JSONObject parentJSON = postJSON.getJSONObject("parent");
+                            Map<String, Object> parentMap = new HashMap<>();
+                            parentMap.put("contents_text", parentJSON.optString("contents_text"));
+                            
+                            // 親投稿の作成者情報がある場合
+                            if (!parentJSON.isNull("creator")) {
+                                parentMap.put("creator_name", parentJSON.getJSONObject("creator").optString("display_name"));
+                            }
+                            postMap.put("parent", parentMap);
+                        }
+                        // 作成日時フォーマット (created_at)
                         String iso = postJSON.optString("created_at");
                         if (iso != null && !iso.isEmpty()) {
-                            postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(outFmt));
+                            try {
+                                postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(outFmt));
+                            } catch (Exception e) {
+                                postMap.put("created_at_fmt", iso);
+                            }
                         }
                         myQuestions.add(postMap);
                     }
                 }
             }
 
-            // JSPへ渡すデータをセット
+            // JSPへデータをセット
             request.setAttribute("name", name);
             request.setAttribute("description", description);
-            request.setAttribute("questions", myQuestions); // 自分の投稿リスト
+            request.setAttribute("department", department);
+            request.setAttribute("questions", myQuestions); // 自分の投稿のみが入ったリスト
 
             request.getRequestDispatcher("/web_system/QA_04_User.jsp").forward(request, response);
 

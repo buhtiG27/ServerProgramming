@@ -253,4 +253,12 @@
     <servlet-name>TimeTableDelete</servlet-name>
     <url-pattern>/timetable/delete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateTask</servlet-name>
+    <servlet-class>servlet.UpdateTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateTask</servlet-name>
+    <url-pattern>/task/update</url-pattern>
+  </servlet-mapping>
 </web-app>

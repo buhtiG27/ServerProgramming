@@ -2,57 +2,51 @@ package servlet;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
+
+import client.ApiClient;
+import client.ApiResponse;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import listener.AppInitListener;
 
-@WebServlet("/UpdateAnswer") 
 public class UpdateAnswer extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    public UpdateAnswer() {
-        super();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        
+        // パラメータの取得
+        String questionId = request.getParameter("questionId"); // 戻り先URL用
+        String answerId = request.getParameter("answerId");     // 更新対象ID
+        String content = request.getParameter("answerText");    // 修正後の本文
+
+        try {
+            JSONObject json = new JSONObject();
+            json.put("content", content);
+
+            ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
+            // Go API側のエンドポイント例: /answers/123
+            ApiResponse apires = api.putJson(request, "/answers/" + answerId, json.toString());
+
+            if (apires.is2xx()) {
+                // 成功時は元の質問詳細画面へ戻る
+                response.sendRedirect(request.getContextPath() + "/questions/show?questionId=" + questionId);
+            } else {
+                request.setAttribute("error", "回答の更新に失敗しました");
+                request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp?questionId=" + questionId).forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "システムエラーが発生しました。");
+            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp").forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	this.doPost(request, response);
-    }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-        // 書き換え
-        String classname = request.getParameter("classname");
-        String teacher = request.getParameter("teacher");
-        String roomname = request.getParameter("roomname");
-
-
-
-        boolean result = false;
-
-        try {
-        	
-
-            request.setAttribute("subject", null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // データベースエラー時のメッセージ
-            request.setAttribute("error", "システムエラーが発生しました。時間をおいて再度お試しください。");
-            // DBエラー時もclassnameを付与して編集画面に戻る
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp?classname=" + classname).forward(request, response);
-            return; // 処理を中断
-        }
-        if (result) {
-        	// 更新成功時は詳細画面へリダイレクト
-        	response.sendRedirect(request.getContextPath() + "/ShowQuestion?classname=" + classname);
-        	return;
-        } else {
-            request.setAttribute("error", "更新に失敗しました");
-            // 更新失敗時はエラーメッセージをセットして、編集画面へフォワード
-            request.getRequestDispatcher("/web_system/QA_10_ShowQuestion.jsp?classname=" + classname).forward(request, response);
-        }
+        doPost(request, response);
     }
 }

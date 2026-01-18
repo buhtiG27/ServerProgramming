@@ -39,7 +39,6 @@
     			</div>
 				<ul>
     				<li><button class="filter" type="submit" name="filterbyNew" value="send" data-text="新着">新着</button></li>
-    				<li><button class="filter" type="submit" name="filterbySameGrade" value="send" data-text="学科">学科</button></li>
     				<li><button class="filter" type="submit" name="filterbyFlag" value="send" data-text="フラグつき">フラグつき</button></li>
 				</ul>
 			</div>
