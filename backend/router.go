@@ -82,6 +82,27 @@ func SetupRouter() *gin.Engine {
 
 		// ユーザの投稿一覧の取得
 		protected.GET("/user/posts", controllers.GetUserPosts)
+
+		// いいねをする
+		protected.POST("/posts/like", controllers.DoLike)
+
+		// いいね数と情報の取得
+		protected.GET("/posts/:id/like", controllers.GetLikeCountAndInfo)
+
+		// いいねの解除
+		protected.DELETE("/posts/:id/like", controllers.DeleteLike)
+
+		// フラグの登録
+		protected.POST("/user/flags", controllers.RegisterFlag)
+
+		// フラグの一覧取得
+		protected.GET("/user/flags", controllers.GetFlags)
+
+		// フラグされているか判定
+		protected.GET("/posts/:id/flag", controllers.GetFlagInfo)
+
+		// フラグの登録解除
+		protected.DELETE("/user/flags/:id", controllers.UnregisterFlag)
 	}
 	return router
 }
