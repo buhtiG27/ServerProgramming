@@ -22,17 +22,14 @@ public class UpdateQuestion extends HttpServlet {
 
         // パラメータ取得
         String questionId = request.getParameter("questionId");
-        String content = request.getParameter("questionText");
+        String content = request.getParameter("contents_text"); 
 
         try {
-            // JSONの作成
             JSONObject json = new JSONObject();
-            json.put("content", content);
+            json.put("contents_text", content); 
 
-            // ApiClientによるPUTリクエスト
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            ApiResponse apires = api.putJson(request, "/questions/" + questionId, json.toString());
-
+            ApiResponse apires = api.putJson(request, "/posts/" + questionId, json.toString());
             if (apires.is2xx()) {
                 // 成功：詳細画面へ
                 response.sendRedirect(request.getContextPath() + "/questions/show?questionId=" + questionId);

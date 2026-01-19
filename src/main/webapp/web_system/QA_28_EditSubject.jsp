@@ -5,8 +5,7 @@
     String subId = request.getParameter("subjectId");
     String rawWeekday = request.getParameter("weekday");
     String rawTime = request.getParameter("time");
-    
-    // パラメータ名が混在しないよう統一 (QA_21, QA_29両方から受け取れるようにする)
+
     String cls  = request.getParameter("classneme");
     String tea  = request.getParameter("teacher");
     String room = request.getParameter("roomname");
@@ -67,8 +66,7 @@
 		<% if (!errorMessage.isEmpty()) { %>
 			<p style="color:red; font-weight:bold;"><%= errorMessage %></p>
 		<% } %>
-		
-		<%-- 置き換え --%>
+
 		<div class="view_list">
 			<form action="" method="post">
 			<input type="hidden" name="subjectId" value="<%= subId %>" />
@@ -77,14 +75,11 @@
 				<div class="info_box">
 					<label>授業名：</label>
 					<input class="content_box" type="text" name="classneme" value="<%= (cls != null ? cls : "") %>"/>
-					
-					<label>教室名：</label>
+					<label>教員名：</label>
 					<input class="content_box" type="text" name="teacher" value="<%= (tea != null ? tea : "") %>"/>
-					
 					<label>教室：</label>
 					<input class="content_box" type="text" name="roomname" value="<%= (room != null ? room : "") %>"/>
-					
-					<button class="save_button" type="submit" name="save" value="send">保存</button>
+					<button class="save_button" type="submit">確認</button>
 				</div>
 			</form>
 			

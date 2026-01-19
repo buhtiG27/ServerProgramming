@@ -112,8 +112,9 @@
                 <% if (loggedInUserId != null && loggedInUserId.equals(answerCreatorId)) { %>
                     <div class="post_bottomParts_form" style="text-align: right; flex: 1;">
                         <button class="edit_button" type="button" 
-                                onclick="openEditAnswerModal('<%= ((String)answer.get("contents_text")).replace("'", "\\'") %>', '${currentAnswer['id']}')">
-                            編集
+                        		 onclick="openEditAnswerModal(this, '${currentAnswer['id']}')"
+                        		 data-text="${currentAnswer['contents_text']}">
+                        		 編集
                         </button>
                     </div>
                 <% } else { %>
@@ -134,7 +135,8 @@
         <div class="modal-content">
             <span class="close" onclick="closeEditQuestionModal()">&times;</span>
             <h2>質問を編集</h2>
-            <form action="${pageContext.request.contextPath}/questions/update" method="post">
+            <%-- form action="${pageContext.request.contextPath}/questions/update" method="post" --%>
+            <form>
                 <input type="hidden" name="questionId" value="${question['id']}">
                 <textarea id="editQuestionText" name="contents_text" rows="5" cols="50" style="width: 100%; border: 1px solid #ddd; border-radius: 5px;"></textarea><br><br>
                 <button type="submit" class="submit_button" style="width: 100%;">変更を保存</button>
@@ -146,7 +148,8 @@
         <div class="modal-content">
             <span class="close" onclick="closeEditAnswerModal()">&times;</span>
             <h2>回答を編集</h2>
-            <form action="${pageContext.request.contextPath}/answers/update" method="post">
+            <%-- form action="${pageContext.request.contextPath}/answers/update" method="post" --%>
+            <form>
                 <input type="hidden" id="editAnswerId" name="answerId" value="">
                 <input type="hidden" name="questionId" value="${question['id']}">
                 <textarea id="editAnswerText" name="answerText" rows="5" cols="50" style="width: 100%; border: 1px solid #ddd; border-radius: 5px;"></textarea><br><br>
@@ -191,7 +194,8 @@
         }
 
         /* 回答編集 */
-        function openEditAnswerModal(text, answerId) {
+        function openEditAnswerModal(btn, answerId) {
+            const text = btn.getAttribute("data-text");
             document.getElementById("editAnswerText").value = text;
             document.getElementById("editAnswerId").value = answerId;
             document.getElementById("editAnswerModal").style.display = "block";
@@ -207,6 +211,7 @@
 			<div class="bottom_button">
                 <form class="form" action="${pageContext.request.contextPath}/questions" method="get">
                     <button class="pageButton toQuestions" type="submit">
+                
                         <img src="${pageContext.request.contextPath}/web_system/images/icon_home.png" alt="(質問一覧だよ！)" class="icon_toQuestions">
                         <img src="${pageContext.request.contextPath}/web_system/images/icon_home_hukidashi.png" alt="(質問一覧だよ！)" class="icon_toQuestions_hukidashi">
                     </button>

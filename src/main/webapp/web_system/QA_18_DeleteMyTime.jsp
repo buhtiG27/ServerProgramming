@@ -1,3 +1,4 @@
+<%-- バックエンド側が実装できていない --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.util.stream.Collectors" %>

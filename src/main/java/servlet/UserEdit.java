@@ -18,24 +18,22 @@ public class UserEdit extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // フォームから新しいユーザー情報を取得
         String userName = request.getParameter("userName");
-        String department = request.getParameter("department"); // 学科
+        String description = request.getParameter("description");
 
         try {
             JSONObject json = new JSONObject();
-            json.put("name", userName);
-            json.put("department", department);
+            json.put("display_name", userName);
+            json.put("description", description);
 
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            // ログイン中の自分を更新するエンドポイント
+
             ApiResponse apires = api.putJson(request, "/current_user", json.toString());
 
             if (apires.is2xx()) {
-                // 成功したらユーザー情報表示画面へ
                 response.sendRedirect(request.getContextPath() + "/user");
             } else {
-                request.setAttribute("error", "プロフィールの更新に失敗しました");
+                request.setAttribute("error", "更新に失敗しました。ステータス:" + apires.status);
                 request.getRequestDispatcher("/web_system/QA_04_UserEdit.jsp").forward(request, response);
             }
         } catch (Exception e) {

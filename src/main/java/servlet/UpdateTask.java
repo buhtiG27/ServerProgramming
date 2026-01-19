@@ -29,40 +29,34 @@ public class UpdateTask extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         String rid = (String) request.getAttribute("rid");
-        
-        // フォームからパラメータを取得
-        String taskId = request.getParameter("taskId"); // 更新に必須
-        String classname = request.getParameter("classname");
+
+        String taskId = request.getParameter("taskId");
         String content = request.getParameter("content");
-        String limmit = request.getParameter("limmit");
+        String limit = request.getParameter("limmit");
         String output = request.getParameter("output");
-        String detail = request.getParameter("detail");
+        String detail = request.getParameter("detailcontent");
+        String weekday = request.getParameter("weekday");
+        String time = request.getParameter("time");
 
         try {
-            // 1. APIに送るJSONデータを作成
             JSONObject json = new JSONObject();
-            json.put("classname", classname);
-            json.put("content", content);
-            json.put("limit", limmit); // API側のキー名（limit/limmit）に合わせる
-            json.put("output", output);
-            json.put("detail", detail);
+            json.put("practice_name", request.getParameter("classneme")); 
+            json.put("description", detail);
+            json.put("place", output);
+            json.put("contents_text", content);
+            json.put("deadline", limit);
 
-            // 2. ApiClientを取得してPUTリクエストを送信
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            // エンドポイント例: /tasks/123
+
             ApiResponse apires = api.putJson(request, "/tasks/" + taskId, json.toString());
 
             if (apires.is2xx()) {
-                // 更新成功時は課題一覧または詳細画面へ
-                getServletContext().log("[rid=" + rid + "] Update task success: " + taskId);
-                response.sendRedirect(request.getContextPath() + "/tasks"); 
+                getServletContext().log("[rid=" + rid + "] Update success: " + taskId);
+                response.sendRedirect(request.getContextPath() + "/tasks/view?taskId=" + taskId + "&weekday=" + weekday + "&time=" + time);
             } else {
-                // API側でエラーになった場合
-                getServletContext().log("[rid=" + rid + "] Update task failed status=" + apires.status);
-                request.setAttribute("error", "更新に失敗しました（APIエラー）");
+                request.setAttribute("error", "課題の更新に失敗しました");
                 request.getRequestDispatcher("/web_system/QA_26_EditTask.jsp").forward(request, response);
             }
-
         } catch (Exception e) {
             getServletContext().log("[rid=" + rid + "] UpdateTask error", e);
             request.setAttribute("error", "システムエラーが発生しました。");

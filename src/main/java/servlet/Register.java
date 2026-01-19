@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import listener.AppInitListener;
 
-@SuppressWarnings("deprecation")
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -70,7 +69,6 @@ public class Register extends HttpServlet {
                 String error = res.body;
                 request.setAttribute("error", "登録に失敗しました: " + error);
                 request.setAttribute("Username", user);
-                request.setAttribute("Password", pw);
                 request.setAttribute("Address", email);
                 request.setAttribute("Grade", gradeStr);
                 request.setAttribute("Classification", clsStr);

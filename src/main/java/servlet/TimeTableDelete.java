@@ -55,24 +55,28 @@ public class TimeTableDelete extends HttpServlet {
         request.getRequestDispatcher("/web_system/QA_18_DeleteMyTime.jsp").forward(request, response);
     }
 
-    // POST: 科目の削除実行
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String subjectId = request.getParameter("subjectId");
+        String rid = (String) request.getAttribute("rid");
+
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            // API仕様に合わせて DELETE リクエストを送信
+
             ApiResponse apires = api.delete(request, "/timetables/" + subjectId);
 
-            if (!apires.is2xx()) {
-                request.setAttribute("error", "削除に失敗しました");
+            if (apires.is2xx()) {
+                getServletContext().log("[rid=" + rid + "] Timetable deleted: SubjectID=" + subjectId);
+            } else {
+                getServletContext().log("[rid=" + rid + "] Delete failed status=" + apires.status);
+                request.getSession().setAttribute("error", "削除に失敗しました");
             }
         } catch (Exception e) {
-            getServletContext().log("TimetableDelete POST error", e);
+            getServletContext().log("TimetableDelete error", e);
         }
-        // 削除後、再度削除画面（自身）へリダイレクト
+
         response.sendRedirect(request.getContextPath() + "/timetable/delete");
     }
 

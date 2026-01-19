@@ -20,18 +20,16 @@ public class UpdateAnswer extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         
         // パラメータの取得
-        String questionId = request.getParameter("questionId"); // 戻り先URL用
-        String answerId = request.getParameter("answerId");     // 更新対象ID
-        String content = request.getParameter("answerText");    // 修正後の本文
+        String questionId = request.getParameter("questionId");
+        String answerId = request.getParameter("answerId"); 
+        String content = request.getParameter("answerText"); 
 
         try {
             JSONObject json = new JSONObject();
-            json.put("content", content);
+            json.put("contents_text", content); 
 
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            // Go API側のエンドポイント例: /answers/123
-            ApiResponse apires = api.putJson(request, "/answers/" + answerId, json.toString());
-
+            ApiResponse apires = api.putJson(request, "/posts/" + answerId, json.toString());
             if (apires.is2xx()) {
                 // 成功時は元の質問詳細画面へ戻る
                 response.sendRedirect(request.getContextPath() + "/questions/show?questionId=" + questionId);

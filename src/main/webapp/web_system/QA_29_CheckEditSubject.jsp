@@ -1,3 +1,4 @@
+<%-- バックエンド側の実装ができていない --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -30,24 +31,26 @@
     		
     		<div class="bottom_buttons">
     			<form class="form" action="${pageContext.request.contextPath}/web_system/QA_28_EditSubject.jsp" method="post">
-    				<input type="hidden" name="actionType" value="correction"> 
+    				<input type="hidden" name="actionType" value="correction">
     				<input type="hidden" name="subjectId" value="<%= subId %>">
-    				<input type="hidden" name="weekday" value="<%= rawWeekday %>">
-    				<input type="hidden" name="time" value="<%= rawTime %>">
     				<input type="hidden" name="classneme" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
     				<input type="hidden" name="roomname" value="<%= room %>">
+                	<input type="hidden" name="weekday" value="<%= rawWeekday %>" />
+                	<input type="hidden" name="time" value="<%= rawTime %>" />
     				<button class="correctButton" type="submit">訂正</button>
-				</form>
-    			
-    			<form class="form" action="${pageContext.request.contextPath}/subjects/update" method="post">
+    			</form>
+    			<%-- form class="form" action="${pageContext.request.contextPath}/subjects/update" method="post" --%>
+    			<form class="form">
     				<input type="hidden" name="subjectId" value="<%= subId %>">
     				<input type="hidden" name="classneme" value="<%= cls %>">
     				<input type="hidden" name="teacher" value="<%= tea %>">
     				<input type="hidden" name="roomname" value="<%= room %>">
+    				<input type="hidden" name="weekday" value="<%= rawWeekday %>" />
+                	<input type="hidden" name="time" value="<%= rawTime %>" />
     				<button class="registerButton" type="submit">登録</button>
-				</form>
-    		</div>
+    			</form>
+			</div>
     	
     	</div>
     

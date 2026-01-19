@@ -4,13 +4,10 @@
 <%
     request.setCharacterEncoding("UTF-8");
 
-    // ID系の取得
     String taskId = request.getParameter("taskId");
     String weekday = request.getParameter("weekday");
     String time = request.getParameter("time");
 
-    // フォーム値の取得 (QA_13からの遷移と QA_27からの戻りの両方に対応)
-    // 27の「訂正」ボタンで送る名前に合わせて classneme を取得
     String cls    = request.getParameter("classneme"); 
     String con    = request.getParameter("content");
     String lim    = request.getParameter("limmit");
@@ -21,7 +18,6 @@
     String actionType = request.getParameter("actionType");
 
     if ("POST".equalsIgnoreCase(request.getMethod())) {
-        // 「確認」ボタンが押された場合のみバリデーション
         if (!"correction".equals(actionType)) {
             if (cls == null || cls.isEmpty()) { errorMessage = "授業名を入力してください。"; }
             else if (con == null || con.isEmpty()) { errorMessage = "内容を入力してください。"; }
@@ -30,7 +26,6 @@
             else if (detail == null || detail.isEmpty()) { errorMessage = "補足説明を入力してください。"; }
 
             if (errorMessage.isEmpty()) {
-                // すべての情報をQA_27へ引き継ぐ
                 String params = "?taskId=" + taskId 
                               + "&weekday=" + weekday 
                               + "&time=" + time
@@ -40,7 +35,7 @@
                               + "&output=" + URLEncoder.encode(output, "UTF-8")
                               + "&detailcontent=" + URLEncoder.encode(detail, "UTF-8");
 
-                response.sendRedirect("QA_27_CheckEdiTask.jsp" + params);
+                response.sendRedirect("QA_27_CheckEditTask.jsp" + params);
                 return;
             }
         }
@@ -68,7 +63,6 @@
         <div class="view_list">
             <div class="info_box">
                 <form action="" method="post">
-                    <%-- hiddenでID系を保持 --%>
                     <input type="hidden" name="taskId" value="<%= taskId %>">
                     <input type="hidden" name="weekday" value="<%= weekday %>">
                     <input type="hidden" name="time" value="<%= time %>">

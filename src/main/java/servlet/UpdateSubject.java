@@ -30,20 +30,17 @@ public class UpdateSubject extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String rid = (String) request.getAttribute("rid");
         
-        // 1. フォームからパラメータを取得
-        String subjectId = request.getParameter("subjectId"); // 更新対象を特定するID
-        String subjectName = request.getParameter("subjectName");
-        String teacher = request.getParameter("teacher");
-        String classroom = request.getParameter("classroom");
+        String subjectId = request.getParameter("subjectId");
+        String cls = request.getParameter("classneme"); 
+        String tea = request.getParameter("teacher");
+        String room = request.getParameter("roomname");
 
         try {
-            // 2. APIに送るJSONデータを作成 (Go側の構造体タグに合わせる)
-            JSONObject json = new JSONObject();
-            json.put("subject_name", subjectName);
-            json.put("teacher", teacher);
-            json.put("class_room", classroom);
+        	JSONObject json = new JSONObject();
+        	json.put("subject_name", cls);
+            json.put("teacher", tea);
+            json.put("class_room", room);
 
-            // 3. ApiClientを取得してPUTリクエストを送信
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
             
             // エンドポイント例: /subjects/123

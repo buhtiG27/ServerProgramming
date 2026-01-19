@@ -1,3 +1,4 @@
+<%-- バックエンド側の実装ができていない --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,18 +17,18 @@
     </head>
     <body>
         <%
-    request.setCharacterEncoding("UTF-8");
-    // 全パラメータを受け取る
-    String taskId = request.getParameter("taskId");
-    String weekday = request.getParameter("weekday");
-    String time = request.getParameter("time");
+    		request.setCharacterEncoding("UTF-8");
+
+    		String taskId = request.getParameter("taskId");
+    		String weekday = request.getParameter("weekday");
+    		String time = request.getParameter("time");
     
-    String cls = request.getParameter("classneme"); 
-    String con = request.getParameter("content"); 
-    String lim = request.getParameter("limmit"); 
-    String output = request.getParameter("output"); 
-    String ditail = request.getParameter("detailcontent"); 
-%>
+    		String cls = request.getParameter("classneme"); 
+    		String con = request.getParameter("content"); 
+    		String lim = request.getParameter("limmit"); 
+    		String output = request.getParameter("output"); 
+    		String ditail = request.getParameter("detailcontent"); 
+		%>
 
         <header><jsp:include page="header.jsp" /></header>
         <div class="request_list">
@@ -52,10 +53,12 @@
             		<button class="correctButton" type="submit">訂正</button>
         		</form>
 
-                <form class="form" action="${pageContext.request.contextPath}/tasks/update" method="post">
+                <%-- form class="form" action="${pageContext.request.contextPath}/tasks/update" method="post" --%>
+                <form class="form">
             		<input type="hidden" name="taskId" value="<%= taskId %>" />
             		<input type="hidden" name="weekday" value="<%= weekday %>" />
             		<input type="hidden" name="time" value="<%= time %>" />
+            		<input type="hidden" name="classneme" value="<%= cls %>" />
             		<input type="hidden" name="content" value="<%= con %>" />
             		<input type="hidden" name="limmit" value="<%= lim %>" />
             		<input type="hidden" name="output" value="<%= output %>" />

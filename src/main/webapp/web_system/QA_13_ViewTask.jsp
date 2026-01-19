@@ -40,11 +40,6 @@
             </form>
         </div>
 
-        <%-- エラー表示用 --%>
-        <c:if test="${not empty error}">
-            <p style="color: red; text-align: center">${error}</p>
-        </c:if>
-
         <br />
         <div class="view_list">
             <h2 class="task_title">${task.content}</h2>

@@ -23,8 +23,9 @@
                 <img src="${pageContext.request.contextPath}/web_system/images/kari_image_User.png" class="icon_image" />
                 
                 <div class="button">
-                    <%-- プロフィール編集画面へ --%>
-                    <form action="${pageContext.request.contextPath}/web_system/QA_09_Edit.jsp" method="get">
+                    <%-- プロフィール編集画面へ・フロント・バックエンドができていない --%>
+                    <%-- form action="${pageContext.request.contextPath}/web_system/QA_09_Edit.jsp" method="get"--%>
+                    <form>
                         <button class="edit_button" type="submit">編集</button>
                     </form>
                 </div>
