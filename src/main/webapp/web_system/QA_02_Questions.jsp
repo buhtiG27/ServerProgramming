@@ -105,7 +105,16 @@
                         <img src="${pageContext.request.contextPath}/web_system/images/<%= goodIcon %>" 
                         	 alt="Good" width="auto" height="90%" style="margin-top:10%;">
                         </button>
-                        <span class="count-text"><%= q.get("like_count") != null ? q.get("like_count") : 0 %></span>
+                        <span class="count-text">
+                        <%
+                        	Object countObj = q.get("like_count");
+                        	int displayCount = 0;
+                        	if (countObj != null) {
+                        		displayCount = Integer.parseInt(countObj.toString());
+                        	}
+                        %>
+                        <%= displayCount %>
+                        </span>
                     </form>
 
                     <%-- 返信（詳細）ボタン --%>
@@ -128,9 +137,9 @@
                         	String flagIcon = isFlag ? "icon_flag_active.png" : "icon_flag.png";
                         	String flagStyle = isFlag ? "filter: sepia(100%) saturate(500%) hue-rotate(0deg);" : "";
                         %>
-                            <img src="${pageContext.request.contextPath}/web_system/images/${q['is_flag'] ? 'icon_flag_active.png' : 'icon_flag.png'}" 
+                            <img src="${pageContext.request.contextPath}/web_system/images/<%= flagIcon %>" 
                             	 alt="Flag" width="auto" height="90%"
-                            	 style="margin-top:5%; ${q['is_flag'] ? 'filter: sepia(100%) saturate(500%) hue-rotate(0deg);' : ''}">
+                            	 style="margin-top:5%; <%= flagStyle %>">
                             </button>
                     </form>
                 </div>

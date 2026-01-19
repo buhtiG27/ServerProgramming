@@ -35,50 +35,61 @@ public class FilterQuestion extends HttpServlet {
         
         try {
             ApiClient api = (ApiClient) getServletContext().getAttribute(AppInitListener.API_KEY);
-            
-            // 全投稿を取得
+
             ApiResponse postsRes = api.get(request, "/posts?limit=100"); 
             JSONObject postsJson = new JSONObject(postsRes.body);
             JSONArray posts = postsJson.getJSONArray("posts");
 
             List<Map<String, Object>> filteredList = new ArrayList<>();
             DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-
+            
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
-                String qId = String.valueOf(postJSON.get("id"));
-                
-                // いいね情報の取得
+
+                Map<String, Object> postMap = postJSON.toMap();
+                String qId = String.valueOf(postMap.get("id"));
+
                 ApiResponse likeRes = api.get(request, "/posts/" + qId + "/like");
                 if (likeRes.is2xx()) {
                     JSONObject likeData = new JSONObject(likeRes.body);
-                    postJSON.put("is_liked", likeData.optBoolean("is_liked", false));
-                    postJSON.put("like_count", likeData.optInt("count", 0));
+                    postMap.put("is_liked", likeData.optBoolean("is_liked", false));
+                    
+                    int count = 0;
+                    if (likeData.has("count")) {
+                        count = likeData.getInt("count");
+                    } else if (likeData.has("like_count")) {
+                        count = likeData.getInt("like_count");
+                    } else if (likeData.has("likes")) {
+                        count = likeData.getInt("likes");
+                    }
+
+                    postMap.put("like_count", count);
                 }
-                
-                // フラグ情報の取得
+
                 ApiResponse flagRes = api.get(request, "/posts/" + qId + "/flag");
-                boolean isActuallyFlagged = false; // 変数名を明確に
+                boolean isActuallyFlagged = false;
                 if (flagRes.is2xx()) {
                     JSONObject flagData = new JSONObject(flagRes.body);
                     isActuallyFlagged = flagData.optBoolean("is_flag", false);
-                    postJSON.put("is_flag", isActuallyFlagged);
+                    postMap.put("is_flag", isActuallyFlagged);
                 }
 
-                // フィルタ判定
+                String iso = (String) postMap.get("created_at");
+                if (iso != null) {
+                    postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(outFmt));
+                }
+
                 if ("flagged".equals(filterType)) {
-                    // ここを修正：is_flagged ではなく isActuallyFlagged を使う
                     if (isActuallyFlagged) {
-                        addPostToList(postJSON, filteredList, outFmt);
+                        filteredList.add(postMap);
                     }
                 } else {
-                    addPostToList(postJSON, filteredList, outFmt);
+                    filteredList.add(postMap);
                 }
             }
             
             request.setAttribute("type", filterType); 
-            request.setAttribute("questions", filteredList); // JSP側が "${questions}" で受けている場合
-            request.setAttribute("isFilterMode", true);
+            request.setAttribute("questions", filteredList);
             
             request.getRequestDispatcher("/web_system/QA_02_Questions.jsp").forward(request, response);
 
@@ -87,15 +98,6 @@ public class FilterQuestion extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/questions");
         }
     }
-    private void addPostToList(JSONObject postJSON, List<Map<String, Object>> list, DateTimeFormatter fmt) {
-        Map<String, Object> postMap = postJSON.toMap();
-        String iso = (String) postMap.get("created_at");
-        if (iso != null) {
-            postMap.put("created_at_fmt", OffsetDateTime.parse(iso).format(fmt));
-        }
-        list.add(postMap);
-    }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

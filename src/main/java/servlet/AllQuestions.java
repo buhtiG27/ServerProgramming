@@ -87,7 +87,15 @@ public class AllQuestions extends HttpServlet {
                 if (likeRes.is2xx()) {
                     JSONObject likeData = new JSONObject(likeRes.body);
                     postMap.put("is_liked", likeData.optBoolean("is_liked", false));
-                    postMap.put("like_count", likeData.optInt("count", 0));
+                    int count = 0;
+                    if (likeData.has("count")) {
+                        count = likeData.getInt("count");
+                    } else if (likeData.has("like_count")) {
+                        count = likeData.getInt("like_count");
+                    } else if (likeData.has("likes")) {
+                        count = likeData.getInt("likes");
+                    }
+                    postMap.put("like_count", count);
                 }
                 
                 ApiResponse flagRes = api.get(request, "/posts/" + qId + "/flag");
