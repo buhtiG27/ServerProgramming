@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +14,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import listener.AppInitListener;
 
 public class AllQuestions extends HttpServlet {
@@ -78,16 +75,31 @@ public class AllQuestions extends HttpServlet {
             JSONObject json = new JSONObject(apires.body);
             JSONArray posts = json.getJSONArray("posts");
 
-            DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-
             List<Map<String, Object>> questions = new ArrayList<>();
+
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
                 Map<String, Object> postMap = postJSON.toMap();
+                
+                String qId = String.valueOf(postMap.get("id"));
+
+                ApiResponse likeRes = api.get(request, "/posts/" + qId + "/like");
+                if (likeRes.is2xx()) {
+                    JSONObject likeData = new JSONObject(likeRes.body);
+                    postMap.put("is_liked", likeData.optBoolean("is_liked", false));
+                    postMap.put("like_count", likeData.optInt("count", 0));
+                }
+                
+                ApiResponse flagRes = api.get(request, "/posts/" + qId + "/flag");
+                if (flagRes.is2xx()) {
+                    JSONObject flagData = new JSONObject(flagRes.body);
+                    postMap.put("is_flag", flagData.optBoolean("is_flag", false));
+                }
+
                 String iso = (String) postMap.get("created_at");
                 if (iso != null) {
-                    OffsetDateTime odt = OffsetDateTime.parse(iso);
-                    postMap.put("created_at_fmt", odt.format(outFmt));
+
+                    postMap.put("created_at_fmt", iso.replace("T", " ").substring(0, 19));
                 }
                 questions.add(postMap);
             }

@@ -46,12 +46,33 @@ public class FilterQuestion extends HttpServlet {
 
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject postJSON = posts.getJSONObject(i);
+                String qId = String.valueOf(postJSON.get("id"));
+                
+                // いいね情報の取得
+                ApiResponse likeRes = api.get(request, "/posts/" + qId + "/like");
+                if (likeRes.is2xx()) {
+                    JSONObject likeData = new JSONObject(likeRes.body);
+                    postJSON.put("is_liked", likeData.optBoolean("is_liked", false));
+                    postJSON.put("like_count", likeData.optInt("count", 0));
+                }
+                
+                // フラグ情報の取得
+                ApiResponse flagRes = api.get(request, "/posts/" + qId + "/flag");
+                boolean isActuallyFlagged = false; // 変数名を明確に
+                if (flagRes.is2xx()) {
+                    JSONObject flagData = new JSONObject(flagRes.body);
+                    isActuallyFlagged = flagData.optBoolean("is_flag", false);
+                    postJSON.put("is_flag", isActuallyFlagged);
+                }
 
-                // trueの場合、リストに追加
+                // フィルタ判定
                 if ("flagged".equals(filterType)) {
-                    if (postJSON.optBoolean("is_flagged", false)) {
+                    // ここを修正：is_flagged ではなく isActuallyFlagged を使う
+                    if (isActuallyFlagged) {
                         addPostToList(postJSON, filteredList, outFmt);
                     }
+                } else {
+                    addPostToList(postJSON, filteredList, outFmt);
                 }
             }
             

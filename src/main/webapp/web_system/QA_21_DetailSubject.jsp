@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 <%
-    // サーブレットが受け取った「数値」をそのまま取得しておく
     String rawWeekday = request.getParameter("weekday");
     String rawTime = request.getParameter("time");
     String rawCls = request.getParameter("classname");
@@ -95,7 +94,6 @@
         <div class="textarea_box">
     <ul>
     <%
-        // request.getAttribute("practices") が List<Object> として届く
         Object practicesObj = request.getAttribute("practices");
         List<Map<String, Object>> tasks = (List<Map<String, Object>>) practicesObj;
         
@@ -105,9 +103,7 @@
     <%
         } else {
             for (Map<String, Object> t : tasks) {
-                // デバッグ用にキーを確認する場合（任意）: System.out.println("Keys: " + t.keySet());
-                
-                // キー名が 'practice_name' か 'PracticeName' か 'subject_id' になっていないか確認
+
                 String pName = (t.get("practice_name") != null) ? t.get("practice_name").toString() 
                              : (t.get("PracticeName") != null) ? t.get("PracticeName").toString() : "名称未設定";
                 Object pId = (t.get("ID") != null) ? t.get("ID") : t.get("id");

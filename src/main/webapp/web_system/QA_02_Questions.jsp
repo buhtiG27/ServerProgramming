@@ -97,9 +97,15 @@
                         <input type="hidden" name="offset" value="<%= offset %>">
                         <input type="hidden" name="type" value="<%= type != null ? type : "" %>">
                         <button class="goodButton" type="submit">
-                            <img src="${pageContext.request.contextPath}/web_system/images/icon_good_button.png" alt="Good" width="auto" height="90%" style="margin-top:10%;">
+                        <%
+                        	Object isLikedObj = q.get("is_liked");
+                        	boolean isLiked = (isLikedObj != null && isLikedObj.toString().equals("true"));
+                        	String goodIcon = isLiked ? "icon_good_active.png" : "icon_good_button.png";
+                        %>
+                        <img src="${pageContext.request.contextPath}/web_system/images/<%= goodIcon %>" 
+                        	 alt="Good" width="auto" height="90%" style="margin-top:10%;">
                         </button>
-                        <span class="count-text">${q['like_count'] != null ? q['like_count'] : 0}</span>
+                        <span class="count-text"><%= q.get("like_count") != null ? q.get("like_count") : 0 %></span>
                     </form>
 
                     <%-- 返信（詳細）ボタン --%>
@@ -116,11 +122,16 @@
                         <input type="hidden" name="offset" value="<%= offset %>">
                         <input type="hidden" name="type" value="<%= type != null ? type : "" %>">
                         <button class="flagButton" type="submit">
-                            <img src="${pageContext.request.contextPath}/web_system/images/${q['is_flagged'] == true ? 'icon_flag_active.png' : 'icon_flag.png'}" 
-                                 alt="Flag" 
-                                 width="auto" height="90%" 
-                                 style="margin-top:5%; ${q['is_flagged'] == true ? 'filter: sepia(100%) saturate(500%) hue-rotate(0deg);' : ''}">
-                        </button>
+                        <%
+                        	Object isFlagObj = q.get("is_flag");
+                        	boolean isFlag = (isFlagObj != null && isFlagObj.toString().equals("true"));
+                        	String flagIcon = isFlag ? "icon_flag_active.png" : "icon_flag.png";
+                        	String flagStyle = isFlag ? "filter: sepia(100%) saturate(500%) hue-rotate(0deg);" : "";
+                        %>
+                            <img src="${pageContext.request.contextPath}/web_system/images/${q['is_flag'] ? 'icon_flag_active.png' : 'icon_flag.png'}" 
+                            	 alt="Flag" width="auto" height="90%"
+                            	 style="margin-top:5%; ${q['is_flag'] ? 'filter: sepia(100%) saturate(500%) hue-rotate(0deg);' : ''}">
+                            </button>
                     </form>
                 </div>
             </div>
